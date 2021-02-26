@@ -1,6 +1,3 @@
-import logo from './logo.svg';
-import './App.css';
-
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
@@ -22,25 +19,28 @@ import CommentPage from './pages/StoryDetailPage/comment';
 
 
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Switch>
+        <Route exact path="/" render={() => <CoverPage />} />
+        <Route path="/board" render={() => <BoardPage />} />
+        {/* <Route path="/mypage" render={() => <MyPage />} />
+        <Route path="/event" render={() => <EventPage />} />
+        <Route path="/alert" render={() => <AlertPage />} />
+        <Route path="/search" render={() => <SearchPage />} />
+        <Route path="/newcommit" render={() => <NewCommitPage />} />
+        <Route path="/commitdetail" render={() => <CommitDetailPage />} />
+        <Route path="/newstorycontent" render={() => <NewStoryContentPage />} />
+        <Route path="/newstoryinfo" render={() => <NewStoryInfoPage />} />
+        <Route path="/content" render={() => <ContentPage />} />
+        <Route path="/info" render={() => <InfoPage />} />
+        <Route path="/commit" render={() => <CommitPage />} />
+        <Route path="/comment" render={() => <CommentPage />} />
+        <Route path="/loading" render={() => <LoadingPage />} /> */}
+      </Switch>
     </div>
-  );
-}
+  )
+};
 
-export default App;
+export default withRouter(App);
