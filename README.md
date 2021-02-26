@@ -1,4 +1,4 @@
-## Shape Of Voice
+## Story Hub
 
 ![Logo](https://user-images.githubusercontent.com/68832639/108806191-5ab90400-75e4-11eb-84f0-ce0f11d65ea1.png)
 
