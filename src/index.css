@@ -1,5 +1,9 @@
+* {
+  border: 1px solid rgba(196, 191, 191, 0.356);
+  margin: 10px;
+}
+
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -10,4 +14,47 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.body {
+  width: 70vw;
+  height: 70vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  float: left;
+}
+
+.leftNav {
+  width: 55vw;
+}
+
+.board {
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+}
+
+#LeftCreateNav {
+  display: flex;
+  flex-direction: column;
+  float: left;
+}
+
+#LeftDetailNav {
+  display: flex;
+  flex-direction: column;
+  float: left;
+}
+
+#RightNav {
+  display: flex;
+  flex-direction: column;
+  float: left;
+}
+
+#UpNav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }

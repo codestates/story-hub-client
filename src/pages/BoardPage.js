@@ -9,10 +9,29 @@ const BoardPage = (props) => {
     return (
         <>
             <UpNav/>
-            <div>BoardPage</div>
-            <Link to='/content'>
-            <button>Temp Board Card</button>
-            </Link>
+            <div className="body">
+                <div className="board hotStory">
+                    <h1>Hot Story</h1>
+                    <Link to='/content'>
+                    <button>Temp Board Card</button>
+                    </Link>
+                    <Link to='/content'>
+                    <button>Temp Board Card</button>
+                    </Link>
+                    <Link to='/content'>
+                    <button>Temp Board Card</button>
+                    </Link>
+                </div>
+                <div className="board newStory">
+                    <h1>New Story</h1>
+                    <Link to='/content'>
+                    <button>Temp Board Card</button>
+                    </Link>
+                    <Link to='/content'>
+                    <button>Temp Board Card</button>
+                    </Link>
+                </div>
+            </div>
             <RightNav/>
         </>
     )
