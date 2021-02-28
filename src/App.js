@@ -25,7 +25,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" render={() => <CoverPage />} />
         <Route path="/board" render={() => <BoardPage />} />
-        {/* <Route path="/mypage" render={() => <MyPage />} />
+        <Route path="/mypage" render={() => <MyPage />} />
         <Route path="/event" render={() => <EventPage />} />
         <Route path="/alert" render={() => <AlertPage />} />
         <Route path="/search" render={() => <SearchPage />} />
@@ -37,7 +37,7 @@ const App = () => {
         <Route path="/info" render={() => <InfoPage />} />
         <Route path="/commit" render={() => <CommitPage />} />
         <Route path="/comment" render={() => <CommentPage />} />
-        <Route path="/loading" render={() => <LoadingPage />} /> */}
+        {/* <Route path="/loading" render={() => <LoadingPage />} /> */}
       </Switch>
     </div>
   )
