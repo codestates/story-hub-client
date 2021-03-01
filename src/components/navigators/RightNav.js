@@ -2,22 +2,24 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import Button from '../button'
+
 
 
 const RightNav = (props) => {
     return (
         <div id="RightNav">
             <Link to="/board">
-            <button>Board</button>
+            <Button>Board</Button>
             </Link>
             <Link to="/alert">
-            <button>Alert</button>
+            <Button>Alert</Button>
             </Link>
             <Link to="/mypage">
-            <button>MyPage</button>
+            <Button>My Page</Button>
             </Link>
             <Link to="/event">
-            <button>Event</button>
+            <Button>Event</Button>
             </Link>
         </div>
     )
