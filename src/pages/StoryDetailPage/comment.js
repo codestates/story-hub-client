@@ -9,10 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const CommentPage = (props) => {
     return (
         <>
-            <UpNav/>
-            <LeftDetailNav/>
             <div>CommentPage</div>
-            <RightNav/>
         </>
     )
 }

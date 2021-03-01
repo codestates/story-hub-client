@@ -9,10 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const CommitPage = (props) => {
     return (
         <>
-            <UpNav/>
-            <LeftDetailNav/>
             <div>CommitPage</div>
-            <RightNav/>
         </>
     )
 }

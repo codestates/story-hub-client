@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Switch, withRouter } from 'react-router-dom';
+import UpNav from './components/navigators/UpNav';
+import RightNav from './components/navigators/RightNav';
+import LeftCreateNav from './components/navigators/LeftCreateNav';
+import LeftDetailNav from './components/navigators/LeftDetailNav';
 import CoverPage from './pages/CoverPage';
 import BoardPage from './pages/BoardPage';
 import SearchPage from './pages/SearchPage';
@@ -22,6 +26,9 @@ import CommentPage from './pages/StoryDetailPage/comment';
 const App = () => {
   return (
     <div>
+      <UpNav/>
+      {isNew ? (<LeftCreateNav/>) : ("")}
+      {isDetail ? (<LeftDetailNav/>) : ("")}
       <Switch>
         <Route exact path="/" render={() => <CoverPage />} />
         <Route path="/board" render={() => <BoardPage />} />
@@ -39,6 +46,7 @@ const App = () => {
         <Route path="/comment" render={() => <CommentPage />} />
         {/* <Route path="/loading" render={() => <LoadingPage />} /> */}
       </Switch>
+      <RightNav/>
     </div>
   )
 };

@@ -8,7 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 const BoardPage = (props) => {
     return (
         <>
-            <UpNav/>
             <div className="body">
                 <div className="board hotStory">
                     <h1>Hot Story</h1>
@@ -32,7 +31,6 @@ const BoardPage = (props) => {
                     </Link>
                 </div>
             </div>
-            <RightNav/>
         </>
     )
 }

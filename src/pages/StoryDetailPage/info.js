@@ -9,10 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const InfoPage = (props) => {
     return (
         <>
-            <UpNav/>
-            <LeftDetailNav/>
             <div>InfoPage</div>
-            <RightNav/>
         </>
     )
 }

@@ -9,13 +9,10 @@ import { useDispatch, useSelector } from 'react-redux';
 const ContentPage = (props) => {
     return (
         <>
-            <UpNav/>
-            <LeftDetailNav/>
             <div>ContentPage</div>
             <Link to='/newcommit'>
             <button>new commit</button>
             </Link>
-            <RightNav/>
         </>
     )
 }

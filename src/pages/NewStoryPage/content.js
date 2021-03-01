@@ -9,10 +9,9 @@ import { useDispatch, useSelector } from 'react-redux';
 const NewStoryContentPage = (props) => {
     return (
         <>
-            <UpNav/>
-            <LeftCreateNav/>
-            <div>NewStoryContentPage</div>
-            <RightNav/>
+            <div className="body leftNav">
+                <div>NewStoryContentPage</div>
+            </div>
         </>
     )
 }

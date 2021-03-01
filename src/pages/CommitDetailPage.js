@@ -8,9 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const CommitDetailPage = (props) => {
     return (
         <>
-            <UpNav/>
             <div>CommitDetailPage</div>
-            <RightNav/>
         </>
     )
 }

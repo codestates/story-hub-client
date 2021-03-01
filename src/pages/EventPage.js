@@ -9,9 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const EventPage = (props) => {
     return (
         <>
-            <UpNav/>
             <div>EventPage</div>
-            <RightNav/>
         </>
     )
 }

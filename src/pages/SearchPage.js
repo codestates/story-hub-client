@@ -8,9 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const SearchPage = (props) => {
     return (
         <>
-            <UpNav/>
             <div>SearchPage</div>
-            <RightNav/>
         </>
     )
 }

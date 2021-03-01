@@ -8,9 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const MyPage = (props) => {
     return (
         <>
-            <UpNav/>
             <div>MyPage</div>
-            <RightNav/>
         </>
     )
 }
