@@ -1,6 +1,12 @@
 * {
-  border: 1px solid rgba(196, 191, 191, 0.356);
+  border: 1px solid rgb(224, 224, 224);
   margin: 10px;
+}
+
+a {
+  text-decoration: none;
+  margin:1px;
+  margin-left:10px;
 }
 
 body {
@@ -17,7 +23,13 @@ code {
 }
 
 .body {
-  width: 70vw;
+  border-radius: 10px;
+  margin-left: -50px;
+  position: relative;
+  z-index: 2;
+  margin-right:-30px;
+  background-color: rgb(185, 185, 185);
+  width: 80vw;
   height: 70vh;
   display: flex;
   flex-direction: row;
