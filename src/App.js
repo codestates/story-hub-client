@@ -25,14 +25,23 @@ import Parts from './style/Parts'
 
 
 const App = () => {
-  return (
-    <div>
-      <Route exact path="/" render={() => <CoverPage />} />
+  const state = useSelector((state) => state);
+  // console.log(state);
+  const { isLogo, isCreate } = state.buttonReducer;
+
+  return isLogo ? (
+    <>
+      <Switch>
+        <Route exact path="/" render={() => <CoverPage />} />
+      </Switch>
+    </>
+    ) : (
+    <>
       <UpNav/>
-      {/* {isNew ? (<LeftCreateNav/>) : ("")}
-      {isDetail ? (<LeftDetailNav/>) : ("")} */}
+      {isCreate ? (<LeftCreateNav/>) : ("")}
       <Parts.Body>
         <Switch>
+          {/* {isDetail ? (<LeftDetailNav/>) : ("")} */}
           <Route path="/board" render={() => <BoardPage />} />
           <Route path="/mypage" render={() => <MyPage />} />
           <Route path="/event" render={() => <EventPage />} />
@@ -50,8 +59,8 @@ const App = () => {
         </Switch>
       </Parts.Body>
       <RightNav/>
-    </div>
-  )
+    </>
+  );
 };
 
 export default withRouter(App);
