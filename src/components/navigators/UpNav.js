@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import Parts from '../../style/Parts'
 
 const UpNav = (props) => {
     return (
-        <div id="UpNav">
+        <Parts.Nav up>
             <Link to="/">
             <button>Logo</button>
             </Link>
@@ -17,8 +18,8 @@ const UpNav = (props) => {
             <button>search</button>
             </Link>
             <button>Login</button>
-        </div>
+        </Parts.Nav>
     )
 }
 
-export default UpNav;
+export default withRouter(UpNav);

@@ -6,11 +6,13 @@ import store from './store/store';
 
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import GlobalStyle from './style/GlobalStyle'
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <App />
+      <GlobalStyle />
     </BrowserRouter>
   </Provider>,
   document.getElementById('root')

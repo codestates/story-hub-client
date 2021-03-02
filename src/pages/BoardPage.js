@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import UpNav from '../components/navigators/UpNav'
-import RightNav from '../components/navigators/RightNav'
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import Parts from '../style/Parts'
 
 const BoardPage = (props) => {
+
     return (
-        <>
-            <div className="body">
-                <div className="board hotStory">
+            <>
+                <Parts.Board>
                     <h1>Hot Story</h1>
                     <Link to='/content'>
                     <button>Temp Board Card</button>
@@ -20,8 +19,8 @@ const BoardPage = (props) => {
                     <Link to='/content'>
                     <button>Temp Board Card</button>
                     </Link>
-                </div>
-                <div className="board newStory">
+                </Parts.Board>
+                <Parts.Board>
                     <h1>New Story</h1>
                     <Link to='/content'>
                     <button>Temp Board Card</button>
@@ -29,9 +28,8 @@ const BoardPage = (props) => {
                     <Link to='/content'>
                     <button>Temp Board Card</button>
                     </Link>
-                </div>
-            </div>
-        </>
+                </Parts.Board>
+            </>
     )
 }
 
