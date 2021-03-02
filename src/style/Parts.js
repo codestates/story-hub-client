@@ -13,7 +13,7 @@ const Parts = {
         text-align: center;
         letter-spacing :-6px;
         line-height: 3;
-        background-color: ${props => props.clicked ? "rgb(185, 185, 185)" : "gray"};
+        background-color: ${props => props.clicked==="true" ? "rgb(185, 185, 185)" : "gray"};
         border-radius: ${props => props.left ? "25px 0px 0px 25px" : "0px 25px 25px 0px"};
     `,
     Body : styled.div`

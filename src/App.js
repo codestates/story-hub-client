@@ -39,9 +39,10 @@ const App = () => {
     <>
       <UpNav/>
       {isCreate ? (<LeftCreateNav/>) : ("")}
+      {/* {isDetail ? (<LeftDetailNav/>) : ("")} */}
       <Parts.Body>
         <Switch>
-          {/* {isDetail ? (<LeftDetailNav/>) : ("")} */}
+          
           <Route path="/board" render={() => <BoardPage />} />
           <Route path="/mypage" render={() => <MyPage />} />
           <Route path="/event" render={() => <EventPage />} />

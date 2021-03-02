@@ -10,24 +10,29 @@ import Parts from '../../style/Parts'
 // <Parts.Button state.A>Alert</Parts.Button>
 // 특정 버튼이 클릭되면(온클릭) 스테이트를 바꿔준다.
 // ex) A 클릭 시 객체를 {B : "", A: "clicked", M: "", E:""}
+// let clicked = "board"
+
 const value = (e) => {
-    console.log(e.target.textContent)
+    clicked = e.target.textContent
 } 
+
+let url = document.location.href.split("/");
+let clicked = url[url.length-1]
 
 const RightNav = (props) => {
     return (
         <Parts.Nav>
             <Link to="/board">
-            <Parts.Button onClick={value}>Board</Parts.Button>
+            <Parts.Button onClick={value} clicked={clicked === "board" || clicked === "Board" ? "true" : ""}>Board</Parts.Button>
             </Link>
             <Link to="/alert">
-            <Parts.Button >Alert</Parts.Button>
+            <Parts.Button onClick={value} clicked={clicked === "alert" || clicked === "Alert" ? "true" : ""}>Alert</Parts.Button>
             </Link>
             <Link to="/mypage">
-            <Parts.Button >My Page</Parts.Button>
+            <Parts.Button onClick={value} clicked={clicked === "mypage" || clicked === "My Page" ? "true" : ""}>My Page</Parts.Button>
             </Link>
             <Link to="/event">
-            <Parts.Button >Event</Parts.Button>
+            <Parts.Button onClick={value} clicked={clicked === "event" || clicked === "Event" ? "true" : ""}>Event</Parts.Button>
             </Link>
         </Parts.Nav>
     )
