@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Switch, withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import UpNav from './components/navigators/UpNav';
 import RightNav from './components/navigators/RightNav';
 import LeftCreateNav from './components/navigators/LeftCreateNav';
@@ -21,18 +21,45 @@ import InfoPage from './pages/StoryDetailPage/info';
 import CommitPage from './pages/StoryDetailPage/commit';
 import CommentPage from './pages/StoryDetailPage/comment';
 import Parts from './style/Parts'
+import Switch, { Case, Default } from 'react-switch-case';
 
 
 
 const App = () => {
-  return (
-    <div>
-      <Route exact path="/" render={() => <CoverPage />} />
+  // console.log(state);
+  const state = useSelector((state) => state)
+  const { isLogo, isCreate, isDetail } = state.buttonReducer;
+  // const isLogo = "isLogo"
+  // const isCreate = "isCreate"
+  // const isDetail = "isDetail"
+
+  return ( <Switch condition={isLogo || isCreate || isDetail }>
+      <Case value = "isLogo">
+        <Route exact path="/" render={() => <CoverPage />} />
+      </Case>
+      <Case value = "isCreate">
+        <UpNav/>
+        <Parts.Body>
+          <Route path="/newstorycontent" render={() => <NewStoryContentPage />} />
+          <Route path="/newstoryinfo" render={() => <NewStoryInfoPage />} />
+        <LeftCreateNav/>
+        <RightNav/>
+        </Parts.Body>
+      </Case>
+      <Case value = "isDetail">
       <UpNav/>
-      {/* {isNew ? (<LeftCreateNav/>) : ("")}
-      {isDetail ? (<LeftDetailNav/>) : ("")} */}
-      <Parts.Body>
-        <Switch>
+        <Parts.Body>
+          <Route path="/content" render={() => <ContentPage />} />
+          <Route path="/info" render={() => <InfoPage />} />
+          <Route path="/commit" render={() => <CommitPage />} />
+          <Route path="/comment" render={() => <CommentPage />} />
+        </Parts.Body>
+        <LeftDetailNav/>
+        <RightNav/>
+      </Case>
+      <Default>
+      <UpNav/>
+        <Parts.Body>
           <Route path="/board" render={() => <BoardPage />} />
           <Route path="/mypage" render={() => <MyPage />} />
           <Route path="/event" render={() => <EventPage />} />
@@ -40,18 +67,10 @@ const App = () => {
           <Route path="/search" render={() => <SearchPage />} />
           <Route path="/newcommit" render={() => <NewCommitPage />} />
           <Route path="/commitdetail" render={() => <CommitDetailPage />} />
-          <Route path="/newstorycontent" render={() => <NewStoryContentPage />} />
-          <Route path="/newstoryinfo" render={() => <NewStoryInfoPage />} />
-          <Route path="/content" render={() => <ContentPage />} />
-          <Route path="/info" render={() => <InfoPage />} />
-          <Route path="/commit" render={() => <CommitPage />} />
-          <Route path="/comment" render={() => <CommentPage />} />
-          {/* <Route path="/loading" render={() => <LoadingPage />} /> */}
-        </Switch>
-      </Parts.Body>
-      <RightNav/>
-    </div>
-  )
+        </Parts.Body>
+        <RightNav/>
+      </Default>
+    </Switch> )
 };
 
 export default withRouter(App);

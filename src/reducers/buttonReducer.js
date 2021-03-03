@@ -5,18 +5,17 @@ import {
     BUTTON_CLICKED,
 } from '../actions';
 import { buttonState } from './initialState';
-
 const buttonReducer = (state = buttonState, action) => {
     switch (action.type) {
     case LOGO_CLICKED:
         return {
         ...state,
-        isClicked: action.payload,
+        isLogo: action.payload,
         };
     case CREATE_CLICKED:
         return {
         ...state,
-        isClicked: action.payload,
+        isCreate: action.payload,
         };
     case DETAIL_CLICKED: {
         return {

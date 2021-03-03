@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
+import Parts from '../../style/Parts'
 
 
 const LeftCreateNav = (props) => {
     return (
-        <div id="LeftCreateNav">
+        <Parts.Nav left>
             <Link to="/newstorycontent">
-            <button>content</button>
+            <Parts.Button left>Content</Parts.Button>
             </Link>
             <Link to="/newstoryinfo">
-            <button>info</button>
+            <Parts.Button left>Info</Parts.Button>
             </Link>
-        </div>
+        </Parts.Nav>
     )
 }
 
-export default LeftCreateNav;
+export default withRouter(LeftCreateNav);

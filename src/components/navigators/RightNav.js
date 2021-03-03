@@ -10,8 +10,8 @@ import Parts from '../../style/Parts'
 // <Parts.Button state.A>Alert</Parts.Button>
 // 특정 버튼이 클릭되면(온클릭) 스테이트를 바꿔준다.
 // ex) A 클릭 시 객체를 {B : "", A: "clicked", M: "", E:""}
-
 const RightNav = (props) => {
+
     return (
         <Parts.Nav>
             <Link to="/board">

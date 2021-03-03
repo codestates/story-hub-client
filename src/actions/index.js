@@ -35,15 +35,17 @@ export const userUpdate = (nickName) => {
     };
 };
 
-export const logoClicked = () => {
+export const logoClicked = (isLogo) => {
     return {
-        type: LOGO_CLICKED
+        type: LOGO_CLICKED,
+        payload: isLogo,
     }
 }
 
-export const createClicked = () => {
+export const createClicked = (isCreate) => {
     return {
-        type: CREATE_CLICKED
+        type: CREATE_CLICKED,
+        payload: isCreate,
     }
 }
 

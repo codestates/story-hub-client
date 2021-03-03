@@ -2,26 +2,26 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
+import Parts from '../../style/Parts'
 
 
 const LeftDetailNav = (props) => {
     return (
-        <div id="LeftDetailNav">
+        <Parts.Nav left>
             <Link to="/content">
-            <button>content</button>
+            <Parts.Button left>Content</Parts.Button>
             </Link>
             <Link to="/info">
-            <button>info</button>
+            <Parts.Button left>Info</Parts.Button>
             </Link>
             <Link to="/commit">
-            <button>commit</button>
+            <Parts.Button left>Commit</Parts.Button>
             </Link>
             <Link to="/comment">
-            <button>comment</button>
+            <Parts.Button left>Comment</Parts.Button>
             </Link>
-        </div>
+        </Parts.Nav>
     )
 }
 
-export default LeftDetailNav;
+export default withRouter(LeftDetailNav);

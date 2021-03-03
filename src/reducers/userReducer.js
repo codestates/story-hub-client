@@ -5,7 +5,6 @@ import {
     USER_UPDATE,
 } from '../actions';
 import { userState } from './initialState';
-
 const userReducer = (state = userState, action) => {
     switch (action.type) {
     case USER_LOGIN:
