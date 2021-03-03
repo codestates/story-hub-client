@@ -12,27 +12,32 @@ import Parts from '../../style/Parts'
 // ex) A 클릭 시 객체를 {B : "", A: "clicked", M: "", E:""}
 // let clicked = "board"
 
-const value = (e) => {
-    clicked = e.target.textContent
-} 
-
-let url = document.location.href.split("/");
-let clicked = url[url.length-1]
-
 const RightNav = (props) => {
+    let url = document.location.href.split("/");
+    let clicked = url[url.length-1]
+
+    const setClicked = (e) => {
+        clicked = e.target.textContent
+    } 
+
+    const isClickedButton = (props) => {
+        if (props.includes(clicked)) return "clicked"
+        else return ""
+    }
+
     return (
-        <Parts.Nav>
+        <Parts.Nav display={props.display==="none" ? "none": ""}>
             <Link to="/board">
-            <Parts.Button onClick={value} clicked={clicked === "board" || clicked === "Board" ? "true" : ""}>Board</Parts.Button>
+            <Parts.Button onClick={setClicked} clicked={isClickedButton(["board", "Board"])}>Board</Parts.Button>
             </Link>
             <Link to="/alert">
-            <Parts.Button onClick={value} clicked={clicked === "alert" || clicked === "Alert" ? "true" : ""}>Alert</Parts.Button>
+            <Parts.Button onClick={setClicked} clicked={isClickedButton(["alert", "Alert"])}>Alert</Parts.Button>
             </Link>
             <Link to="/mypage">
-            <Parts.Button onClick={value} clicked={clicked === "mypage" || clicked === "My Page" ? "true" : ""}>My Page</Parts.Button>
+            <Parts.Button onClick={setClicked} clicked={isClickedButton(["mypage", "My Page"])}>My Page</Parts.Button>
             </Link>
             <Link to="/event">
-            <Parts.Button onClick={value} clicked={clicked === "event" || clicked === "Event" ? "true" : ""}>Event</Parts.Button>
+            <Parts.Button onClick={setClicked} clicked={isClickedButton(["event", "Event"])}>Event</Parts.Button>
             </Link>
         </Parts.Nav>
     )

@@ -25,3 +25,7 @@ export const buttonState = {
         }
     },
 };
+
+export const pageState = {
+    page : "Cover"
+};

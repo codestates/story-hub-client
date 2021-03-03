@@ -7,22 +7,23 @@ import Parts from '../../style/Parts'
 
 
 const UpNav = (props) => {
-    const state = useSelector((state) => state);
-    const dispatch = useDispatch();
-
     return (
-        <Parts.Nav up>
-            <Link to="/">
-            <button onClick={() => dispatch(logoClicked(true))}>Logo</button>
-            </Link>
-            <Link to="/newstorycontent">
-            <button onClick={() => dispatch(createClicked(true))}>Create New Story</button>
-            </Link>
-            <input type='text' placeholder='search'></input>
-            <Link to="/search">
-            <button>search</button>
-            </Link>
-            <button>Login</button>
+        <Parts.Nav up display={props.display==="none" ? "none" : ""}>
+            <div>
+                <Link to="/">
+                <button>Logo</button>
+                </Link>
+                <Link to="/newstorycontent">
+                <button>Create New Story</button>
+                </Link>
+            </div>
+            <div>
+                <input type='text' placeholder='search'></input>
+                <Link to="/search">
+                <button>search</button>
+                </Link>
+                <button>Login</button>
+            </div>
         </Parts.Nav>
     )
 }

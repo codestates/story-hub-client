@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoClicked } from '../actions';
+import { pageMoved } from '../actions';
 
 const CoverPage = (props) => {
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
 
+    useEffect( () => {
+        dispatch(pageMoved("Cover"));
+    }, [])
+
     return (
         <>
             <div>CoverPage</div>
             <Link to="/board">
-            <button onClick={() => dispatch(logoClicked(false))}>toBoard</button>
+            <button>toBoard</button>
             </Link>
         </>
     )

@@ -7,6 +7,7 @@ export const LOGO_CLICKED = 'LOGO_CLICKED'
 export const CREATE_CLICKED = 'CREATE_CLICKED'
 export const DETAIL_CLICKED = 'DETAIL_CLICKED'
 export const BUTTON_CLICKED = 'BUTTON_CLICKED'
+export const PAGE_MOVED = "PAGE_MOVED"
 
 export const userLogin = (userInfo) => {
     return {
@@ -58,5 +59,12 @@ export const detailClicked = () => {
 export const buttonClicked = () => {
     return {
         type: BUTTON_CLICKED
+    }
+}
+
+export const pageMoved = (page) => {
+    return {
+        type: PAGE_MOVED,
+        payload: page,
     }
 }
