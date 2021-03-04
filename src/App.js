@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import UpNav from './components/navigators/UpNav';
 import RightNav from './components/navigators/RightNav';
 import LeftCreateNav from './components/navigators/LeftCreateNav';
@@ -21,7 +21,6 @@ import InfoPage from './pages/StoryDetailPage/info';
 import CommitPage from './pages/StoryDetailPage/commit';
 import CommentPage from './pages/StoryDetailPage/comment';
 import Parts from './style/Parts'
-import Switch, { Case, Default } from 'react-switch-case';
 
 
 
