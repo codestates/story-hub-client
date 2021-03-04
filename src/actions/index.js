@@ -4,6 +4,7 @@ export const USER_SIGNUP = 'USER_SIGNUP';
 export const USER_UPDATE = 'USER_UPDATE';
 
 export const PAGE_MOVED = "PAGE_MOVED"
+export const MODAL_MOVED = "MODAL_MOVED"
 
 export const userLogin = (userInfo) => {
     return {
@@ -39,9 +40,9 @@ export const pageMoved = (page) => {
     }
 }
 
-export const pageMoved = (page) => {
+export const modalMoved = (page) => {
     return {
-        type: PAGE_MOVED,
+        type: MODAL_MOVED,
         payload: page,
     }
 }

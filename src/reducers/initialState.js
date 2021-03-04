@@ -4,5 +4,6 @@ export const userState = {
 };
 
 export const pageState = {
-    page : "Cover"
+    page : "Cover",
+    modalPage: ""
 };
