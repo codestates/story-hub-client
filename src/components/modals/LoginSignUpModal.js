@@ -136,7 +136,7 @@ const LoginSignUpModal = (props) => {
           : 
 
           <>
-            {/* <MoveButton onClick={() => {setPage("Login", stateInitialize())}}>←</MoveButton>
+            <MoveButton onClick={() => {setPage("Login", stateInitialize())}}>←</MoveButton>
             <ModalTitle>SIGN UP</ModalTitle>
             <InputFrame>
               <InputTitle>E-MAIL</InputTitle>
@@ -173,7 +173,7 @@ const LoginSignUpModal = (props) => {
             <ModalButton>SUBMIT</ModalButton>
             <TextDiv >OR</TextDiv>
             <ModalButton thin>Sign up with GOOGLE</ModalButton>
-            <ModalButton thin>Sign up KAKAO</ModalButton> */}
+            <ModalButton thin>Sign up KAKAO</ModalButton>
           </>
           }
         </ModalFrame>
