@@ -19,8 +19,8 @@ const Parts = {
         line-height: 3;
         background-color: ${props => props.clicked==="clicked" ? "rgb(185, 185, 185)" : "gray"};
         border-radius: ${props => props.left ? "25px 0px 0px 25px" : "0px 25px 25px 0px"};
-    `,
-    Body : styled.div`
+`,
+        Body : styled.div`
         padding: 10px;
         border-radius: 10px;
         position: relative;
@@ -33,13 +33,13 @@ const Parts = {
         flex-direction: row;
         justify-content: space-evenly;
         float: left;
-    `,
-    Board : styled.div`
+`,
+        Board : styled.div`
         width: 45%;
         display: flex;
         flex-direction: column;
-    `,
-    Nav : styled.div`
+`,
+        Nav : styled.div`
         padding-top: 10px;
         display: ${props => props.display==="none" ? "none" : "flex"};
         flex-direction: ${props => props.up ? "row" : "column"};
@@ -51,7 +51,7 @@ const Parts = {
         ${props => props.up ? "min-width: 450px" : ""};
         ${props => props.up ? "height: 30px" : ""};
         ${props => props.up ? "padding: 10px" : ""};
-    `,
+`,
 
 }
 

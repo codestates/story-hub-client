@@ -30,4 +30,4 @@ const LeftCreateNav = (props) => {
     )
 }
 
-export default LeftCreateNav;
+export default withRouter(LeftCreateNav);

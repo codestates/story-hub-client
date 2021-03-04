@@ -36,4 +36,4 @@ const LeftDetailNav = (props) => {
     )
 }
 
-export default LeftDetailNav;
+export default withRouter(LeftDetailNav);

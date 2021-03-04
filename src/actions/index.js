@@ -3,10 +3,6 @@ export const USER_LOGOUT = 'USER_LOGOUT';
 export const USER_SIGNUP = 'USER_SIGNUP';
 export const USER_UPDATE = 'USER_UPDATE';
 
-export const LOGO_CLICKED = 'LOGO_CLICKED'
-export const CREATE_CLICKED = 'CREATE_CLICKED'
-export const DETAIL_CLICKED = 'DETAIL_CLICKED'
-export const BUTTON_CLICKED = 'BUTTON_CLICKED'
 export const PAGE_MOVED = "PAGE_MOVED"
 
 export const userLogin = (userInfo) => {
@@ -36,29 +32,10 @@ export const userUpdate = (nickName) => {
     };
 };
 
-export const logoClicked = (isLogo) => {
+export const pageMoved = (page) => {
     return {
-        type: LOGO_CLICKED,
-        payload: isLogo,
-    }
-}
-
-export const createClicked = (isCreate) => {
-    return {
-        type: CREATE_CLICKED,
-        payload: isCreate,
-    }
-}
-
-export const detailClicked = () => {
-    return {
-        type: DETAIL_CLICKED
-    }
-}
-
-export const buttonClicked = () => {
-    return {
-        type: BUTTON_CLICKED
+        type: PAGE_MOVED,
+        payload: page,
     }
 }
 
