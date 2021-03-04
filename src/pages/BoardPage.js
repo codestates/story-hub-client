@@ -9,7 +9,6 @@ import StoryCard from '../components/cards/StoryCard'
 import fakeData from '../fakeData'
 
 const BoardPage = (props) => {
-
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
     

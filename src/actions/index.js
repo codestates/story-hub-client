@@ -38,3 +38,10 @@ export const pageMoved = (page) => {
         payload: page,
     }
 }
+
+export const pageMoved = (page) => {
+    return {
+        type: PAGE_MOVED,
+        payload: page,
+    }
+}

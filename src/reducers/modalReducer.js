@@ -1,8 +1,8 @@
 import {
     PAGE_MOVED
 } from '../actions';
-import { pageState } from './initialState';
-const pageReducer = (state = pageState, action) => {
+import { modalState } from './initialState';
+const modalReducer = (state = modalState, action) => {
     switch (action.type) {
     case PAGE_MOVED:
         return {
@@ -13,4 +13,4 @@ const pageReducer = (state = pageState, action) => {
     default: return state
     }
 };
-export default pageReducer;
+// export default modalReducer;
