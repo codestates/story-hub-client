@@ -6,9 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 const StoryCard = (props) => {
     // const state = useSelector((state) => state);
     // const dispatch = useDispatch();
-  
+
     // useEffect(() => {}, []);
-  
+
     // const handleMoveDetailPage = (id) => {
     //   if (state.userReducer.users[0].boardId.includes(id)) {
     //     dispatch(checkLike(true));
@@ -18,7 +18,7 @@ const StoryCard = (props) => {
     //   dispatch(getBoardDetail(id));
     //   props.history.push('/boarddetail');
     // };
-  
+
     // onClick={() => handleMoveDetailPage(props.id)}
     return (
         
@@ -38,6 +38,6 @@ const StoryCard = (props) => {
             <br />
         </div>
     );
-  };
-  
-  export default withRouter(StoryCard);
+};
+
+export default withRouter(StoryCard);
