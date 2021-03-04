@@ -26,51 +26,42 @@ import Switch, { Case, Default } from 'react-switch-case';
 
 
 const App = () => {
-  // console.log(state);
-  const state = useSelector((state) => state)
-  const { isLogo, isCreate, isDetail } = state.buttonReducer;
-  // const isLogo = "isLogo"
-  // const isCreate = "isCreate"
-  // const isDetail = "isDetail"
+  const state = useSelector((state) => state);
+  const { page } = state.pageReducer;
 
-  return ( <Switch condition={isLogo || isCreate || isDetail }>
-      <Case value = "isLogo">
-        <Route exact path="/" render={() => <CoverPage />} />
-      </Case>
-      <Case value = "isCreate">
+  return (
+    <>
+      <Parts.Page display={page==="Cover" ? "" : "none"}>
+        <Switch>
+          <Route exact path="/" render={() => <CoverPage />} />
+        </Switch>
+      </Parts.Page>
+      <Parts.Page display={page==="Cover" ? "none" : ""}>
         <UpNav/>
-        <Parts.Body>
-          <Route path="/newstorycontent" render={() => <NewStoryContentPage />} />
-          <Route path="/newstoryinfo" render={() => <NewStoryInfoPage />} />
-        <LeftCreateNav/>
-        <RightNav/>
-        </Parts.Body>
-      </Case>
-      <Case value = "isDetail">
-      <UpNav/>
-        <Parts.Body>
-          <Route path="/content" render={() => <ContentPage />} />
-          <Route path="/info" render={() => <InfoPage />} />
-          <Route path="/commit" render={() => <CommitPage />} />
-          <Route path="/comment" render={() => <CommentPage />} />
-        </Parts.Body>
-        <LeftDetailNav/>
-        <RightNav/>
-      </Case>
-      <Default>
-      <UpNav/>
-        <Parts.Body>
-          <Route path="/board" render={() => <BoardPage />} />
-          <Route path="/mypage" render={() => <MyPage />} />
-          <Route path="/event" render={() => <EventPage />} />
-          <Route path="/alert" render={() => <AlertPage />} />
-          <Route path="/search" render={() => <SearchPage />} />
-          <Route path="/newcommit" render={() => <NewCommitPage />} />
-          <Route path="/commitdetail" render={() => <CommitDetailPage />} />
+        <LeftCreateNav display={page==="NewStory" ? "" : "none"}/>
+        <LeftDetailNav display={page==="StoryDetail" ? "" : "none"}/>
+        <Parts.Body width={page==="NewStory" || page==="StoryDetail" ? "left" : "none"}>
+          <Switch>
+            <Route path="/board" render={() => <BoardPage />} />
+            <Route path="/mypage" render={() => <MyPage />} />
+            <Route path="/event" render={() => <EventPage />} />
+            <Route path="/alert" render={() => <AlertPage />} />
+            <Route path="/search" render={() => <SearchPage />} />
+            <Route path="/newcommit" render={() => <NewCommitPage />} />
+            <Route path="/commitdetail" render={() => <CommitDetailPage />} />
+            <Route path="/newstorycontent" render={() => <NewStoryContentPage />} />
+            <Route path="/newstoryinfo" render={() => <NewStoryInfoPage />} />
+            <Route path="/content" render={() => <ContentPage />} />
+            <Route path="/info" render={() => <InfoPage />} />
+            <Route path="/commit" render={() => <CommitPage />} />
+            <Route path="/comment" render={() => <CommentPage />} />
+            {/* <Route path="/loading" render={() => <LoadingPage />} /> */}
+          </Switch>
         </Parts.Body>
         <RightNav/>
-      </Default>
-    </Switch> )
+      </Parts.Page>
+    </>
+  );
 };
 
 export default withRouter(App);

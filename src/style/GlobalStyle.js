@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
     
     * {
         border: 1px solid rgb(224, 224, 224);
+        white-space: nowrap;
     }
 
     a {

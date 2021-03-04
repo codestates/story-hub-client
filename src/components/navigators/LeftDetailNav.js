@@ -6,19 +6,31 @@ import Parts from '../../style/Parts'
 
 
 const LeftDetailNav = (props) => {
+    let url = document.location.href.split("/");
+    let clicked = url[url.length-1]
+
+    const setClicked = (e) => {
+        clicked = e.target.textContent
+    } 
+
+    const isClickedButton = (props) => {
+        if (props.includes(clicked)) return "clicked"
+        else return ""
+    }
+
     return (
-        <Parts.Nav left>
+        <Parts.Nav left display={props.display==="none" ? "none": ""}>
             <Link to="/content">
-            <Parts.Button left>Content</Parts.Button>
+            <Parts.Button left onClick={setClicked} clicked={isClickedButton(["Content", "content"])}>Content</Parts.Button>
             </Link>
             <Link to="/info">
-            <Parts.Button left>Info</Parts.Button>
+            <Parts.Button left onClick={setClicked} clicked={isClickedButton(["Info", "info"])}>Info</Parts.Button>
             </Link>
             <Link to="/commit">
-            <Parts.Button left>Commit</Parts.Button>
+            <Parts.Button left onClick={setClicked} clicked={isClickedButton(["Commit", "commit"])}>Commit</Parts.Button>
             </Link>
             <Link to="/comment">
-            <Parts.Button left>Comment</Parts.Button>
+            <Parts.Button left onClick={setClicked} clicked={isClickedButton(["Comment", "comment"])}>Comment</Parts.Button>
             </Link>
         </Parts.Nav>
     )
