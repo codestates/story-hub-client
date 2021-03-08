@@ -6,6 +6,9 @@ export const USER_UPDATE = 'USER_UPDATE';
 export const PAGE_MOVED = "PAGE_MOVED"
 export const MODAL_MOVED = "MODAL_MOVED"
 
+export const MESSAGE_OPEN = "MESSAGE_OPEN"
+export const MESSAGE_CLOSE = "MESSAGE_CLOSE"
+
 export const userLogin = (userInfo) => {
     return {
         type: USER_LOGIN,
@@ -44,5 +47,18 @@ export const modalMoved = (page) => {
     return {
         type: MODAL_MOVED,
         payload: page,
+    }
+}
+
+export const messageOpen = (message) => {
+    return {
+        type: MESSAGE_OPEN,
+        payload: message,
+    }
+}
+
+export const messageClose = () => {
+    return {
+        type: MESSAGE_CLOSE,
     }
 }

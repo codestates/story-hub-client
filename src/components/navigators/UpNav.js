@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { modalMoved } from '../../actions';
+import { modalMoved, userLogout, messageOpen } from '../../actions';
 import styled from 'styled-components'
 import Parts from '../../style/Parts'
 import logoImage from './logo.png'
@@ -48,7 +48,7 @@ import searchButtonImage from './searchButton.png'
         margin-left: -24px;
         background-size: 19px;
     `
-    const LoginButton = styled.button`
+    const LogButton = styled.button`
         margin-left: 5px;
         background-color: gray;
         color: white;
@@ -60,7 +60,9 @@ import searchButtonImage from './searchButton.png'
 
 const UpNav = (props) => {
     const state = useSelector((state) => state);
+    const { isLogin } = state.userReducer;
     const dispatch = useDispatch();
+
 
     return (
         <Parts.Nav up display={props.display==="none" ? "none" : ""}>
@@ -77,7 +79,12 @@ const UpNav = (props) => {
                 <Link to="/search">
                 <SearchButton/>
                 </Link>
-                <LoginButton onClick={() => dispatch(modalMoved("Login"))}>Login</LoginButton>
+                { isLogin ?
+                <LogButton onClick={() => {dispatch(userLogout(), dispatch(messageOpen("로그아웃 되었습니다!")))}}>Logout</LogButton>
+                :
+                <LogButton onClick={() => dispatch(modalMoved("Login"))}>Login</LogButton>
+                }
+                
             </UpNavFrame>
         </Parts.Nav>
     )
