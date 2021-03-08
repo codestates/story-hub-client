@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { modalMoved } from '../../actions'
+import { userLogin, userSignup, modalMoved, messageOpen } from '../../actions'
 import styled from 'styled-components'
 import Parts from '../../style/Parts'
+import GoogleOauth from '../../GoogleOauth'
+import KakaoOauth from '../../KakaoOauth'
 
 const ModalFrame = styled.div`
   display: flex;
@@ -12,7 +14,7 @@ const ModalFrame = styled.div`
   align-items: center;
   z-index:6;
   width: 300px;
-  height: 400px;
+  height: 330px;
   background-color: white;
   border: 2px solid rgb(220,220,220);
   box-shadow: 3px 3px 12px gray;
@@ -23,7 +25,6 @@ const MoveButton = styled.button`
   background-color: transparent;
   font-size: 1.1rem;
   margin-left: -300px;
-  margin-top: -30px;
   `
 const ModalInput = styled.input`
   width: 200px;
@@ -40,7 +41,7 @@ const ModalTitle = styled.div`
 const InputFrame = styled.div`
   display: flex;
   align-items: center;
-  height: 25px;
+  height: 40px;
   ${props => props.bottom ? "margin-bottom: 20px;" : "" }
 `
 const InputTitle = styled.span`
@@ -59,15 +60,11 @@ const ModalButton = styled.button`
   font: bold ${props => props.thin? "0.9rem" : "1.1rem"} 'Nanum Myeongjo', serif;
   color: white;
 `
-const TextDiv = styled.div`
-  margin-top: 10px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  `
 
 const LoginSignUpModal = (props) => {
   const state = useSelector((state) => state);
   const { modalPage } = state.pageReducer;
+  const { user, isLogin, accessToken } = state.userReducer;
   const dispatch = useDispatch();
 
   const [page, setPage] = useState('Login');
@@ -91,25 +88,68 @@ const LoginSignUpModal = (props) => {
     }
   };
 
+  const loginRequestHandler = async () => {
+    await axios.post('http://localhost:4000/user/login', {
+        email: email,
+        password: password
+      },
+      {
+        'Content-Type': 'application/json',
+        withCredentials: true,
+      }
+    ).then(res => {
+        dispatch(userLogin({
+          loginType: res.data.loginType,
+          accessToken: res.data.accessToken
+        }))
+        dispatch(modalMoved(""))
+        stateInitialize()
+        dispatch(messageOpen("스토리 허브에 오신 것을 환영합니다! :)"))
+    }).catch(err => {
+      if(err) dispatch(messageOpen("입력 정보를 다시 확인해주세요!"))
+    })
+  }
+
+  const signupRequestHandler = async () => {
+    await axios.post('http://localhost:4000/user/signup', {
+        email: email,
+        password: password,
+        userName: username,
+        nickname: nickname
+      },
+      {
+        'Content-Type': 'application/json',
+        withCredentials: true,
+      }
+    ).then(res => {
+        loginRequestHandler()
+        dispatch(modalMoved(""))
+        stateInitialize()
+        setPage("Login")
+    }).catch(err => {
+      if(err) dispatch(messageOpen("입력 정보를 다시 확인해주세요!"))
+    })
+  }
+
   const vaildateEmail = (email) => {
     const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   };
 
   const stateInitialize = () => {
-    const inputs = document.querySelectorAll('input')
-    for (let i = 0; i < inputs.length; i++) inputs[i].value=""
     setEmail("")
     setPassword("")
     setUsername("")
     setNickname("")
+    const inputs = document.querySelectorAll('input')
+    for (let i = 0; i < inputs.length; i++) inputs[i].value=""
   }
     return (
       <Parts.ModalBackground display={props.display==="none" ? "none" : ""}>
         <ModalFrame>
           {page==='Login' ? 
           <>
-            <MoveButton onClick={() => dispatch(modalMoved(""))}>X</MoveButton>
+            <MoveButton onClick={() => {dispatch(modalMoved("")), stateInitialize()}}>X</MoveButton>
             <ModalTitle>LOGIN</ModalTitle>
             <InputFrame>
               <InputTitle>E-MAIL</InputTitle>
@@ -127,16 +167,18 @@ const LoginSignUpModal = (props) => {
                 required
               />
             </InputFrame>
-            <ModalButton>LOGIN</ModalButton>
-            <ModalButton thin>Login with GOOGLE</ModalButton>
-            <ModalButton thin>Login with KAKAO</ModalButton>
+            <ModalButton onClick={() => {loginRequestHandler()}}>LOGIN</ModalButton>
+            {/* <ModalButton thin>Login with GOOGLE</ModalButton>
+            <ModalButton thin>Login with KAKAO</ModalButton> */}
+            <KakaoOauth/>
+            <GoogleOauth/>
             <ModalButton onClick={() => {setPage("SignUp"), stateInitialize()}}>SIGN UP</ModalButton>
           </>
 
           : 
 
           <>
-            <MoveButton onClick={() => {setPage("Login", stateInitialize())}}>←</MoveButton>
+            <MoveButton onClick={() => {setPage("Login"), stateInitialize()}}>←</MoveButton>
             <ModalTitle>SIGN UP</ModalTitle>
             <InputFrame>
               <InputTitle>E-MAIL</InputTitle>
@@ -170,10 +212,7 @@ const LoginSignUpModal = (props) => {
                 required
               />
             </InputFrame>
-            <ModalButton>SUBMIT</ModalButton>
-            <TextDiv >OR</TextDiv>
-            <ModalButton thin>Sign up with GOOGLE</ModalButton>
-            <ModalButton thin>Sign up KAKAO</ModalButton>
+            <ModalButton onClick={() => {signupRequestHandler()}}>SUBMIT</ModalButton>
           </>
           }
         </ModalFrame>

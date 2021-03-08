@@ -21,13 +21,16 @@ import InfoPage from './pages/StoryDetailPage/info';
 import CommitPage from './pages/StoryDetailPage/commit';
 import CommentPage from './pages/StoryDetailPage/comment';
 import LoginSignUpModal from './components/modals/LoginSignUpModal'
+import Message from './components/modals/messageModal'
 import Parts from './style/Parts'
-
+import dotenv from 'dotenv'
+dotenv.config()
 
 
 const App = () => {
   const state = useSelector((state) => state);
   const { page, modalPage } = state.pageReducer;
+  const { isOpen } = state.messageReducer;
 
   return (
     <>
@@ -63,6 +66,7 @@ const App = () => {
         </Parts.Page>
       </Parts.Page>
       <LoginSignUpModal display={modalPage==="Login" ? "" : "none"}/>
+      <Message display={isOpen ? "" : "none"}/>
     </>
   );
 };

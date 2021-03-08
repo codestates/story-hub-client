@@ -64,7 +64,7 @@ const Parts = {
         border-radious: 5px;
     `,
     ModalBackground : styled.div`
-        z-index: 5;
+        z-index: ${props => props.message ? "7" : "5"};
         position: absolute;
         top: 0px;
         left: 0px;
