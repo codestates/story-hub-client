@@ -4,8 +4,9 @@ import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { pageMoved } from '../actions';
 import styled from 'styled-components'
-import testImage from '../test.jpeg'
-
+import coverImage from '../coverImg.png'
+import page1 from '../page1.png'
+import page2 from '../page2.png'
 
 const Book = styled.div`
 width: 100%;
@@ -19,7 +20,7 @@ background: #fffff;
 .book {
     transform-style: preserve-3d;
     position: relative;
-    height: 60vh;
+    height: 55vh;
     cursor: pointer;
     backface-visibility: visible;
 }
@@ -27,7 +28,7 @@ background: #fffff;
 .front, .back, .page1, .page2, .page3, .page4, .page5, .page6 {
     transform-style: preserve-3d;
     position: absolute;
-    width: 50vh;
+    width: 45vh;
     height: 100%;
     top: 0; left: 0;
     transform-origin: left center;
@@ -35,8 +36,12 @@ background: #fffff;
 }
 
 .front, .back {
-    background: pink;
-    width: 51vh;
+    border: 1px solid #6565652b;
+    box-shadow: 2px 2px 5px #6565652b;
+    background-image: url(${coverImage});
+    background-position: 50% 50%;
+    background-size: 60vh;
+    width: 46vh;
 }
 
 .front, .page1, .page3, .page5 {
@@ -66,11 +71,15 @@ background: #fffff;
 }
 
 .page5 {
-    background-image: url(${testImage});
+    background-image: url(${page1});
+    background-position: 50% 50%;
+    background-size: 60vh;
 }
 
 .page6 {
-    background-image: url(${testImage});
+    background-image: url(${page2});
+    background-position: 50% 50%;
+    background-size: 60vh;
 }
 
 .book:hover .front {
