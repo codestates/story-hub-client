@@ -6,6 +6,9 @@ export const USER_UPDATE = 'USER_UPDATE';
 export const PAGE_MOVED = "PAGE_MOVED"
 export const MODAL_MOVED = "MODAL_MOVED"
 
+export const CONTENT_SAVED = "CONTENT_SAVED"
+export const COMMIT_SAVED = "COMMIT_SAVED"
+
 export const MESSAGE_OPEN = "MESSAGE_OPEN"
 export const MESSAGE_CLOSE = "MESSAGE_CLOSE"
 
@@ -47,6 +50,20 @@ export const modalMoved = (page) => {
     return {
         type: MODAL_MOVED,
         payload: page,
+    }
+}
+
+export const contentSaved = (text) => {
+    return {
+        type: CONTENT_SAVED,
+        payload: text,
+    }
+}
+
+export const commitSaved = (text) => {
+    return {
+        type: COMMIT_SAVED,
+        payload: text,
     }
 }
 
