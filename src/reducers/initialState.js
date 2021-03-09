@@ -1,21 +1,23 @@
 export const userState = {
-    users: [],
-    isLogin: false,
-    loginType: null,
-    accessToken: ""
+  users: [],
+  isLogin: false,
+  loginType: null,
+  accessToken: '',
 };
 
 export const pageState = {
-    page : "Cover",
-    modalPage: "",
+  page: 'Cover',
+  modalPage: '',
 };
 
 export const textState = {
-    content : "",
-    commit : "",
+  content: '',
+  commit: '',
+  title: '',
+  searchList: [],
 };
 
 export const messageState = {
-    message: "",
-    isOpen: false 
-}
+  message: '',
+  isOpen: false,
+};
