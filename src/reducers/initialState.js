@@ -10,6 +10,11 @@ export const pageState = {
     modalPage: "",
 };
 
+export const textState = {
+    content : "",
+    commit : "",
+};
+
 export const messageState = {
     message: "",
     isOpen: false 
