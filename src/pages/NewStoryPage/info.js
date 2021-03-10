@@ -25,7 +25,7 @@ const NewStoryInfoPage = (props) => {
     // const [submit, setSubmit] = useState({
     //     category: false, comment: false, commitBy: false, max: false, min: false, content: false, contentTitle : false
     // })
-    // let submitClassName = "disabled"
+    let submitClassName = "disabled"
     // console.log([category, comment, commitBy, max, min, content, contentTitle])
     // const chk = () => {
     //     console.log(submitClassName)
@@ -35,7 +35,6 @@ const NewStoryInfoPage = (props) => {
 
     const setCategory = (e) => {
         dispatch(categorySaved(e.target.textContent))
-        setSubmit({category : true})
         // chk()
     } 
 

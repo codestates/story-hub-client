@@ -8,24 +8,22 @@ const Card = styled.div`
     font-size: 2vw;
 `
 const StoryCard = (props) => {
-    // const state = useSelector((state) => state);
-    // const dispatch = useDispatch();
+    const state = useSelector((state) => state);
+    const dispatch = useDispatch();
 
-    // useEffect(() => {}, []);
+    useEffect(() => {}, []);
 
-    // const handleMoveDetailPage = (id) => {
-    //   if (state.userReducer.users[0].boardId.includes(id)) {
-    //     dispatch(checkLike(true));
-    //   } else if(!state.userReducer.users[0].boardId.includes(id)) {
-    //     dispatch(checkLike(false));
-    //   }
-    //   dispatch(getBoardDetail(id));
-    //   props.history.push('/boarddetail');
-    // };
-
-    // onClick={() => handleMoveDetailPage(props.id)}
+    const handleMoveDetailPage = (id) => {
+        if (state.userReducer.users[0].boardId.includes(id)) {
+        dispatch(checkLike(true));
+        } else if(!state.userReducer.users[0].boardId.includes(id)) {
+        dispatch(checkLike(false));
+        }
+        dispatch(getBoardDetail(id));
+        props.history.push('/boarddetail');
+    };
     return (
-        <Card>
+        <Card onClick={() => handleMoveDetailPage(props.board_index)}>
             <h2>{props.title}</h2>
             <div>
             {props.nickname}
