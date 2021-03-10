@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components'
 
+const Card = styled.div`
+    font-size: 2vw;
+`
 const StoryCard = (props) => {
     // const state = useSelector((state) => state);
     // const dispatch = useDispatch();
@@ -21,9 +25,8 @@ const StoryCard = (props) => {
 
     // onClick={() => handleMoveDetailPage(props.id)}
     return (
-        
-        <div>
-        <h2>{props.title}</h2>
+        <Card>
+            <h2>{props.title}</h2>
             <div>
             {props.nickname}
             <br />
@@ -36,7 +39,7 @@ const StoryCard = (props) => {
             {props.created_at} 
             </div>
             <br />
-        </div>
+        </Card>
     );
 };
 

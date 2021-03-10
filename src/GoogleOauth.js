@@ -32,7 +32,7 @@ const GoogleOauth = () => {
     return (
         <>
         <GoogleLogin
-        clientId="87703716333-431r3hvtvnsamlqda33ju6gab1013for.apps.googleusercontent.com"
+        clientId={process.env.REACT_APP_GOOGLE_API_KEY}
         render={renderProps => (
             <button onClick={renderProps.onClick}
             style={{

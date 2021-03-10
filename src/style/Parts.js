@@ -64,7 +64,7 @@ const Parts = {
         border-radious: 5px;
     `,
     ModalBackground : styled.div`
-        z-index: 5;
+        z-index: ${props => props.message ? "7" : "5"};
         position: absolute;
         top: 0px;
         left: 0px;
@@ -75,6 +75,14 @@ const Parts = {
         align-items: center;
         justify-content: center;
     `,
+    Info : styled.div`
+    margin:0;
+    height:30px;
+    width:80px;
+    color: black;
+    text-align: center;
+    background-color: ${props => props.clicked==="clicked" ? "rgb(185, 185, 185)" : "gray"};
+`,
 }
 
 export default Parts;
