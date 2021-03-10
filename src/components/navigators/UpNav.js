@@ -62,35 +62,55 @@ import searchButtonImage from '../../images/searchButton.png'
     `
 
 const UpNav = (props) => {
-    const state = useSelector((state) => state);
-    const { isLogin } = state.userReducer;
-    const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const { isLogin } = state.userReducer;
+  const dispatch = useDispatch();
 
+  const [title, setTitle] = useState('');
 
-    return (
-        <Parts.Nav up display={props.display==="none" ? "none" : ""}>
-            <UpNavFrame>
-                <Link to="/">
-                <Logo/>
-                </Link>
-                <Link to="/newstorycontent">
-                <NewStoryButton>Create New Story</NewStoryButton>
-                </Link>
-            </UpNavFrame>
-            <UpNavFrame>
-                <SearchInput type='text' placeholder='search'/>
-                <Link to="/search">
-                <SearchButton/>
-                </Link>
-                { isLogin ?
-                <LogButton onClick={() => {dispatch(userLogout(), dispatch(messageOpen("로그아웃 되었습니다!")))}}>Logout</LogButton>
-                :
-                <LogButton onClick={() => dispatch(modalMoved("Login"))}>Login</LogButton>
-                }
-                
-            </UpNavFrame>
-        </Parts.Nav>
-    )
-}
+  const searchHClickHandler = () => {
+    if (title.length === 0) {
+      dispatch(messageOpen('검색어를 입력해주세요!'));
+      return;
+    }
+    props.getSearchList(title);
+    setTitle('');
+  };
+
+  return (
+    <Parts.Nav up display={props.display === 'none' ? 'none' : ''}>
+      <UpNavFrame>
+        <Link to="/">
+          <Logo />
+        </Link>
+        <Link to="/newstorycontent">
+          <NewStoryButton>Create New Story</NewStoryButton>
+        </Link>
+      </UpNavFrame>
+      <UpNavFrame>
+        <SearchInput
+          type="text"
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="search"
+          value={title}
+        />
+        <Link to="/search">
+          <SearchButton onClick={searchHClickHandler} />
+        </Link>
+        {isLogin ? (
+          <LogButton
+            onClick={() => {
+              dispatch(userLogout(), dispatch(messageOpen('로그아웃 되었습니다!')));
+            }}
+          >
+            Logout
+          </LogButton>
+        ) : (
+          <LogButton onClick={() => dispatch(modalMoved('Login'))}>Login</LogButton>
+        )}
+      </UpNavFrame>
+    </Parts.Nav>
+  );
+};
 
 export default withRouter(UpNav);
