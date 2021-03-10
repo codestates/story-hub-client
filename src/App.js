@@ -21,11 +21,21 @@ import CommitPage from './pages/StoryDetailPage/commit';
 import CommentPage from './pages/StoryDetailPage/comment';
 import LoginSignUpModal from './components/modals/LoginSignUpModal';
 import Message from './components/modals/messageModal';
+import styled from 'styled-components'
+import background from './images/backgroundImage.jpeg'
 import Parts from './style/Parts';
 import dotenv from 'dotenv';
 import { searchList, searchTitle } from './actions';
 import axios from 'axios';
 dotenv.config();
+
+const AppFrame = styled.div`
+width: 100vw;
+height: 100vh;
+background-image: url(${background});
+background-size: cover;
+background-position: 50% 50%;
+`
 
 const App = () => {
   const state = useSelector((state) => state);
@@ -54,8 +64,8 @@ const App = () => {
   };
 
   return (
-    <>
-      <Parts.Page display={page === 'Cover' ? '' : 'none'}>
+    <AppFrame>
+      <Parts.Page display={page==="Cover" ? "" : "none"}>
         <Switch>
           <Route exact path="/" render={() => <CoverPage />} />
         </Switch>
@@ -86,9 +96,9 @@ const App = () => {
           <RightNav />
         </Parts.Page>
       </Parts.Page>
-      <LoginSignUpModal display={modalPage === 'Login' ? '' : 'none'} />
-      <Message display={isOpen ? '' : 'none'} />
-    </>
+      <LoginSignUpModal display={modalPage==="Login" ? "" : "none"}/>
+      <Message display={isOpen ? "" : "none"}/>
+    </AppFrame>
   );
 };
 
