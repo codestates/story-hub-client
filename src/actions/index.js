@@ -26,81 +26,86 @@ export const ETC_SAVED = "ETC_SAVED";
 
 
 export const userLogin = (userInfo) => {
-    return {
-        type: USER_LOGIN,
-        payload: userInfo,
-    };
+  return {
+    type: USER_LOGIN,
+    payload: userInfo,
+  };
 };
 
 export const userLogout = () => {
-    return {
-        type: USER_LOGOUT,
-    };
+  return {
+    type: USER_LOGOUT,
+  };
 };
 
 export const userSignup = (signupInfo) => {
-    return {
-        type: USER_SIGNUP,
-        payload: signupInfo,
-    };
+  return {
+    type: USER_SIGNUP,
+    payload: signupInfo,
+  };
 };
 
 export const userUpdate = (nickName) => {
-    return {
-        type: USER_UPDATE,
-        payload: nickName,
-    };
+  return {
+    type: USER_UPDATE,
+    payload: nickName,
+  };
 };
 
 export const pageMoved = (page) => {
-    return {
-        type: PAGE_MOVED,
-        payload: page,
-    }
-}
+  return {
+    type: PAGE_MOVED,
+    payload: page,
+  };
+};
 
 export const modalMoved = (page) => {
-    return {
-        type: MODAL_MOVED,
-        payload: page,
-    }
-}
+  return {
+    type: MODAL_MOVED,
+    payload: page,
+  };
+};
 
 export const contentSaved = (text) => {
-    return {
-        type: CONTENT_SAVED,
-        payload: text,
-    }
-}
+  return {
+    type: CONTENT_SAVED,
+    payload: text,
+  };
+};
 
 export const commitSaved = (text) => {
-    return {
-        type: COMMIT_SAVED,
-        payload: text,
-    }
-}
+  return {
+    type: COMMIT_SAVED,
+    payload: text,
+  };
+};
+
+export const searchTitle = (text) => {
+  return {
+    type: SEARCH_TITLE,
+    payload: text,
+  };
+};
+
+export const searchList = (arr) => {
+  return {
+    type: SEARCH_LIST,
+    payload: arr,
+  };
+};
 
 export const messageOpen = (message) => {
-    return {
-        type: MESSAGE_OPEN,
-        payload: message,
-    }
-}
+  return {
+    type: MESSAGE_OPEN,
+    payload: message,
+  };
+};
 
 export const messageClose = () => {
     return {
         type: MESSAGE_CLOSE,
     }
 }
-
-
-
-
-
-
-
-
-
 
 export const contentTitleSaved = (title) => {
     return {
@@ -157,3 +162,13 @@ export const etcSaved = (text) => {
         payload: text,
     }
 }
+
+
+
+
+
+
+
+
+
+
