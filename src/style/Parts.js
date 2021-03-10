@@ -11,6 +11,7 @@ const Parts = {
     ${props => props.main ? "min-height: 450px" : ""};
     `,
     Button : styled.div`
+        position:relative;
         z-index: ${props => props.clicked==="clicked" ? "3" : "1"};
         margin: ${props => props.left ? "0px -7px 5px 0px" : " 0px 0px 5px -7px"};
         height:100px;
