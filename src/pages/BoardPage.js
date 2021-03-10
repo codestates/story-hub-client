@@ -6,7 +6,7 @@ import ReactPaginate from 'react-paginate';
 import { pageMoved } from '../actions';
 import Parts from '../style/Parts';
 import StoryCard from '../components/cards/StoryCard';
-import fakeData from '../fakeData';
+// import fakeData from '../fakeData';
 
 const BoardPage = (props) => {
   const state = useSelector((state) => state);
@@ -27,11 +27,11 @@ const BoardPage = (props) => {
     });
   }, []);
 
-  let hot = [];
-  for (let el of fakeData.boardFakeData.slice()) {
-    hot.push(el);
-  }
-  hot.sort((a, b) => b.up_count - b.down_count - (a.up_count - a.down_count));
+  // let hot = [];
+  // for (let el of fakeData.boardFakeData.slice()) {
+  //   hot.push(el);
+  // }
+  // hot.sort((a, b) => b.up_count - b.down_count - (a.up_count - a.down_count));
 
   const [newStory, setNewStory] = useState([]);
   const [hotStory, setHotStory] = useState([]);
@@ -44,39 +44,6 @@ const BoardPage = (props) => {
 
   const newPagesVisited = newPageNumber * newBoardsPerPage;
   const hotPagesVisited = hotPageNumber * hotBoardsPerPage;
-
-  const displayNewStory = newStory
-    .slice(newPagesVisited, newPagesVisited + newBoardsPerPage)
-    .map((newBoard, idx) => {
-      return (
-        <StoryCard
-          key={idx}
-          board_index={newBoard.board_index}
-          content={newBoard.content}
-          up_count={newBoard.up_count}
-          down_count={newBoard.down_count}
-          title={newBoard.title}
-          nickname={newBoard.nickname}
-          created_at={newBoard.created_at}
-        />
-      );
-    });
-  const displayHotStory = hotStory
-    .slice(hotPagesVisited, hotPagesVisited + hotBoardsPerPage)
-    .map((hotBoard, idx) => {
-      return (
-        <StoryCard
-          key={idx}
-          board_index={hotBoard.board_index}
-          content={hotBoard.content}
-          up_count={hotBoard.up_count}
-          down_count={hotBoard.down_count}
-          title={hotBoard.title}
-          nickname={hotBoard.nickname}
-          created_at={hotBoard.created_at}
-        />
-      );
-    });
 
   const newPageCount = Math.ceil(hotStory.length / newBoardsPerPage);
   const hotPageCount = Math.ceil(hotStory.length / hotBoardsPerPage);
@@ -92,7 +59,22 @@ const BoardPage = (props) => {
     <>
       <Parts.Board>
         <h1>Hot Story</h1>
-        {displayHotStory}
+        {hotStory
+          .slice(hotPagesVisited, hotPagesVisited + hotBoardsPerPage)
+          .map((hotBoard, idx) => {
+            return (
+              <StoryCard
+                key={idx}
+                board_index={hotBoard.board_index}
+                content={hotBoard.content}
+                up_count={hotBoard.up_count}
+                down_count={hotBoard.down_count}
+                title={hotBoard.title}
+                nickname={hotBoard.nickname}
+                created_at={hotBoard.created_at}
+              />
+            );
+          })}
         <ReactPaginate
           pageCount={hotPageCount}
           // pageRangeDisplayed={5}
@@ -108,7 +90,22 @@ const BoardPage = (props) => {
       </Parts.Board>
       <Parts.Board>
         <h1>New Story</h1>
-        {displayNewStory}
+        {newStory
+          .slice(newPagesVisited, newPagesVisited + newBoardsPerPage)
+          .map((newBoard, idx) => {
+            return (
+              <StoryCard
+                key={idx}
+                board_index={newBoard.board_index}
+                content={newBoard.content}
+                up_count={newBoard.up_count}
+                down_count={newBoard.down_count}
+                title={newBoard.title}
+                nickname={newBoard.nickname}
+                created_at={newBoard.created_at}
+              />
+            );
+          })}
         <ReactPaginate
           pageCount={newPageCount}
           // pageRangeDisplayed={5}

@@ -13,7 +13,6 @@ import MyPage from './pages/MyPage';
 import EventPage from './pages/EventPage';
 import NewCommitPage from './pages/NewCommitPage';
 import CommitDetailPage from './pages/CommitDetailPage';
-import LoadingPage from './pages/LoadingPage';
 import NewStoryContentPage from './pages/NewStoryPage/content';
 import NewStoryInfoPage from './pages/NewStoryPage/info';
 import ContentPage from './pages/StoryDetailPage/content';

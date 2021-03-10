@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { pageMoved, contentSaved } from '../../actions';
+import { pageMoved, contentSaved, contentTitleSaved } from '../../actions';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, ContentState, convertToRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -10,35 +10,74 @@ import styled from 'styled-components'
 
 const EditorStyle = styled.div`
     width: 100%;
-    height: 50vw;
+    height: 90%;
 
+    .toolbarClassName{
+        border: none;
+        background-color: #fff8eda1;
+    }
+    
+    .rdw-option-wrapper{
+        border: none;
+        background-color: #fff8eda1;
+    }
+
+    .rdw-dropdown-selectedtext{
+        border: none;
+        background-color: #fff8eda1;
+    }
+    
     .wrapperClassName{
         width: 100%;
         height: 80%;
         margin: 0 auto;
         margin-bottom: 4rem;
     }
+
     .editorClassName{
-        font-size: 2vw;
         white-space: pre-wrap;
         width: 100%;
         display: block;
         border: 1px solid white !important;
         padding: 5px !important;
         border-radius: 2px !important;
-        background-color: white;
+        background-color: #fff8eda1;
+    }
+
+    span {
+        display: inline-block;
+        max-width: 100%;
+        white-space: break-spaces;
+    }
+
+    .title {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        font-size: 1.2rem;
+        margin: 0px 10px 15px 10px;
+    }
+
+    input {
+        height: 18px;
+        width: 50vw;
+        max-width: 350px;
+        margin-left: 15px;
+        border-radius: 5px;
+        padding-left: 10px;
     }
 ` 
 
 const NewStoryContentPage = (props) => {
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
-    const {content} = state.textReducer
+    const {content, contentTitle} = state.textReducer
     const [text, setText] = 
         useState(EditorState.createWithContent(ContentState.createFromBlockArray(htmlToDraft(content).contentBlocks)))
     
     const onEditorStateChange = (text) => {
-        setText(text);                 
+        setText(text);              
         if(text.getCurrentContent().getPlainText()) {
             dispatch(contentSaved(draftToHtml(convertToRaw(text.getCurrentContent()))));
         }
@@ -49,7 +88,9 @@ const NewStoryContentPage = (props) => {
         // lines[lines.length-1].focus()
     }
 
-    // const handleNextButton = () => {}
+    const handleTitle = (e) => {
+        dispatch(contentTitleSaved(e.target.value))
+    }
 
     // document.getElementsByTagName('textarea').focus()
         
@@ -60,6 +101,10 @@ const NewStoryContentPage = (props) => {
 
     return (
         <EditorStyle>
+            <div className = "title">
+                <div>Title </div>
+                <input placeholder="Please enter a title" value = {contentTitle} onChange = {handleTitle}/>
+            </div>
             <Editor
                 editorState={text}
                 toolbarClassName="toolbarClassName"
@@ -69,8 +114,10 @@ const NewStoryContentPage = (props) => {
                     list: {inDropdown: true},
                     textAlign : {inDropdown: true},
                     history : {inDropdown: true},
-                    options: ['inline', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'emoji', 'history'],
-                    
+                    options: ['inline', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'emoji', 'history'],
+                    fontSize: {
+                        options: [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48],
+                    },
                 }}
                 onEditorStateChange={onEditorStateChange}
                 placeholder="Please start the story."
