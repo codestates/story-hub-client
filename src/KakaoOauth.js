@@ -1,7 +1,7 @@
 import React from 'react';
 import KakaoLogin from 'react-kakao-login';
 import axios from 'axios';
-import Background from './kakao_login_medium_wide.png'
+import Background from './images/kakao_login_medium_wide.png'
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin, modalMoved, messageOpen } from './actions'
 
