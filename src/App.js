@@ -23,9 +23,18 @@ import CommentPage from './pages/StoryDetailPage/comment';
 import LoginSignUpModal from './components/modals/LoginSignUpModal'
 import Message from './components/modals/messageModal'
 import Parts from './style/Parts'
+import styled from 'styled-components'
+import background from './images/backgroundImage.jpeg'
 import dotenv from 'dotenv'
 dotenv.config()
 
+const AppFrame = styled.div`
+width: 100vw;
+height: 100vh;
+background-image: url(${background});
+background-size: cover;
+background-position: 50% 50%;
+`
 
 const App = () => {
   const state = useSelector((state) => state);
@@ -33,7 +42,7 @@ const App = () => {
   const { isOpen } = state.messageReducer;
 
   return (
-    <>
+    <AppFrame>
       <Parts.Page display={page==="Cover" ? "" : "none"}>
         <Switch>
           <Route exact path="/" render={() => <CoverPage />} />
@@ -67,7 +76,7 @@ const App = () => {
       </Parts.Page>
       <LoginSignUpModal display={modalPage==="Login" ? "" : "none"}/>
       <Message display={isOpen ? "" : "none"}/>
-    </>
+    </AppFrame>
   );
 };
 
