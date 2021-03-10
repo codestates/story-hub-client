@@ -2,26 +2,38 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
+import Parts from '../../style/Parts'
 
 
 const LeftDetailNav = (props) => {
+    let url = document.location.href.split("/");
+    let clicked = url[url.length-1]
+
+    const setClicked = (e) => {
+        clicked = e.target.textContent
+    } 
+
+    const isClickedButton = (props) => {
+        if (props.includes(clicked)) return "clicked"
+        else return ""
+    }
+
     return (
-        <div id="LeftDetailNav">
+        <Parts.Nav left display={props.display==="none" ? "none": ""}>
             <Link to="/content">
-            <button>content</button>
+            <Parts.Button left onClick={setClicked} clicked={isClickedButton(["Content", "content"])}>Content</Parts.Button>
             </Link>
             <Link to="/info">
-            <button>info</button>
+            <Parts.Button left onClick={setClicked} clicked={isClickedButton(["Info", "info"])}>Info</Parts.Button>
             </Link>
             <Link to="/commit">
-            <button>commit</button>
+            <Parts.Button left onClick={setClicked} clicked={isClickedButton(["Commit", "commit"])}>Commit</Parts.Button>
             </Link>
             <Link to="/comment">
-            <button>comment</button>
+            <Parts.Button left onClick={setClicked} clicked={isClickedButton(["Comment", "comment"])}>Comment</Parts.Button>
             </Link>
-        </div>
+        </Parts.Nav>
     )
 }
 
-export default LeftDetailNav;
+export default withRouter(LeftDetailNav);

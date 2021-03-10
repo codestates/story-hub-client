@@ -11,7 +11,6 @@ const Parts = {
     ${props => props.main ? "min-height: 450px" : ""};
     `,
     Button : styled.div`
-        position:relative;
         z-index: ${props => props.clicked==="clicked" ? "3" : "1"};
         margin: ${props => props.left ? "0px -7px 5px 0px" : " 0px 0px 5px -7px"};
         height:100px;
@@ -85,6 +84,14 @@ const Parts = {
         align-items: center;
         justify-content: center;
     `,
+    Info : styled.div`
+    margin:0;
+    height:30px;
+    width:80px;
+    color: black;
+    text-align: center;
+    background-color: ${props => props.clicked==="clicked" ? "rgb(185, 185, 185)" : "gray"};
+`,
 }
 
 export default Parts;
