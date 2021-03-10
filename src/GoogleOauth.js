@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogin, modalMoved, messageOpen } from './actions';
-import Background from './GoogleLoginButton.png';
+import { userLogin, modalMoved, messageOpen } from './actions'
+import Background from './images/GoogleLoginButton.png'
 
 const GoogleOauth = () => {
   const state = useSelector((state) => state);
