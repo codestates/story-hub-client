@@ -1,8 +1,22 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, useHistory, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { modalMoved, userLogout, messageOpen } from '../../actions';
+import { 
+  modalMoved, 
+  userLogout, 
+  messageOpen,
+  categorySaved,
+  commentSaved,
+  commitbySaved,
+  maxSaved,
+  minSaved,
+  etcSaved,
+  contentTitleSaved,
+  contentSaved,
+  commitSaved, 
+  commitTitleSaved
+} from '../../actions';
 import styled from 'styled-components'
 import Parts from '../../style/Parts'
 import logoImage from '../../images/story_hub_logo.png'
@@ -89,9 +103,10 @@ const UpNav = (props) => {
   const state = useSelector((state) => state);
   const { isLogin } = state.userReducer;
   const dispatch = useDispatch();
-
+  const history = useHistory();
+  
   const [title, setTitle] = useState('');
-
+  
   const searchHClickHandler = () => {
     if (title.length === 0) {
       dispatch(messageOpen('검색어를 입력해주세요!'));
@@ -100,46 +115,62 @@ const UpNav = (props) => {
     props.getSearchList(title);
     setTitle('');
   };
-
+  
   return (
     <Parts.Nav up display={props.display === 'none' ? 'none' : ''}>
-      <UpNavFrame>
-        <Link to="/">
-          <Logo />
-        </Link>
+    <UpNavFrame>
+    <Link to="/">
+    <Logo />
+    </Link>
+    <ButtonWrap>
+    <Link to="/newstorycontent">
+    <button>Create New Story</button>
+    </Link>
+    </ButtonWrap>
+    </UpNavFrame>
+    <UpNavFrame>
+    <SearchInput
+    type="text"
+    onChange={(e) => setTitle(e.target.value)}
+    placeholder="search"
+    value={title}
+    />
+    <Link to="/search">
+    <SearchButton> 
+      <button onClick={searchHClickHandler} />
+    </SearchButton> 
+    </Link>
+    {isLogin ? (
+      <ButtonWrap>
+      <button
+      onClick={() => {
+        dispatch(userLogout(), 
+        dispatch(messageOpen('로그아웃 되었습니다!')),
+        dispatch(categorySaved('')),
+        dispatch(commitbySaved('')),
+        dispatch(commitSaved('')),
+        dispatch(commitTitleSaved('')),
+        dispatch(contentSaved('')),
+        dispatch(contentTitleSaved('')),
+        dispatch(commentSaved('')),
+        dispatch(etcSaved('')),
+        dispatch(minSaved(0)),
+        dispatch(maxSaved(0)),
+        history.push('/'));
+      }}
+      >
+      Logout
+      </button>
+      </ButtonWrap>
+      ) : (
         <ButtonWrap>
-        <Link to="/newstorycontent">
-          <button>Create New Story</button>
-        </Link>
+        <button onClick={() => dispatch(modalMoved('Login'))}>Login</button>
         </ButtonWrap>
-      </UpNavFrame>
-      <UpNavFrame>
-        <SearchInput
-          type="text"
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="search"
-          value={title}
-        />
-        <Link to="/search">
-          <SearchButton>
-            <button onClick={searchHClickHandler}/>
-          </SearchButton>
-        </Link>
-        {isLogin ? (
-          <ButtonWrap>
-          <button
-            onClick={() => {
-              dispatch(userLogout(), dispatch(messageOpen('로그아웃 되었습니다!')));
-            }}>Logout</button>
-          </ButtonWrap>
-        ) : (
-          <ButtonWrap>
-          <button onClick={() => dispatch(modalMoved('Login'))}>Login</button>
-          </ButtonWrap>
         )}
-      </UpNavFrame>
-    </Parts.Nav>
-  );
-};
-
-export default withRouter(UpNav);
+        </UpNavFrame>
+        </Parts.Nav>
+        );
+      };
+      
+      export default withRouter(UpNav);
+      

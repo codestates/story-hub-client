@@ -3,16 +3,16 @@ export const USER_LOGOUT = 'USER_LOGOUT';
 export const USER_SIGNUP = 'USER_SIGNUP';
 export const USER_UPDATE = 'USER_UPDATE';
 
-export const PAGE_MOVED = "PAGE_MOVED";
-export const MODAL_MOVED = "MODAL_MOVED";
+export const PAGE_MOVED = 'PAGE_MOVED';
+export const MODAL_MOVED = 'MODAL_MOVED';
 
-export const CONTENT_SAVED = "CONTENT_SAVED";
-export const COMMIT_SAVED = "COMMIT_SAVED";
+export const CONTENT_SAVED = 'CONTENT_SAVED';
+export const COMMIT_SAVED = 'COMMIT_SAVED';
 export const SEARCH_TITLE = 'SEARCH_TITLE';
 export const SEARCH_LIST = 'SEARCH_LIST';
 
-export const MESSAGE_OPEN = "MESSAGE_OPEN";
-export const MESSAGE_CLOSE = "MESSAGE_CLOSE";
+export const MESSAGE_OPEN = 'MESSAGE_OPEN';
+export const MESSAGE_CLOSE = 'MESSAGE_CLOSE';
 
 export const CONTENT_TITLE = "CONTENT_TITLE";
 export const COMMIT_TITLE = "COMMIT_TITLE";
@@ -23,7 +23,7 @@ export const COMMITBY_SAVED = "COMMITBY_SAVED";
 export const MAX_SAVED = "MAX_SAVED";
 export const MIN_SAVED = "MIN_SAVED";
 export const ETC_SAVED = "ETC_SAVED";
-
+export const BOARD_INDEX_SAVED = "BOARD_INDEX_SAVED"
 
 export const userLogin = (userInfo) => {
   return {
@@ -102,56 +102,56 @@ export const messageOpen = (message) => {
 };
 
 export const messageClose = () => {
-    return {
-        type: MESSAGE_CLOSE,
-    }
-}
+  return {
+    type: MESSAGE_CLOSE,
+  };
+};
 
 export const contentTitleSaved = (title) => {
-    return {
-        type: CONTENT_TITLE,
-        payload: title,
-    }
-}
+  return {
+    type: CONTENT_TITLE,
+    payload: title,
+  };
+};
 
 export const commitTitleSaved = (title) => {
-    return {
-        type: COMMIT_TITLE,
-        payload: title,
-    }
-}
+  return {
+    type: COMMIT_TITLE,
+    payload: title,
+  };
+};
 
 export const categorySaved = (choose) => {
-    return {
-        type: CATEGORY_SAVED,
-        payload: choose,
-    }
-}
+  return {
+    type: CATEGORY_SAVED,
+    payload: choose,
+  };
+};
 
 export const commentSaved = (text) => {
-    return {
-        type: COMMENT_SAVED,
-        payload: text,
-    }
-}
+  return {
+    type: COMMENT_SAVED,
+    payload: text,
+  };
+};
 
 export const commitbySaved = (choose) => {
-    return {
-        type: COMMITBY_SAVED,
-        payload: choose,
-    }
-}
+  return {
+    type: COMMITBY_SAVED,
+    payload: choose,
+  };
+};
 
 export const maxSaved = (number) => {
-    return {
-        type: MAX_SAVED,
-        payload: number,
-    }
-}
+  return {
+    type: MAX_SAVED,
+    payload: number,
+  };
+};
 
-export const minSaved = (number) => {
+export const boardIndexSaved = (number) => {
     return {
-        type: MIN_SAVED,
+        type: BOARD_INDEX_SAVED,
         payload: number,
     }
 }
@@ -163,12 +163,10 @@ export const etcSaved = (text) => {
     }
 }
 
-
-
-
-
-
-
-
-
+export const minSaved = (number) => {
+  return {
+      type: MIN_SAVED,
+      payload: number,
+  }
+}
 
