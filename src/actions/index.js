@@ -23,7 +23,7 @@ export const COMMITBY_SAVED = "COMMITBY_SAVED";
 export const MAX_SAVED = "MAX_SAVED";
 export const MIN_SAVED = "MIN_SAVED";
 export const ETC_SAVED = "ETC_SAVED";
-
+export const BOARD_INDEX_SAVED = "BOARD_INDEX_SAVED"
 
 export const userLogin = (userInfo) => {
   return {
@@ -149,9 +149,9 @@ export const maxSaved = (number) => {
     }
 }
 
-export const minSaved = (number) => {
+export const boardIndexSaved = (number) => {
     return {
-        type: MIN_SAVED,
+        type: BOARD_INDEX_SAVED,
         payload: number,
     }
 }
@@ -163,7 +163,12 @@ export const etcSaved = (text) => {
     }
 }
 
-
+export const minSaved = (number) => {
+  return {
+      type: MIN_SAVED,
+      payload: number,
+  }
+}
 
 
 

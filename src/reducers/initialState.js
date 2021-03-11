@@ -8,6 +8,7 @@ export const userState = {
 export const pageState = {
   page: 'Cover',
   modalPage: '',
+  boardIndex: 0,
 };
 
 export const textState = {
