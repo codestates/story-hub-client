@@ -28,16 +28,16 @@ const RightNav = (props) => {
     return (
         <Parts.Nav display={props.display==="none" ? "none": ""}>
             <Link to="/board">
-            <Parts.Button onClick={setClicked} clicked={isClickedButton(["board", "Board"])}>Board</Parts.Button>
+            <Parts.Button onClick={setClicked} clicked={isClickedButton(["board", "Board"])} color="#ffeeaad9">Board</Parts.Button>
             </Link>
             <Link to="/alert">
-            <Parts.Button onClick={setClicked} clicked={isClickedButton(["alert", "Alert"])}>Alert</Parts.Button>
+            <Parts.Button onClick={setClicked} clicked={isClickedButton(["alert", "Alert"])} color="#ffa0a0c4">Alert</Parts.Button>
             </Link>
             <Link to="/mypage">
-            <Parts.Button onClick={setClicked} clicked={isClickedButton(["mypage", "My Page"])}>My Page</Parts.Button>
+            <Parts.Button onClick={setClicked} clicked={isClickedButton(["mypage", "My Page"])} color='#95d8a0cf'>My Page</Parts.Button>
             </Link>
             <Link to="/event">
-            <Parts.Button onClick={setClicked} clicked={isClickedButton(["event", "Event"])}>Event</Parts.Button>
+            <Parts.Button onClick={setClicked} clicked={isClickedButton(["event", "Event"])} color='#aad4ffbd'>Event</Parts.Button>
             </Link>
         </Parts.Nav>
     )
