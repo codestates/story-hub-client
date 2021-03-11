@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MyComments = ({ content, upCount, createdAt }) => {
+const MyComment = ({ content, upCount, createdAt }) => {
   return (
     <div>
       <h1>MyComments</h1>
@@ -11,4 +11,4 @@ const MyComments = ({ content, upCount, createdAt }) => {
   );
 };
 
-export default MyComments;
+export default MyComment;
