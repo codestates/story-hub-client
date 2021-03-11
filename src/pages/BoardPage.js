@@ -6,6 +6,8 @@ import ReactPaginate from 'react-paginate';
 import { pageMoved } from '../actions';
 import Parts from '../style/Parts';
 import StoryCard from '../components/cards/StoryCard';
+import { ContentState } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
 // import fakeData from '../fakeData';
 
 const BoardPage = (props) => {
@@ -62,11 +64,13 @@ const BoardPage = (props) => {
         {hotStory
           .slice(hotPagesVisited, hotPagesVisited + hotBoardsPerPage)
           .map((hotBoard, idx) => {
+            let contentState = ContentState.createFromBlockArray(htmlToDraft(hotBoard.content).contentBlocks)
+            let onlyText = contentState.getPlainText()              
             return (
               <StoryCard
                 key={idx}
                 board_index={hotBoard.board_index}
-                content={hotBoard.content}
+                content={onlyText}
                 up_count={hotBoard.up_count}
                 down_count={hotBoard.down_count}
                 title={hotBoard.title}
@@ -93,11 +97,13 @@ const BoardPage = (props) => {
         {newStory
           .slice(newPagesVisited, newPagesVisited + newBoardsPerPage)
           .map((newBoard, idx) => {
+            let contentState = ContentState.createFromBlockArray(htmlToDraft(newBoard.content).contentBlocks)
+            let onlyText = contentState.getPlainText() 
             return (
               <StoryCard
                 key={idx}
                 board_index={newBoard.board_index}
-                content={newBoard.content}
+                content={onlyText}
                 up_count={newBoard.up_count}
                 down_count={newBoard.down_count}
                 title={newBoard.title}

@@ -14,15 +14,16 @@ export const SEARCH_LIST = 'SEARCH_LIST';
 export const MESSAGE_OPEN = 'MESSAGE_OPEN';
 export const MESSAGE_CLOSE = 'MESSAGE_CLOSE';
 
-export const CONTENT_TITLE = 'CONTENT_TITLE';
-export const COMMIT_TITLE = 'COMMIT_TITLE';
+export const CONTENT_TITLE = "CONTENT_TITLE";
+export const COMMIT_TITLE = "COMMIT_TITLE";
 
-export const CATEGORY_SAVED = 'CATEGORY_SAVED';
-export const COMMENT_SAVED = 'COMMENT_SAVED';
-export const COMMITBY_SAVED = 'COMMITBY_SAVED';
-export const MAX_SAVED = 'MAX_SAVED';
-export const MIN_SAVED = 'MIN_SAVED';
-export const ETC_SAVED = 'ETC_SAVED';
+export const CATEGORY_SAVED = "CATEGORY_SAVED";
+export const COMMENT_SAVED = "COMMENT_SAVED";
+export const COMMITBY_SAVED = "COMMITBY_SAVED";
+export const MAX_SAVED = "MAX_SAVED";
+export const MIN_SAVED = "MIN_SAVED";
+export const ETC_SAVED = "ETC_SAVED";
+export const BOARD_INDEX_SAVED = "BOARD_INDEX_SAVED"
 
 export const userLogin = (userInfo) => {
   return {
@@ -148,16 +149,24 @@ export const maxSaved = (number) => {
   };
 };
 
-export const minSaved = (number) => {
-  return {
-    type: MIN_SAVED,
-    payload: number,
-  };
-};
+export const boardIndexSaved = (number) => {
+    return {
+        type: BOARD_INDEX_SAVED,
+        payload: number,
+    }
+}
 
 export const etcSaved = (text) => {
+    return {
+        type: ETC_SAVED,
+        payload: text,
+    }
+}
+
+export const minSaved = (number) => {
   return {
-    type: ETC_SAVED,
-    payload: text,
-  };
-};
+      type: MIN_SAVED,
+      payload: number,
+  }
+}
+

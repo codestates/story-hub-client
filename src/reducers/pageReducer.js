@@ -1,6 +1,7 @@
 import {
     PAGE_MOVED,
-    MODAL_MOVED
+    MODAL_MOVED,
+    BOARD_INDEX_SAVED
 } from '../actions';
 import { pageState } from './initialState';
 const pageReducer = (state = pageState, action) => {
@@ -15,6 +16,11 @@ const pageReducer = (state = pageState, action) => {
         return {
         ...state,
         modalPage: action.payload,
+        }
+    case BOARD_INDEX_SAVED:
+        return {
+        ...state,
+        boardIndex: action.payload,
         }
     default: return state
     }

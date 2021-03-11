@@ -23,10 +23,6 @@ const InfoStyle = styled.div`
   }
 `;
 
-// button {
-//     background-color: ${props => props.clicked==="clicked" ? "rgb(185, 185, 185)" : "gray"};
-// }
-
 const NewStoryInfoPage = (props) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
@@ -34,19 +30,9 @@ const NewStoryInfoPage = (props) => {
   const { category, comment, commitBy, max, min, etc } = state.infoReducer;
   const { accessToken, loginType } = state.userReducer;
   const { content, contentTitle } = state.textReducer;
-  const [submit, setSubmit] = useState({
-    category: false,
-    comment: false,
-    commitBy: false,
-    max: false,
-    min: false,
-    content: false,
-    contentTitle: false,
-  });
 
   const setCategory = (e) => {
     dispatch(categorySaved(e.target.textContent));
-    setSubmit({ category: true });
   };
 
   const isCategoryButton = (props) => {
@@ -104,7 +90,7 @@ const NewStoryInfoPage = (props) => {
         data: {
           loginType,
           title: contentTitle,
-          content: content.slice(3, -5),
+          content: content,
           optionName: commitBy,
           category: category,
           minLength: min,
@@ -126,7 +112,7 @@ const NewStoryInfoPage = (props) => {
         }
       });
     } else {
-      dispatch(messageOpen('입력이 안된 부분이 있습니다.'));
+      dispatch(messageOpen('입력이 안되었거나 잘못입력된 부분이 있습니다.'));
       return;
     }
   };

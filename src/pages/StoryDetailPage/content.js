@@ -10,19 +10,22 @@ import { pageMoved } from '../../actions'
 const ContentPage = (props) => {
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
+    const fakeHtml = `<p><span style="font-size: 30px;"><strong><em>이것은 Fake</em></strong></span></p>`
     
     useEffect( () => {
         dispatch(pageMoved("StoryDetail"));
     }, [])
-
+    
     return (
         <>
-            <div>ContentPage</div>
+        <div>ContentPage</div>
+            <div dangerouslySetInnerHTML ={ {__html: fakeHtml} }></div>
             <Link to='/newcommit'>
             <button>new commit</button>
-            </Link>
+            </Link>        
         </>
-    )
-}
-
-export default ContentPage;
+        )
+    }
+    
+    export default ContentPage;
+    
