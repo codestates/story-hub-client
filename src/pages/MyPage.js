@@ -155,7 +155,6 @@ const MyPage = (props) => {
             />
           ))
         : ''}
-      <button onClick={() => console.log(myInfo)}>sdfdsf</button>
     </>
   );
 };
