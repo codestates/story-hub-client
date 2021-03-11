@@ -5,9 +5,9 @@ const Parts = {
     Page : styled.div`
     ${props => props.display==="none" ? "display: none" : ""};
     ${props => props.main ? "display: flex" : ""};
-    ${props => props.main ? "margin-left: 25px" : ""};
-    ${props => props.main ? "width: 95vw" : ""};
-    ${props => props.main ? "height: 88vh" : ""};
+    ${props => props.main ? "margin-left: 35px" : ""};
+    ${props => props.main ? "width: 92vw" : ""};
+    ${props => props.main ? "height: 85vh" : ""};
     ${props => props.main ? "min-height: 450px" : ""};
     `,
     Button : styled.div`
@@ -19,11 +19,12 @@ const Parts = {
         writing-mode: vertical-rl;
         text-orientation: upright;
         color: black;
+        font-weight: bold;
         font-size: 0.9rem;
         text-align: center;
         letter-spacing :-6px;
         line-height: ${props => props.left ? "4" : "3"};
-        background-color: ${props => props.clicked==="clicked" ? "#ffeeaad9" : "#ffc681d1" };
+        background-color: ${props => props.color ? props.color : 'white'};
         ${props => props.clicked==="clicked" ? "" : "box-shadow:inset 15px -1px 8px rgba(0, 0, 0, 0.3)" };
         ${props => (props.clicked!=="clicked" && props.left) ? "box-shadow:inset -15px -1px 10px rgba(0, 0, 0, 0.3)" : "" };
         border-radius: 2px;

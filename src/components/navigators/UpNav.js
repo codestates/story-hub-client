@@ -21,60 +21,84 @@ import styled from 'styled-components'
 import Parts from '../../style/Parts'
 import logoImage from '../../images/story_hub_logo.png'
 import searchButtonImage from '../../images/searchButton.png'
+import searchButtonImage2 from '../../images/searchButton2.png'
 
+    const UpNavFrame = styled.div`
+        display: flex;
+        align-items: center;
+    `
+    const Logo = styled.div`
+        margin: 10px 5px 0 30px;
+        display: inline-block;
+        background-image: url(${logoImage});
+        width: 100px;
+        height: 60px;
+        background-repeat: no-repeat;
+    `
+    const SearchInput = styled.input`
+        height: 25px;
+        width: 30vw;
+        min-width: 150px;
+        max-width: 400px;
+        background-color: #fff8ed2b;
+        color: white;
+        padding-left: 10px;
+        border: 2px solid rgba(223,190,106,0.6);
+        border-right: none;
+        border-radius: 5px 0px 0px 5px;
+        font: bold 0.8rem 'Nanum Myeongjo', serif;
 
-const UpNavFrame = styled.div`
-display: flex;
-align-items: center;
-`
-const Logo = styled.div`
-margin:0 10px 0 10px;
-display: inline-block;
-background-image: url(${logoImage});
-width: 140px;
-height: 60px;
-background-size: 140px;
-background-repeat: no-repeat;
-`
-const NewStoryButton = styled.button`
-background-color: #ffc681;
-border: 2px solid #ffeeaa;
-color: black;
-width: 140px;
-height: 30px;
-border-radius: 20px;
-font: bold 0.8rem 'Nanum Myeongjo', serif;
-`
-const SearchInput = styled.input`
-height: 20px;
-width: 30vw;
-min-width: 150px;
-max-width: 400px;
-border: 3px solid #ffc681;
-background-color: rgba(255, 255, 255, 0.9);
-border-radius: 14px;
-padding-left: 10px;
-font: bold 0.8rem 'Nanum Myeongjo', serif;
-`
-const SearchButton = styled.div`
-background-image: url(${searchButtonImage});
-background-color: #ffeeaa;
-border-radius: 14px;
-border: 4px solid #ffc681;
-width: 20px;
-height: 20px;
-margin-left: -24px;
-background-size: 19px;
-`
-const LogButton = styled.button`
-background-color: #ffc681;
-border: 2px solid #ffeeaa;
-margin-left: 5px;
-width: 60px;
-height: 28px;
-border-radius: 20px;
-font: bold 0.8rem 'Nanum Myeongjo', serif;
-`
+        ::placeholder {
+          color: #fff8ed6b;
+        }
+    `
+    const SearchButton = styled.div`
+      button {
+        background-image: url(${searchButtonImage});
+        background-repeat: no-repeat;
+        background-color: transparent;
+        border: 3px solid rgba(223,190,106,0.6);
+        border-radius: 0px 5px 5px 0px;
+        width: 31px;
+        height: 31px;
+        margin-left: -1px;
+        transition: all 0.5s ease-out;
+      }
+      button:hover {
+        color: #fff;
+        border: 3px solid #ceb154;
+        background-image: url(${searchButtonImage2});
+        color: $white;
+      }
+    `
+
+  const ButtonWrap = styled.div`
+  button{
+    display: inline-block;
+    background: transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(223,190,106,1);
+    padding: 7px 10px 7px;
+    transition: all 0.5s ease-out;
+    background: linear-gradient(270deg, rgba(223,190,106,0.8), rgba(146,111,52,0.8), rgba(34,34,34,0), rgba(34,34,34,0));
+    background-position: 1% 50%;
+    background-size: 300% 300%;
+    text-decoration: none;
+    margin: 0.625rem;
+    border: 3px solid rgba(223,190,106,0.6);
+    border-radius: 5px;
+    font: bold 0.7rem 'Nanum Myeongjo', serif;
+  }
+  
+  button:hover {
+    color: #fff;
+    border: 3px solid rgba(223,190,106,0);
+    color: $white;
+    background-position: 96% 50%;
+  }
+  `
+
 const UpNav = (props) => {
   const state = useSelector((state) => state);
   const { isLogin } = state.userReducer;
@@ -98,9 +122,11 @@ const UpNav = (props) => {
     <Link to="/">
     <Logo />
     </Link>
+    <ButtonWrap>
     <Link to="/newstorycontent">
-    <NewStoryButton>Create New Story</NewStoryButton>
+    <button>Create New Story</button>
     </Link>
+    </ButtonWrap>
     </UpNavFrame>
     <UpNavFrame>
     <SearchInput
@@ -110,10 +136,13 @@ const UpNav = (props) => {
     value={title}
     />
     <Link to="/search">
-    <SearchButton onClick={searchHClickHandler} />
+    <SearchButton> 
+      <button onClick={searchHClickHandler} />
+    </SearchButton> 
     </Link>
     {isLogin ? (
-      <LogButton
+      <ButtonWrap>
+      <button
       onClick={() => {
         dispatch(userLogout(), 
         dispatch(messageOpen('로그아웃 되었습니다!')),
@@ -131,9 +160,12 @@ const UpNav = (props) => {
       }}
       >
       Logout
-      </LogButton>
+      </button>
+      </ButtonWrap>
       ) : (
-        <LogButton onClick={() => dispatch(modalMoved('Login'))}>Login</LogButton>
+        <ButtonWrap>
+        <button onClick={() => dispatch(modalMoved('Login'))}>Login</button>
+        </ButtonWrap>
         )}
         </UpNavFrame>
         </Parts.Nav>
