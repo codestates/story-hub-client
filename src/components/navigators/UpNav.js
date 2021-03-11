@@ -22,6 +22,7 @@ import Parts from '../../style/Parts'
 import logoImage from '../../images/story_hub_logo.png'
 import searchButtonImage from '../../images/searchButton.png'
 
+
 const UpNavFrame = styled.div`
 display: flex;
 align-items: center;
@@ -74,7 +75,6 @@ height: 28px;
 border-radius: 20px;
 font: bold 0.8rem 'Nanum Myeongjo', serif;
 `
-
 const UpNav = (props) => {
   const state = useSelector((state) => state);
   const { isLogin } = state.userReducer;

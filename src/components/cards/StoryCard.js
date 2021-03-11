@@ -43,3 +43,4 @@ const StoryCard = (props) => {
     };
     
     export default withRouter(StoryCard);
+
