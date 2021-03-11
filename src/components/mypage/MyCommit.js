@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MyCommits = ({ title, upCount, createdAt }) => {
+const MyCommit = ({ title, upCount, createdAt }) => {
   return (
     <div>
       <h1>MyCommits</h1>
@@ -11,4 +11,4 @@ const MyCommits = ({ title, upCount, createdAt }) => {
   );
 };
 
-export default MyCommits;
+export default MyCommit;
