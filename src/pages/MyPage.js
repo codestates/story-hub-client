@@ -9,8 +9,8 @@ import Parts from '../style/Parts';
 import MyInfo from '../components/mypage/MyInfo';
 import MyStory from '../components/mypage/MyStory';
 import MyFavorite from '../components/mypage/MyFavorite';
-import MyCommits from '../components/mypage/MyCommits';
-import MyComments from '../components/mypage/MyComments';
+import MyCommits from '../components/mypage/MyCommit';
+import MyComments from '../components/mypage/MyComment';
 
 const MyPage = (props) => {
   const state = useSelector((state) => state);
