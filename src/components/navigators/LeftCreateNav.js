@@ -21,10 +21,10 @@ const LeftCreateNav = (props) => {
     return (
         <Parts.Nav left display={props.display==="none" ? "none": ""}>
             <Link to="/newstorycontent">
-            <Parts.Button left onClick={setClicked} clicked={isClickedButton(["Content", "newstorycontent"])}>Content</Parts.Button>
+            <Parts.Button left onClick={setClicked} clicked={isClickedButton(["Content", "newstorycontent"])} color="#ffb569cf">Content</Parts.Button>
             </Link>
             <Link to="/newstoryinfo">
-            <Parts.Button left onClick={setClicked} clicked={isClickedButton(["Info", "newstoryinfo"])}>Info</Parts.Button>
+            <Parts.Button left onClick={setClicked} clicked={isClickedButton(["Info", "newstoryinfo"])} color="#fff6b8c9">Info</Parts.Button>
             </Link>
         </Parts.Nav>
     )
