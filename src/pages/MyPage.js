@@ -45,7 +45,8 @@ const MyPage = (props) => {
       },
     });
     const { data } = result.data;
-    setMyInfo(data);
+    myInfo.push(data);
+    setMyInfo(myInfo);
   };
 
   const myStoryFc = async () => {
@@ -110,7 +111,7 @@ const MyPage = (props) => {
 
   return (
     <>
-      <MyInfo myInfo={myInfo} />
+      {myInfo.length > 0 ? <MyInfo myInfo={myInfo} /> : ''}
       {myStory.length > 0
         ? myStory.map((el, idx) => (
             <MyStory
@@ -154,6 +155,7 @@ const MyPage = (props) => {
             />
           ))
         : ''}
+      <button onClick={() => console.log(myInfo)}>sdfdsf</button>
     </>
   );
 };
