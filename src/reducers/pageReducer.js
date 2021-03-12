@@ -3,6 +3,7 @@ import {
     MODAL_MOVED,
     BOARD_INDEX_SAVED,
     STORY_DETAIL_SAVED,
+    SET_MY_PAGE_PROPS,
     COMMIT_DETAIL_SAVED,
     COMMIT_DETAIL_INDEX_SAVED,
     COMMIT_DETAIL_TITLE_SAVED,
@@ -16,7 +17,6 @@ const pageReducer = (state = pageState, action) => {
         return {
             ...state,
             page: action.payload,
-            
         };
         case MODAL_MOVED:
         return {
@@ -32,6 +32,11 @@ const pageReducer = (state = pageState, action) => {
         return {
             ...state,
             storyDetail: action.payload,
+        }
+        case SET_MY_PAGE_PROPS:
+        return {
+            ...state,
+            myPageProps: action.payload,
         }
         case COMMIT_DETAIL_SAVED:
         return {

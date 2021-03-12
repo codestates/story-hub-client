@@ -26,6 +26,7 @@ export const ETC_SAVED = "ETC_SAVED";
 
 export const BOARD_INDEX_SAVED = "BOARD_INDEX_SAVED";
 export const STORY_DETAIL_SAVED = "STORY_DETAIL_SAVED";
+export const SET_MY_PAGE_PROPS = "SET_MY_PAGE_PROPS";
 
 export const COMMIT_DETAIL_SAVED = "COMMIT_DETAIL_SAVED";
 export const COMMIT_DETAIL_INDEX_SAVED = "COMMIT_DETAIL_INDEX_SAVED";
@@ -182,6 +183,13 @@ export const storyDetailSaved = (text) => {
   return {
       type: STORY_DETAIL_SAVED,
       payload: text,
+  }
+}
+
+export const setMyPageProps = (props) => {
+  return {
+      type: SET_MY_PAGE_PROPS,
+      payload: props,
   }
 }
 

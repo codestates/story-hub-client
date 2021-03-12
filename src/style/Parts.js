@@ -70,7 +70,7 @@ const Parts = {
         ${props => props.up ? "margin: 0 10vw 0 10px" : ""};
         ${props => props.up ? "justify-content: space-between" : ""};
         ${props => props.up ? "align-items: center" : ""};
-        ${props => props.up ? "width: 95vw" : ""};
+        ${props => props.up ? "width: 93vw" : ""};
         ${props => props.up ? "padding: 5px" : ""};
     `,
     Card : styled.div`
