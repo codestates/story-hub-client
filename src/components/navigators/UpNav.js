@@ -33,7 +33,7 @@ const UpNavFrame = styled.div`
   align-items: center;
 `;
 const Logo = styled.div`
-  margin: 10px 5px 0 30px;
+  margin: 2px 10px 0 30px;
   display: inline-block;
   background-image: url(${logoImage});
   width: 100px;
