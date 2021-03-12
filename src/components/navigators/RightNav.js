@@ -34,7 +34,7 @@ const RightNav = (props) => {
             <Parts.Button onClick={setClicked} clicked={isClickedButton(["alert", "Alert"])} color="#ffa0a0c4">Alert</Parts.Button>
             </Link>
             <Link to="/mypage">
-            <Parts.Button onClick={setClicked} clicked={isClickedButton(["mypage", "My Page"])} color='#95d8a0cf'>My Page</Parts.Button>
+            <Parts.Button onClick={setClicked} clicked={isClickedButton(["mypage", "MyPage"])} color='#95d8a0cf'>MyPage</Parts.Button>
             </Link>
             <Link to="/event">
             <Parts.Button onClick={setClicked} clicked={isClickedButton(["event", "Event"])} color='#aad4ffbd'>Event</Parts.Button>
