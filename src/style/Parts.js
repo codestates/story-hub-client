@@ -12,6 +12,7 @@ const Parts = {
     `,
     Button : styled.div`
         position:relative;
+        text-transform: uppercase;
         z-index: ${props => props.clicked==="clicked" ? "3" : "1"};
         margin: ${props => props.left ? "0px -7px 5px 0px" : " 0px 0px 5px -7px"};
         height:100px;
@@ -19,11 +20,11 @@ const Parts = {
         writing-mode: vertical-rl;
         text-orientation: upright;
         color: black;
-        font-weight: bold;
-        font-size: 0.9rem;
+        font-size: 0.8rem;
+        font-weight: 800;
         text-align: center;
-        letter-spacing :-6px;
-        line-height: ${props => props.left ? "4" : "3"};
+        letter-spacing :-3px;
+        line-height: ${props => props.left ? "4.5" : "3"};
         background-color: ${props => props.color ? props.color : 'white'};
         ${props => props.clicked==="clicked" ? "" : "box-shadow:inset 15px -1px 8px rgba(0, 0, 0, 0.3)" };
         ${props => (props.clicked!=="clicked" && props.left) ? "box-shadow:inset -15px -1px 10px rgba(0, 0, 0, 0.3)" : "" };
@@ -37,23 +38,28 @@ const Parts = {
         background-size: cover;
         background-position: 50% 0%;
         padding: 20px;
+        padding-top: 10px;
         border-radius: 10px;
         position: relative;
         z-index: 2;
         background-color: rgb(185, 185, 185);
         width: 100vw;
-        min-width: 330px;
+        min-width: 570px;
         height: auto;
+        min-height: 500px;
         margin-right: -5px;
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: space-between;
         float: left;
     `,
     Board : styled.div`
         width: 45%;
+        margin-left: 10px;
         display: flex;
         flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
     `,
     Nav : styled.div`
         padding-top: 10px;

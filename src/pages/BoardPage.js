@@ -7,7 +7,41 @@ import Parts from '../style/Parts';
 import StoryCard from '../components/cards/StoryCard';
 import { ContentState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
+import styled from 'styled-components'
 
+const CardsFrame = styled.div`
+width: 80%;
+height: 75vh;
+display:flex;
+flex-direction: column;
+justyfy-content: flex-start;
+align-items: center;
+`
+
+const PagenateFrame = styled.div`
+font-size: 0.8rem;
+margin-top: 15px;
+ul {
+width: 80%;
+display: flex;
+flex-direction: row;
+justify-self: end;
+}
+li {
+  display: inline-block;
+  margin: 0 3px 0 3px;
+}
+.previous, .next {
+  display: inline-block;
+  margin: 0 15px 0 15px;
+  font-weight: bold;
+}
+.selected {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #f49531;
+}
+`
 const BoardPage = (props) => {
   const dispatch = useDispatch();
 
@@ -32,8 +66,8 @@ const BoardPage = (props) => {
   const [newPageNumber, setNewPageNumber] = useState(0);
   const [hotPageNumber, setHotPageNumber] = useState(0);
 
-  const newBoardsPerPage = 3;
-  const hotBoardsPerPage = 3;
+  const newBoardsPerPage = 4;
+  const hotBoardsPerPage = 4;
 
   const newPagesVisited = newPageNumber * newBoardsPerPage;
   const hotPagesVisited = hotPageNumber * hotBoardsPerPage;
@@ -52,6 +86,7 @@ const BoardPage = (props) => {
     <>
       <Parts.Board>
         <h1>Hot Story</h1>
+        <CardsFrame>
         {hotStory
           .slice(hotPagesVisited, hotPagesVisited + hotBoardsPerPage)
           .map((hotBoard, idx) => {
@@ -62,7 +97,6 @@ const BoardPage = (props) => {
                 key={idx}
                 board_index={hotBoard.board_index}
                 content={onlyText}
-                storyDetail={hotBoard.content}
                 up_count={hotBoard.up_count}
                 down_count={hotBoard.down_count}
                 title={hotBoard.title}
@@ -71,21 +105,25 @@ const BoardPage = (props) => {
               />
             );
           })}
+        </CardsFrame>
+        <PagenateFrame>
         <ReactPaginate
           pageCount={hotPageCount}
           // pageRangeDisplayed={5}
           // marginPagesDisplayed={0}
-          previousLabel={'이전'}
-          nextLabel={'다음'}
+          previousLabel={'<'}
+          nextLabel={'>'}
           onPageChange={hotChangePage}
           // containerClassName={"pagination-ul"}
           // activeClassName={"currentPage"}
           // previousClassName={"pageLabel-btn"}
           // nextClassName={"pageLabel-btn"}
         />
+        </PagenateFrame>
       </Parts.Board>
       <Parts.Board>
         <h1>New Story</h1>
+        <CardsFrame>
         {newStory
           .slice(newPagesVisited, newPagesVisited + newBoardsPerPage)
           .map((newBoard, idx) => {
@@ -96,7 +134,6 @@ const BoardPage = (props) => {
                 key={idx}
                 board_index={newBoard.board_index}
                 content={onlyText}
-                storyDetail={newBoard.content}
                 up_count={newBoard.up_count}
                 down_count={newBoard.down_count}
                 title={newBoard.title}
@@ -105,19 +142,22 @@ const BoardPage = (props) => {
               />
             );
           })}
+        </CardsFrame>
+        <PagenateFrame>
         <ReactPaginate
           pageCount={newPageCount}
           // pageRangeDisplayed={5}
           // marginPagesDisplayed={0}
           // breakLabel={""}
-          previousLabel={'이전'}
-          nextLabel={'다음'}
+          previousLabel={'<'}
+          nextLabel={'>'}
           onPageChange={newChangePage}
           // containerClassName={"pagination-ul"}
           // activeClassName={"currentPage"}
           // previousClassName={"pageLabel-btn"}
           // nextClassName={"pageLabel-btn"}
         />
+        </PagenateFrame>
       </Parts.Board>
     </>
   );
