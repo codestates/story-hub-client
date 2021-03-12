@@ -28,6 +28,12 @@ export const BOARD_INDEX_SAVED = "BOARD_INDEX_SAVED";
 export const STORY_DETAIL_SAVED = "STORY_DETAIL_SAVED";
 export const SET_MY_PAGE_PROPS = "SET_MY_PAGE_PROPS";
 
+export const COMMIT_DETAIL_SAVED = "COMMIT_DETAIL_SAVED";
+export const COMMIT_DETAIL_INDEX_SAVED = "COMMIT_DETAIL_INDEX_SAVED";
+export const COMMIT_DETAIL_TITLE_SAVED = "COMMIT_DETAIL_TITLE_SAVED";
+export const COMMIT_DETAIL_NICKNAME_SAVED = "COMMIT_DETAIL_NICKNAME_SAVED";
+export const COMMIT_DETAIL_CREATED_SAVED = "COMMIT_DETAIL_CREATED_SAVED";
+
 export const userLogin = (userInfo) => {
   return {
     type: USER_LOGIN,
@@ -184,6 +190,41 @@ export const setMyPageProps = (props) => {
   return {
       type: SET_MY_PAGE_PROPS,
       payload: props,
+  }
+}
+
+export const commitDetailSaved = (text) => {
+  return {
+      type: COMMIT_DETAIL_SAVED,
+      payload: text,
+  }
+}
+
+export const commitDetailIndexSaved = (number) => {
+  return {
+      type: COMMIT_DETAIL_INDEX_SAVED,
+      payload: number,
+  }
+}
+
+export const commitDetailTitleSaved = (text) => {
+  return {
+      type: COMMIT_DETAIL_TITLE_SAVED,
+      payload: text,
+  }
+}
+
+export const commitDetailNicknameSaved = (text) => {
+  return {
+      type: COMMIT_DETAIL_NICKNAME_SAVED,
+      payload: text,
+  }
+}
+
+export const commitDetailCreatedSaved = (text) => {
+  return {
+      type: COMMIT_DETAIL_CREATED_SAVED,
+      payload: text,
   }
 }
 

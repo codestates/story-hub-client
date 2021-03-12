@@ -11,6 +11,11 @@ export const pageState = {
   boardIndex: 0,
   storyDetail: '',
   myPageProps: {},
+  commitDetail : '',
+  commitDetailIndex : 0,
+  commitDetailTitle : '',
+  commitDetailNickname : '',
+  commitDetailCreated : '',
 };
 
 export const textState = {

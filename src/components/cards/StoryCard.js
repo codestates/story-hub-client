@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { useHistory, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -23,7 +22,7 @@ display: flex;
 flex-direction: column;
 justify-content: space-between;
 .frame1 {
-    padding: 10px 10px 3px 10px;
+    padding: 20px 10px 3px 10px;
     border-bottom: 1px solid black;
     width: 75%;
     display: flex;
@@ -32,8 +31,9 @@ justify-content: space-between;
     align-items: center; 
 }
 .title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: bold;
+    ${ellipsis('700px')};
 }
 span {
     display: inline-block;
@@ -63,6 +63,7 @@ const StoryCard = (props) => {
 
     const handleCard = () => {
         dispatch(boardIndexSaved(props.board_index))
+        dispatch(storyDetailSaved(props.storyDetail))
         history.push('/content');
     }
 
