@@ -163,10 +163,9 @@ const myStory = (props) => {
     useEffect(() => {
         getCommitList();
         getCommentList();
-    }, []);
+    }, [boardIndex]);
 
     const html = myPageProps.storyDetail;
-    console.log(html);
     const text = htmlToText(html);
     
 
