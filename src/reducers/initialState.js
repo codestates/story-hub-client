@@ -9,7 +9,12 @@ export const pageState = {
   page: 'Cover',
   modalPage: '',
   boardIndex: 0,
-  storyDetail: ''
+  storyDetail: '',
+  commitDetail : '',
+  commitDetailIndex : 0,
+  commitDetailTitle : '',
+  commitDetailNickname : '',
+  commitDetailCreated : '',
 };
 
 export const textState = {
