@@ -13,6 +13,7 @@ const AlertPage = (props) => {
 
   const { accessToken, loginType } = state.userReducer;
   const dispatch = useDispatch();
+  console.log(accessToken);
 
   useEffect(() => {
     dispatch(pageMoved('Alert'));
