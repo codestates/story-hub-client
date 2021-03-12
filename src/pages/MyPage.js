@@ -16,12 +16,11 @@ import CommitModal from '../components/modals/MyPageModals/commit'
 import CommentModal from '../components/modals/MyPageModals/comment'
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
-import { ContentState } from 'draft-js';
-import htmlToDraft from 'html-to-draftjs';
 
 const CardsFrame = styled.div`
 width: 100%;
-height: 75vh;
+height: ${props => props.comments ? "20vh" : "35vh"};
+${props => props.story ? "height: 75vh;" : ""}
 display:flex;
 flex-direction: row;
 justyfy-content: flex-start;
@@ -121,8 +120,7 @@ const MyPage = (props) => {
       },
     });
     const { data } = result.data;
-    myInfo.push(data);
-    setMyInfo(myInfo);
+    setMyInfo(data);
   };
 
   const myStoryFc = async () => {
@@ -194,13 +192,15 @@ const MyPage = (props) => {
       <h1>My Story</h1>
       {myStory.length > 0 ? (
         <>
-          <CardsFrame>
+          <CardsFrame story>
           {myStory
             .slice(storyPagesVisited, storyPagesVisited + storyBoardsPerPage)
             .map((storyBoard, idx) => {           
               return (
                 <MyStory
                   key={idx}
+                  boardIndex={storyBoard.board_index}
+                  storyDetail={storyBoard.content}
                   title={storyBoard.title}
                   upCount={storyBoard.up_count}
                   downCount={storyBoard.down_count}
@@ -222,7 +222,7 @@ const MyPage = (props) => {
         : ''}
         </Parts.Board>
         <Parts.Board>
-        <h1>My Favorite</h1>
+                  <h1>My Favorite</h1>
       {myFavorite.length > 0 ? (
         <>
           <CardsFrame>
@@ -232,6 +232,8 @@ const MyPage = (props) => {
               return (
                 <MyFavorite
                   key={idx}
+                  boardIndex={favoriteBoard.board_index}
+                  storyDetail={favoriteBoard.content}
                   title={favoriteBoard.title}
                   upCount={favoriteBoard.up_count}
                   downCount={favoriteBoard.down_count}
@@ -261,6 +263,7 @@ const MyPage = (props) => {
               return (
                 <MyCommits
                   key={idx}
+                  commitIndex={commitBoard.commit_index}
                   title={commitBoard.title}
                   upCount={commitBoard.up_count}
                   downCount={commitBoard.down_count}
@@ -283,7 +286,7 @@ const MyPage = (props) => {
       <h1>My Comments</h1>
       {myComment.length > 0 ? (
         <>
-          <CardsFrame>
+          <CardsFrame comments>
           {myComment
             .slice(commentPagesVisited, commentPagesVisited + commentBoardsPerPage)
             .map((commentBoard, idx) => {           
