@@ -4,15 +4,11 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { pageMoved } from '../../actions';
 import styled from 'styled-components';
-
 const ContentPage = (props) => {
     const state = useSelector((state) => state);
     const { storyDetail, boardIndex } = state.pageReducer;
-    
     const [boardInfoList, setBoardInfo] = useState([]);
-    
     const dispatch = useDispatch();
-    
     const getTitle = async () => {
         const result = await axios({
             url: 'http://localhost:4000/board/detailcontent',
@@ -24,12 +20,12 @@ const ContentPage = (props) => {
         const { boardInfo } = result.data;
         setBoardInfo(boardInfo);
     };
-    
+  
     useEffect(() => {
         getTitle();
         dispatch(pageMoved('StoryDetail'));
     }, []);
-    
+  
     return (
         <>
         <div>ContentPage</div>
@@ -50,6 +46,6 @@ const ContentPage = (props) => {
         </>
     );
 };
-                
+
 export default ContentPage;
                 
