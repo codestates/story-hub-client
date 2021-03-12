@@ -97,6 +97,7 @@ const BoardPage = (props) => {
                 key={idx}
                 board_index={hotBoard.board_index}
                 content={onlyText}
+                storyDetail={hotBoard.content}
                 up_count={hotBoard.up_count}
                 down_count={hotBoard.down_count}
                 title={hotBoard.title}
@@ -134,6 +135,7 @@ const BoardPage = (props) => {
                 key={idx}
                 board_index={newBoard.board_index}
                 content={onlyText}
+                storyDetail={newBoard.content}
                 up_count={newBoard.up_count}
                 down_count={newBoard.down_count}
                 title={newBoard.title}
