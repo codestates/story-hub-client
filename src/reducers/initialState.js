@@ -9,7 +9,8 @@ export const pageState = {
   page: 'Cover',
   modalPage: '',
   boardIndex: 0,
-  storyDetail: ''
+  storyDetail: '',
+  myPageProps: {},
 };
 
 export const textState = {

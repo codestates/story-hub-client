@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import cardBackground from '../../images/card.png'
-import { modalMoved, boardIndexSaved } from '../../actions'
+import { modalMoved, boardIndexSaved, storyDetailSaved, setMyPageProps } from '../../actions'
+import { ellipsis } from 'polished';
 
 const Card = styled.div`
 background-image: url(${cardBackground});
@@ -19,7 +20,7 @@ background-size: 100% 100%;
 font-size: 0.9rem;
 display: flex;
 flex-direction: column;
-justify-content: space-between;
+justify-content: space-evenly;
 .frame1 {
     padding: 10px 10px 3px 5px;
     border-bottom: 1px solid black;
@@ -32,6 +33,7 @@ justify-content: space-between;
 .title {
     font-size: 1rem;
     font-weight: bold;
+    ${ellipsis('700px')};
 }
 span {
     display: inline-block;
@@ -48,29 +50,31 @@ span {
 }
 `;
 
-const MyStory = ({ boardIndex, title, upCount, downCount, createdAt, clickEvent }) => {
+const MyStory = (props) => {
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
     const { modalPage } = state.pageReducer;
-    
+
     const [boardInfo, serBoardInfo] = useState([]);
     const [commitInfo, setCommitInfo] = useState([]);
     const [commentInfo, setCommentInfo] = useState([]);
-    //   <Card onClick={() => clickEvent(boardIndex)}>
+
     return (
         <Card onClick={() => {
             dispatch(modalMoved("MyStory"))
-            dispatch(boardIndexSaved(boardIndex))
+            dispatch(boardIndexSaved(props.boardIndex))
+            dispatch(storyDetailSaved(props.storyDetail))
+            dispatch(setMyPageProps(props))
             }}>
             <div className='frame1'>
-                <h2 className="title">{title}</h2>
+                <h2 className="title">{props.title}</h2>
             </div>
             <div className="frame2">
                 <div className="counts">
-                    <span>{upCount}/ </span>
-                    <span>{downCount}</span>
+                    <span>{props.upCount}/ </span>
+                    <span>{props.downCount}</span>
                 </div>
-                <div className="date">{createdAt.slice(0, 10)}</div>
+                <div className="date">{props.createdAt.slice(0, 10)}</div>
             </div>
         </Card>
     );
