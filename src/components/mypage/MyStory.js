@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 
 const MyStory = ({ boardIndex, title, upCount, downCount, createdAt }) => {
-  const [boardInfo, serBoardInfo] = useState([]);
+  const [boardInfo, setBoardInfo] = useState([]);
   const [commitInfo, setCommitInfo] = useState([]);
   const [commentInfo, setCommentInfo] = useState([]);
 
@@ -15,7 +15,7 @@ const MyStory = ({ boardIndex, title, upCount, downCount, createdAt }) => {
         boardIndex,
       },
     });
-    serBoardInfo(result.data[0]);
+    setBoardInfo(result.data[0]);
     setCommitInfo(result.data[1]);
     setCommentInfo(result.data[2]);
   };

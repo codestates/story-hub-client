@@ -109,6 +109,7 @@ const MyPage = (props) => {
     setMyComments(list);
   };
 
+
   return (
     <>
       {myInfo.length > 0 ? <MyInfo myInfo={myInfo} /> : ''}

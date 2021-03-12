@@ -1,11 +1,10 @@
 
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { useHistory, withRouter } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { ellipsis } from 'polished';
-import { boardIndexSaved } from '../../actions';
+import { boardIndexSaved, storyDetailSaved } from '../../actions';
 
 const Card = styled.div`
 font-size: 2vw;
@@ -20,6 +19,7 @@ const StoryCard = (props) => {
 
     const handleCard = () => {
         dispatch(boardIndexSaved(props.board_index))
+        dispatch(storyDetailSaved(props.storyDetail))
         history.push('/content');
     }
 
