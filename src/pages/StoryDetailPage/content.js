@@ -10,8 +10,6 @@ const ContentPage = (props) => {
     const [boardInfoList, setBoardInfo] = useState([]);
     const dispatch = useDispatch();
     const getTitle = async () => {
-      console.log(boardIndex)
-      console.log(storyDetail)
         const result = await axios({
             url: 'http://localhost:4000/board/detailcontent',
             method: 'GET',
@@ -19,15 +17,15 @@ const ContentPage = (props) => {
                 boardIndex,
             },
         });
-        console.log(result.data)
         const { boardInfo } = result.data;
         setBoardInfo(boardInfo);
-        
     };
+  
     useEffect(() => {
         getTitle();
         dispatch(pageMoved('StoryDetail'));
     }, []);
+  
     return (
         <>
         <div>ContentPage</div>
@@ -48,4 +46,6 @@ const ContentPage = (props) => {
         </>
     );
 };
+
 export default ContentPage;
+                
