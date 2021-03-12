@@ -81,7 +81,7 @@ const NewCommitPage = (props) => {
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
     const {commit, commitTitle} = state.textReducer
-    const {boardIndex} = state.pageReducer
+    const { boardIndex } = state.pageReducer
     const { accessToken, loginType } = state.userReducer;
     const history = useHistory();
     const [text, setText] = 

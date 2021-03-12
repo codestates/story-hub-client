@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, withRouter } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ReactPaginate from 'react-paginate';
 import { pageMoved } from '../actions';
 import Parts from '../style/Parts';
 import StoryCard from '../components/cards/StoryCard';
 import { ContentState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
-// import fakeData from '../fakeData';
 
 const BoardPage = (props) => {
-  const state = useSelector((state) => state);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -21,19 +18,13 @@ const BoardPage = (props) => {
       method: 'GET',
       withCredentials: true,
     }).then((res) => {
-      const { hotStory, newStory } = res.data;
+      const { newStory } = res.data;
       setNewStory(newStory);
-      setHotStory(hotStory);
-      console.log(res);
+      setHotStory(newStory.slice().sort((a, b) => b.up_count - b.down_count - (a.up_count - a.down_count)));
+      // console.log(res);
       return res;
     });
   }, []);
-
-  // let hot = [];
-  // for (let el of fakeData.boardFakeData.slice()) {
-  //   hot.push(el);
-  // }
-  // hot.sort((a, b) => b.up_count - b.down_count - (a.up_count - a.down_count));
 
   const [newStory, setNewStory] = useState([]);
   const [hotStory, setHotStory] = useState([]);
@@ -71,6 +62,7 @@ const BoardPage = (props) => {
                 key={idx}
                 board_index={hotBoard.board_index}
                 content={onlyText}
+                storyDetail={hotBoard.content}
                 up_count={hotBoard.up_count}
                 down_count={hotBoard.down_count}
                 title={hotBoard.title}
@@ -104,6 +96,7 @@ const BoardPage = (props) => {
                 key={idx}
                 board_index={newBoard.board_index}
                 content={onlyText}
+                storyDetail={newBoard.content}
                 up_count={newBoard.up_count}
                 down_count={newBoard.down_count}
                 title={newBoard.title}

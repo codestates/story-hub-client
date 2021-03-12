@@ -108,6 +108,7 @@ const MyPage = (props) => {
     setMyComments(list);
   };
 
+
   return (
     <>
       <MyInfo myInfo={myInfo} />
