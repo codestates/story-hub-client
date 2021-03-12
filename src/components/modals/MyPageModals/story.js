@@ -134,6 +134,7 @@ const myStory = (props) => {
     const { myPageProps } = state.pageReducer;
     const history = useHistory();
     const boardIndex = myPageProps.boardIndex
+    console.log(boardIndex)
 
     const [commitList, setCommitList] = useState([]);
     const [commentList, setCommentList] = useState([]);
@@ -147,6 +148,8 @@ const myStory = (props) => {
             },
         });
         setCommitList(result.data.list);
+        console.log('CommitList')
+        console.log(result.data)
     };
 
     const getCommentList = async () => {
@@ -163,10 +166,14 @@ const myStory = (props) => {
     useEffect(() => {
         getCommitList();
         getCommentList();
-    }, []);
+    }, [boardIndex]);
+
+    console.log('story modal')
+    console.log(myPageProps)
+    console.log(commitList)
+    console.log(commentList)
 
     const html = myPageProps.storyDetail;
-    console.log(html);
     const text = htmlToText(html);
     
 
