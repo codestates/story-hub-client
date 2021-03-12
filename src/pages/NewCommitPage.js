@@ -86,6 +86,27 @@ const NewCommitPage = (props) => {
     const history = useHistory();
     const [text, setText] = 
     useState(EditorState.createWithContent(ContentState.createFromBlockArray(htmlToDraft(commit).contentBlocks)))
+    const [option_name, setOptionName] = useState();
+    const [min, setMin] = useState();
+    const [max, setMax] = useState();
+    const [etc, setEtc] = useState();
+    
+    const detailSmallInfo = async () => {
+        const result = await axios({
+            url: 'http://localhost:4000/board/detailinfo',
+            method: 'GET',
+            params: {
+                boardIndex,
+            },
+        });
+        const { data } = result;
+        if (data) {
+            setOptionName(data[1][0].option_name);
+            setMin(data[1][0].min_length);
+            setMax(data[1][0].max_length);
+            setEtc(data[1][0].etc);
+        }
+    };
     
     const onEditorStateChange = (text) => {
         setText(text);              
@@ -107,64 +128,69 @@ const NewCommitPage = (props) => {
     
     const handleSubmit = () => {
         if (commitTitle && commit ) {
-                axios({
-                    url: 'http://localhost:4000/commit/create',
-                    method: 'POST',
-                    withCredentials: true,
-                    headers: {
-                        Authorization: `Bearer ${accessToken}`,
-                    },
-                    data: {
-                        loginType,
-                        title: commitTitle,
-                        content: commit,
-                        boardIndex: boardIndex
-                    },
-                }).then((res) => {
-                    if (res.data.message === 'OK') {
-                        dispatch(commitSaved(''));
-                        dispatch(commitTitleSaved(''));
-                        history.push('/content');
-                    }
-                });
-            } else {
-                dispatch(messageOpen('제목과 내용은 필수입력사항입니다.'));
-                return;
-            }
-        };
-        
-        useEffect( () => {
-            dispatch(pageMoved("NewCommit"));
-        }, [])
-        
-        return (
-            <EditorStyle>
-            <div className = "title">
-            <button onClick = {handleBack}>back</button>
+            axios({
+                url: 'http://localhost:4000/commit/create',
+                method: 'POST',
+                withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+                data: {
+                    loginType,
+                    title: commitTitle,
+                    content: commit,
+                    boardIndex: boardIndex
+                },
+            }).then((res) => {
+                if (res.data.message === 'OK') {
+                    dispatch(commitSaved(''));
+                    dispatch(commitTitleSaved(''));
+                    history.push('/content');
+                }
+            });
+        } else {
+            dispatch(messageOpen('제목과 내용은 필수입력사항입니다.'));
+            return;
+        }
+    };
+    
+    useEffect( () => {
+        detailSmallInfo()
+        dispatch(pageMoved("NewCommit"));
+    }, [])
+    
+    return (
+        <EditorStyle>
+        <div className = "title">
+        <button onClick = {handleBack}>back</button>
             <div>Title </div>
             <input placeholder="Please enter a title" value = {commitTitle} onChange = {handleTitle}/>
-            </div>
-            <Editor
-            editorState={text}
-            toolbarClassName="toolbarClassName"
-            wrapperClassName="wrapperClassName"
-            editorClassName="editorClassName"
-            toolbar = {{
-                list: {inDropdown: true},
-                textAlign : {inDropdown: true},
-                history : {inDropdown: true},
-                options: ['inline', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'emoji', 'history'],
-                fontSize: {
-                    options: [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48],
-                },
-            }}
-            onEditorStateChange={onEditorStateChange}
-            placeholder="Please write the commit."
-            />
-            <button onClick={handleSubmit}>Submit</button>
-            </EditorStyle>
-            )
-        }
-        
-        export default NewCommitPage;
-        
+            <div>Commit By : {option_name}</div>
+            <div>Min : {min}</div>
+            <div>Max : {max}</div>
+            <div>ETC : {etc}</div>
+        </div>
+        <Editor
+        editorState={text}
+        toolbarClassName="toolbarClassName"
+        wrapperClassName="wrapperClassName"
+        editorClassName="editorClassName"
+        toolbar = {{
+            list: {inDropdown: true},
+            textAlign : {inDropdown: true},
+            history : {inDropdown: true},
+            options: ['inline', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'emoji', 'history'],
+            fontSize: {
+                options: [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48],
+            },
+        }}
+        onEditorStateChange={onEditorStateChange}
+        placeholder="Please write the commit."
+        />
+        <button onClick={handleSubmit}>Submit</button>
+        </EditorStyle>
+        )
+    }
+    
+    export default NewCommitPage;
+    

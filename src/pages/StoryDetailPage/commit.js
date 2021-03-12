@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import UpNav from '../../components/navigators/UpNav';
-import LeftDetailNav from '../../components/navigators/LeftDetailNav';
-import RightNav from '../../components/navigators/RightNav';
 import axios from 'axios';
-import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { pageMoved } from '../../actions';
+import CommitDetailCard from '../../components/cards/CommitDetailCard';
 
 const CommitPage = (props) => {
   const state = useSelector((state) => state);
@@ -25,7 +22,7 @@ const CommitPage = (props) => {
 
     setCommitList(result.data.list);
   };
-
+  console.log(commitList)
   useEffect(() => {
     dispatch(pageMoved('StoryDetail'));
     getCommitList();
@@ -34,14 +31,18 @@ const CommitPage = (props) => {
   return (
     <>
       <div>
-        {commitList.map((el, idx) => {
+        {commitList.map((commit, idx) => {
           return (
-            <div key={idx}>
-              <div>{el.title}</div>
-              <div>{el.content}</div>
-              <div>{el.created_at}</div>
-              <hr style={{ border: '1px solid red' }} />
-            </div>
+            <CommitDetailCard
+                key={idx}
+                commit_index={commit.commit_index}
+                title={commit.title}
+                content={commit.content}
+                created={commit.created_at}
+                nickname={commit.nickname}
+                depth={commit.depth}
+                merge_check={commit.merge_check}
+              />
           );
         })}
       </div>
