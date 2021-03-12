@@ -20,6 +20,7 @@ import {
 import styled from 'styled-components';
 import Parts from '../../style/Parts';
 import logoImage from '../../images/story_hub_logo.png';
+import logoImage2 from '../../images/story_hub_logo2.png'
 import searchButtonImage from '../../images/searchButton.png';
 import searchButtonImage2 from '../../images/searchButton2.png';
 import configureStore from '../../store/store';
@@ -27,6 +28,7 @@ import configureStore from '../../store/store';
 const { persistor } = configureStore();
 
 const UpNavFrame = styled.div`
+  margin-top: 5px;
   display: flex;
   align-items: center;
 `;
@@ -37,6 +39,10 @@ const Logo = styled.div`
   width: 100px;
   height: 60px;
   background-repeat: no-repeat;
+  transition: all 0.5s ease-out;
+  :hover {
+    background-image: url(${logoImage2});
+  }
 `;
 const SearchInput = styled.input`
   height: 25px;
