@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -57,7 +56,7 @@ const MyStory = (props) => {
     const [boardInfo, serBoardInfo] = useState([]);
     const [commitInfo, setCommitInfo] = useState([]);
     const [commentInfo, setCommentInfo] = useState([]);
-    console.log(props)
+
     return (
         <Card onClick={() => {
             dispatch(modalMoved("MyStory"))

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import cardBackground from '../../images/card.png'
-import { modalMoved } from '../../actions'
+import { modalMoved, commitDetailIndexSaved, commitDetailSaved, setMyPageProps } from '../../actions'
 import { ellipsis } from 'polished';
 
 const Card = styled.div`
@@ -49,26 +49,26 @@ span {
 }
 `;
 
-const MyCommit = ({ boardIndex, title, upCount, downCount, createdAt }) => {
+const MyCommit = (props) => {
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
-    const { modalPage } = state.pageReducer;
-    
-    const [boardInfo, serBoardInfo] = useState([]);
-    const [commitInfo, setCommitInfo] = useState([]);
-    const [commentInfo, setCommentInfo] = useState([]);
     
     return (
-        <Card onClick={() => dispatch(modalMoved("MyCommit"))}>
+        <Card onClick={() => {
+            dispatch(modalMoved("MyCommit"))
+            dispatch(commitDetailIndexSaved(props.commitIndex))
+            dispatch(commitDetailSaved(props.storyDetail))
+            dispatch(setMyPageProps(props))
+        }}>
             <div className='frame1'>
-                <h2 className="title">{title}</h2>
+                <h2 className="title">{props.title}</h2>
             </div>
             <div className="frame2">
                 <div className="counts">
-                    <span>{upCount}/ </span>
-                    <span>{downCount}</span>
+                    <span>{props.upCount}/ </span>
+                    <span>{props.downCount}</span>
                 </div>
-                <div className="date">{createdAt.slice(0, 10)}</div>
+                <div className="date">{props.createdAt.slice(0, 10)}</div>
             </div>
         </Card>
         );
