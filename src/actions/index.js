@@ -25,6 +25,7 @@ export const MIN_SAVED = "MIN_SAVED";
 export const ETC_SAVED = "ETC_SAVED";
 
 export const BOARD_INDEX_SAVED = "BOARD_INDEX_SAVED";
+export const BOARD_TITLE_SAVED = "BOARD_TITLE_SAVED";
 export const STORY_DETAIL_SAVED = "STORY_DETAIL_SAVED";
 export const SET_MY_PAGE_PROPS = "SET_MY_PAGE_PROPS";
 
@@ -164,6 +165,13 @@ export const boardIndexSaved = (number) => {
         type: BOARD_INDEX_SAVED,
         payload: number,
     }
+}
+
+export const boardTitleSaved = (text) => {
+  return {
+      type: BOARD_TITLE_SAVED,
+      payload: text,
+  }
 }
 
 export const etcSaved = (text) => {

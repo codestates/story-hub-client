@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalMoved } from '../../actions'
 import styled from 'styled-components'
 import Parts from '../../style/Parts'
+import { useHistory } from 'react-router-dom';
 
 const MessageFrame = styled.div`
     display: flex;
@@ -29,12 +30,34 @@ const MessageButton = styled.button`
 `
 
 const DeleteCommit = (props) => {
-    const state = useSelector((state) => state.messageReducer);
+    const state = useSelector((state) => state);
+    const { accessToken, loginType } = state.userReducer;
+    const { commitDetailIndex  } = state.pageReducer;
+    const history = useHistory();
     const dispatch = useDispatch();
+
+    const handleAccept = () => {
+        axios({
+            url: 'http://localhost:4000/commit/',
+            method: 'DELETE',
+            withCredentials: true,
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+            params: {
+                loginType : loginType,
+                commitIndex : commitDetailIndex
+            },
+        })
+        dispatch(modalMoved(""))
+        history.push("/commit")
+    }
 
     return (
         <Parts.ModalBackground message display={props.display==="none" ? "none" : ""}>
             <MessageFrame>
+                <div>Will you definitely delete this commit?</div>
+                <MessageButton onClick={handleAccept}>ACCEPT</MessageButton>
                 <MessageButton onClick={() => dispatch(modalMoved(""))}>CLOSE</MessageButton>
             </MessageFrame>
         </Parts.ModalBackground>

@@ -12,7 +12,7 @@ const InfoStyle = styled.div`
 
 const InfoPage = () => {
   const state = useSelector((state) => state);
-  const { boardIndex } = state.pageReducer;
+  const { boardIndex, boardTitle } = state.pageReducer;
   const { accessToken, loginType } = state.userReducer;
   const [writer, setWriter] = useState();
   const [description, setDescription] = useState();
@@ -61,6 +61,7 @@ const InfoPage = () => {
   return (
     <InfoStyle>
       <div>InfoPage</div>
+      <h1>{boardTitle}</h1>
       <div>
         <div>Writer : {writer}</div>
         <div>Writer`s comment : {description}</div>

@@ -9,6 +9,7 @@ export const pageState = {
   page: 'Cover',
   modalPage: '',
   boardIndex: 0,
+  boardTitle: '',
   storyDetail: '',
   myPageProps: {},
   commitDetail : '',
