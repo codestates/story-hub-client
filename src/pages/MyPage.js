@@ -135,6 +135,7 @@ const MyPage = (props) => {
       },
     });
     const { data } = result;
+    console.log(data)
     setMyStory(data);
   };
   const MyFavoriteFc = async () => {

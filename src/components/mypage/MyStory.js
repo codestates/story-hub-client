@@ -53,12 +53,11 @@ span {
 const MyStory = (props) => {
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
-    const { modalPage } = state.pageReducer;
 
     const [boardInfo, serBoardInfo] = useState([]);
     const [commitInfo, setCommitInfo] = useState([]);
     const [commentInfo, setCommentInfo] = useState([]);
-
+    console.log(props)
     return (
         <Card onClick={() => {
             dispatch(modalMoved("MyStory"))

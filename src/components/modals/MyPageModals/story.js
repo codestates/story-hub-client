@@ -133,6 +133,7 @@ const myStory = (props) => {
     const dispatch = useDispatch();
     const { myPageProps } = state.pageReducer;
     const history = useHistory();
+    console.log(myPageProps)
     const boardIndex = myPageProps.boardIndex
 
     const [commitList, setCommitList] = useState([]);
