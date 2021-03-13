@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -53,7 +52,6 @@ span {
 const MyStory = (props) => {
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
-    const { modalPage } = state.pageReducer;
 
     const [boardInfo, serBoardInfo] = useState([]);
     const [commitInfo, setCommitInfo] = useState([]);

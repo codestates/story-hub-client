@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, useHistory, withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalMoved, setMyPageProps } from '../../../actions'
 import Parts from '../../../style/Parts'
 import styled from 'styled-components'
-import MyComments from '../../mypage/MyComment';
-import MyCommits from '../../mypage/MyCommit';
 import { ellipsis } from 'polished';
 import { htmlToText } from 'html-to-text';
 import cardBackground from '../../../images/card.png'
