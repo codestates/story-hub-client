@@ -7,7 +7,7 @@ import CommitDetailCard from '../../components/cards/CommitDetailCard';
 
 const CommitPage = (props) => {
   const state = useSelector((state) => state);
-  const { boardIndex } = state.pageReducer;
+  const { boardIndex, boardTitle } = state.pageReducer;
   const dispatch = useDispatch();
 
   const [commitList, setCommitList] = useState([]);
@@ -20,7 +20,7 @@ const CommitPage = (props) => {
         boardIndex,
       },
     });
-
+    console.log('삭제하고나선 여기 안들리니??')
     setCommitList(result.data.list);
   };
   useEffect(() => {
@@ -31,6 +31,7 @@ const CommitPage = (props) => {
   return (
     <>
       <div>
+        <h1>{boardTitle}</h1>
         {commitList.map((commit, idx) => {
           return (
             <CommitDetailCard

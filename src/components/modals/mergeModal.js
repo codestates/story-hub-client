@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { modalMoved } from '../../actions'
 import styled from 'styled-components'
 import Parts from '../../style/Parts'
+import { useHistory } from 'react-router-dom';
 
 const MessageFrame = styled.div`
     display: flex;
@@ -33,7 +34,7 @@ const Merge = (props) => {
     const dispatch = useDispatch();
     const { accessToken, loginType } = state.userReducer;
     const { commitDetailIndex  } = state.pageReducer;
-
+    const history = useHistory();
 
     const handleAccept = () => {
         axios({
@@ -49,6 +50,7 @@ const Merge = (props) => {
             },
         })
         dispatch(modalMoved(""))
+        history.push("/commit")
     }
 
     return (

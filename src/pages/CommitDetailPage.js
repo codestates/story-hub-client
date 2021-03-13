@@ -61,6 +61,9 @@ const CommitDetailPage = (props) => {
             resultDelete.data.map(el => {
                 if(el.commit_index === commitDetailIndex){
                     setIsDelete(true)
+                    if(commitDetailIsMerged === '1') {
+                        setIsDelete(false)
+                    }
                 }
             })
         }
