@@ -1,13 +1,9 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { modalMoved, storyDetailSaved, commitDetailSaved, setMyPageProps } from '../../../actions'
 import Parts from '../../../style/Parts'
 import styled from 'styled-components'
-import { ellipsis } from 'polished';
-import { htmlToText } from 'html-to-text';
-import cardBackground from '../../../images/card.png'
 
 const ModalFrame = styled.div`
     display: flex;
