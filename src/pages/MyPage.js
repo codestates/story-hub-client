@@ -135,7 +135,6 @@ const MyPage = (props) => {
       },
     });
     const { data } = result;
-    console.log(data)
     setMyStory(data);
   };
   const MyFavoriteFc = async () => {
@@ -168,6 +167,7 @@ const MyPage = (props) => {
     const { data } = result;
     setMyCommits(data);
   };
+
   const myCommentsFc = async () => {
     const result = await axios({
       url: 'http://localhost:4000/comment/info',
@@ -265,6 +265,7 @@ const MyPage = (props) => {
                 <MyCommits
                   key={idx}
                   commitIndex={commitBoard.commit_index}
+                  commitDetail={commitBoard.content}
                   title={commitBoard.title}
                   upCount={commitBoard.up_count}
                   downCount={commitBoard.down_count}
@@ -294,6 +295,8 @@ const MyPage = (props) => {
               return (
                 <MyComments
                   key={idx}
+                  boardIndex={commentBoard.board_index}
+                  commitIndex={commentBoard.commit_index}
                   content={commentBoard.content}
                   upCount={commentBoard.up_count}
                   downCount={commentBoard.down_count}

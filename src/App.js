@@ -21,6 +21,8 @@ import CommitPage from './pages/StoryDetailPage/commit';
 import CommentPage from './pages/StoryDetailPage/comment';
 import LoginSignUpModal from './components/modals/LoginSignUpModal';
 import Message from './components/modals/messageModal';
+import Merge from './components/modals/mergeModal'
+import DeleteCommit from './components/modals/deleteCommitModal'
 import styled from 'styled-components'
 import background from './images/backgroundImage.jpeg'
 import Parts from './style/Parts';
@@ -97,6 +99,8 @@ const App = () => {
         </Parts.Page>
       </Parts.Page>
       <LoginSignUpModal display={modalPage==="Login" ? "" : "none"}/>
+      <Merge display={modalPage==="Merge" ? "" : "none"}/>
+      <DeleteCommit display={modalPage==="DeleteCommit" ? "" : "none"}/>
       <Message display={isOpen ? "" : "none"}/>
     </AppFrame>
   );

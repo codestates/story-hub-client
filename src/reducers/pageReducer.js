@@ -9,6 +9,7 @@ import {
     COMMIT_DETAIL_TITLE_SAVED,
     COMMIT_DETAIL_NICKNAME_SAVED,
     COMMIT_DETAIL_CREATED_SAVED,
+    COMMIT_DETAIL_ISMERGED_SAVED,
 } from '../actions';
 import { pageState } from './initialState';
 const pageReducer = (state = pageState, action) => {
@@ -62,6 +63,11 @@ const pageReducer = (state = pageState, action) => {
         return {
             ...state,
             commitDetailCreated: action.payload,
+        }
+        case COMMIT_DETAIL_ISMERGED_SAVED:
+        return {
+            ...state,
+            commitDetailIsMerged: action.payload,
         }
         default: return state
     }

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { pageMoved } from '../../actions';
 import CommitDetailCard from '../../components/cards/CommitDetailCard';
 
+
 const CommitPage = (props) => {
   const state = useSelector((state) => state);
   const { boardIndex } = state.pageReducer;
@@ -22,7 +23,6 @@ const CommitPage = (props) => {
 
     setCommitList(result.data.list);
   };
-  console.log(commitList)
   useEffect(() => {
     dispatch(pageMoved('StoryDetail'));
     getCommitList();

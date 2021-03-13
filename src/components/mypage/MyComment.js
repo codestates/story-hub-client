@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import cardBackground from '../../images/card.png'
-import { modalMoved } from '../../actions'
+import { modalMoved, commentSaved, boardIndexSaved, commitDetailIndexSaved, setMyPageProps } from '../../actions'
 import { ellipsis } from 'polished';
 
 const Card = styled.div`
@@ -49,26 +49,27 @@ span {
 }
 `;
 
-const MyComment = ({ boardIndex, content, upCount, downCount, createdAt }) => {
+const MyComment = (props) => {
     const state = useSelector((state) => state);
     const dispatch = useDispatch();
-    const { modalPage } = state.pageReducer;
-    
-    const [boardInfo, serBoardInfo] = useState([]);
-    const [commitInfo, setCommitInfo] = useState([]);
-    const [commentInfo, setCommentInfo] = useState([]);
-    
+
     return (
-        <Card onClick={() => dispatch(modalMoved("MyComment"))}>
+        <Card onClick={() => {
+            dispatch(modalMoved("MyComment"))
+            dispatch(commentSaved(props.content))
+            if (props.boardIndex) dispatch(boardIndexSaved(props.boardIndex))
+            if (props.commitIndex) dispatch(commitDetailIndexSaved(props.commitIndex))
+            dispatch(setMyPageProps(props))
+        }}>
             <div className='frame1'>
-                <div className="content">{content}</div>
+                <div className="content">{props.content}</div>
             </div>
             <div className="frame2">
                 <div className="counts">
-                    <span>{upCount}/ </span>
-                    <span>{downCount}</span>
+                    <span>{props.upCount}/ </span>
+                    <span>{props.downCount}</span>
                 </div>
-                <div className="date">{createdAt.slice(0, 10)}</div>
+                <div className="date">{props.createdAt.slice(0, 10)}</div>
             </div>
         </Card>
         );

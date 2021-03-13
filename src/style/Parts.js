@@ -29,6 +29,7 @@ const Parts = {
         ${props => props.clicked==="clicked" ? "" : "box-shadow:inset 15px -1px 8px rgba(0, 0, 0, 0.3)" };
         ${props => (props.clicked!=="clicked" && props.left) ? "box-shadow:inset -15px -1px 10px rgba(0, 0, 0, 0.3)" : "" };
         border-radius: 2px;
+        ${props => props.display==="none" ? "display: none" : ""};
     `
     ,
     Body : styled.div`
