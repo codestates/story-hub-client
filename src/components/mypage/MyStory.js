@@ -57,7 +57,6 @@ const MyStory = (props) => {
     const [boardInfo, serBoardInfo] = useState([]);
     const [commitInfo, setCommitInfo] = useState([]);
     const [commentInfo, setCommentInfo] = useState([]);
-    console.log(props)
     return (
         <Card onClick={() => {
             dispatch(modalMoved("MyStory"))
