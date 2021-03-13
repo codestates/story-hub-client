@@ -15,7 +15,7 @@ const ModalFrame = styled.div`
     justify-content: flex-start;
     align-items: center;
     width: 300px;
-    height: 420px;
+    height: 280px;
     background-color: white;
     border: 2px solid rgb(220,220,220);
     box-shadow: 3px 3px 12px gray;
@@ -31,14 +31,6 @@ const ModalFrame = styled.div`
     }
     .upCount {
         margin: -10px 20px 0 auto;
-    }
-    .commitTitle {
-        font-weight: 900;
-        font-size: 1.1rem;
-    }
-    span {
-        font-weight: 300;
-        ${ellipsis('700px')};
     }
     h2 {
         margin-top: 10px;
@@ -67,57 +59,11 @@ const ModalFrame = styled.div`
         text-align: right;
         padding-bottom: 3px;
     }
-    .cardFrame {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: space-evenly;
-        width: 90%;
-        border-bottom: 3px double black;
-    }
-    .commentsFrame {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
-        align-items: center;
-        flex-wrap: wrap;
-        width: 300px;
-        height: 160px;
-    }
-    .message {
-        margin-bottom: 40px;
-    }
     .toDetail{
-        margin: auto 0 7px 0;
+        margin: auto 0 20px 0;
         width: 80%;
         height: 50px;
         border-radius: 15px;
-    }
-    .card {
-        width: 120px;
-        height: 50px;
-        margin: 10px;
-        background-image: url(${cardBackground});
-        background-color: transparent;
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        background-position: 50% 50%;
-        padding: 10px 0 0 1vw;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-    }
-    .underline {
-        border-bottom: 1px solid black;
-        padding-bottom: 5px;
-        margin-bottom: 5px;
-        width: 90%;
-        ${ellipsis('700px')};
-    }
-    .bottom {
-        margin-bottom: 5px;
-        text-align: right;
-        padding-right: 10px;
     }
 `
 
@@ -135,6 +81,7 @@ const myComment= (props) => {
                     dispatch(setMyPageProps({}))
                 }}>x</button>
                 <div className="upCount">{myPageProps.upCount}</div>
+                <h1 style={{textAlign:'center', padding:'0 0 5px 0'}}>My Comment</h1>
                 <div className="content">{myPageProps.content}</div>
                 <div className="createdAt">DATE : {myPageProps.createdAt}</div>
                 <button className="toDetail" onClick={() => {
