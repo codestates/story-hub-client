@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { modalMoved, setMyPageProps } from '../../../actions'
+import { modalMoved, boardIndexSaved, setMyPageProps } from '../../../actions'
 import Parts from '../../../style/Parts'
 import styled from 'styled-components'
 import { ellipsis } from 'polished';
@@ -183,6 +183,17 @@ const myCommit = (props) => {
                 </div>
                 <button className="toCommit" onClick={() => {
                     history.push('/commitdetail')
+                    const boardIndex = myPageProps.commitIndex
+                    const email = myPageProps.email
+                    const result = axios({
+                        url: 'http://localhost:4000/commit/detail',
+                        method: 'GET',
+                        params: {
+                            boardIndex,
+                            email
+                        },
+                    }).then(res => console.log(res.data))
+                    dispatch(boardIndexSaved(myPageProps.boardIndex))
                     dispatch(modalMoved(""))
                 }}>To the Commit</button>
             </ModalFrame>

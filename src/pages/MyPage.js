@@ -184,11 +184,9 @@ const MyPage = (props) => {
     setMyComments(list);
   };
 
-
   return (
     <>
       <Parts.Board>
-      <h1>My Info</h1>
       <MyInfo myInfo={myInfo} />
       <h1>My Story</h1>
       {myStory.length > 0 ? (
@@ -264,6 +262,7 @@ const MyPage = (props) => {
               return (
                 <MyCommits
                   key={idx}
+                  boardIndex={commitBoard.board_index}
                   commitIndex={commitBoard.commit_index}
                   commitDetail={commitBoard.content}
                   title={commitBoard.title}
