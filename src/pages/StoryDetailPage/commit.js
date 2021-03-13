@@ -23,7 +23,6 @@ const CommitPage = (props) => {
 
     setCommitList(result.data.list);
   };
-  console.log(commitList)
   useEffect(() => {
     dispatch(pageMoved('StoryDetail'));
     getCommitList();
