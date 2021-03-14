@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory, withRouter } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
   commitDetailSaved,
@@ -8,7 +8,7 @@ import {
   commitDetailTitleSaved,
   commitDetailNicknameSaved,
   commitDetailCreatedSaved,
-  commitDetailIsMergedSaved,
+  commitDetailIsMergedSaved,  
 } from '../../actions';
 
 const Card = styled.div`
@@ -22,6 +22,7 @@ const Card = styled.div`
 const CommitDetailCard = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
+
   const handleCard = () => {
     dispatch(commitDetailSaved(props.content));
     dispatch(commitDetailIndexSaved(props.commit_index));

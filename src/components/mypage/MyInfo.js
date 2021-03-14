@@ -111,7 +111,6 @@ const MyInfo = ({ myInfo }) => {
       },
     });
     const { data } = result.data;
-    console.log(data)
     if(data)setNickName(data.nickname);
   };
 

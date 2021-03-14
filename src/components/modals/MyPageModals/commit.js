@@ -182,20 +182,20 @@ const myCommit = (props) => {
                     </div>
                 </div>
                 <button className="toCommit" onClick={() => {
-                    history.push('/commitdetail')
-                    const boardIndex = myPageProps.commitIndex
-                    const email = myPageProps.email
-                    const result = axios({
-                        url: 'http://localhost:4000/commit/detail',
-                        method: 'GET',
-                        params: {
-                            boardIndex,
-                            email
-                        },
-                    }).then(res => console.log(res.data))
+                    // const boardIndex = myPageProps.commitIndex
+                    // const email = myPageProps.email
+                    // const result = axios({
+                    //     url: 'http://localhost:4000/commit/detail',
+                    //     method: 'GET',
+                    //     params: {
+                    //         boardIndex,
+                    //         email
+                    //     },
+                    // }).then(res => console.log(res.data))
                     dispatch(boardIndexSaved(myPageProps.boardIndex))
                     dispatch(modalMoved(""))
-                }}>To the Commit</button>
+                    history.push('/content')
+                }}>To the Story</button>
             </ModalFrame>
         </Parts.ModalBackground>
     )

@@ -11,6 +11,7 @@ import {
     COMMIT_DETAIL_NICKNAME_SAVED,
     COMMIT_DETAIL_CREATED_SAVED,
     COMMIT_DETAIL_ISMERGED_SAVED,
+    COMMIT_MAXDEPTH_SAVED,
 } from '../actions';
 import { pageState } from './initialState';
 const pageReducer = (state = pageState, action) => {
@@ -74,6 +75,11 @@ const pageReducer = (state = pageState, action) => {
         return {
             ...state,
             commitDetailIsMerged: action.payload,
+        }
+        case COMMIT_MAXDEPTH_SAVED:
+        return {
+            ...state,
+            commitMaxDepth: action.payload,
         }
         default: return state
     }

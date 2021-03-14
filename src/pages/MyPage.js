@@ -4,7 +4,7 @@ import RightNav from '../components/navigators/RightNav';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { pageMoved, userInfo, modalMoved } from '../actions';
+import { pageMoved, userInfo, modalMoved, userUpdate } from '../actions';
 import Parts from '../style/Parts';
 import MyInfo from '../components/mypage/MyInfo';
 import MyStory from '../components/mypage/MyStory';
@@ -106,7 +106,12 @@ const MyPage = (props) => {
     MyFavoriteFc();
     MyCommitsFc();
     myCommentsFc();
-  }, []);
+  }, [accessToken]);
+
+  const setAccessToken = (token) => {
+    dispatch(userUpdate(token));
+  };
+
 
   const myInfoFc = async () => {
     const result = await axios({
@@ -179,146 +184,152 @@ const MyPage = (props) => {
         loginType,
       },
     });
-
     const { list } = result.data;
+    // console.log(list)
+
     setMyComments(list);
   };
 
   return (
     <>
       <Parts.Board>
-      <MyInfo myInfo={myInfo} />
-      <h1>My Story</h1>
-      {myStory.length > 0 ? (
-        <>
-          <CardsFrame story>
-          {myStory
-            .slice(storyPagesVisited, storyPagesVisited + storyBoardsPerPage)
-            .map((storyBoard, idx) => {           
-              return (
-                <MyStory
-                  key={idx}
-                  boardIndex={storyBoard.board_index}
-                  storyDetail={storyBoard.content}
-                  title={storyBoard.title}
-                  upCount={storyBoard.up_count}
-                  downCount={storyBoard.down_count}
-                  createdAt={storyBoard.created_at.slice(0, 10)}
-                />
-              );
-            })}
-          </CardsFrame>
-          <PagenateFrame>
-          <ReactPaginate
-            pageCount={storyPageCount}
-            previousLabel={'<'}
-            nextLabel={'>'}
-            onPageChange={storyChangePage}
-          />
-          </PagenateFrame>
-        </>
-        )
-        : ''}
-        </Parts.Board>
-        <Parts.Board>
-                  <h1>My Favorite</h1>
-      {myFavorite.length > 0 ? (
-        <>
-          <CardsFrame>
-          {myFavorite
-            .slice(favoritePagesVisited, favoritePagesVisited + favoriteBoardsPerPage)
-            .map((favoriteBoard, idx) => {           
-              return (
-                <MyFavorite
-                  key={idx}
-                  boardIndex={favoriteBoard.board_index}
-                  storyDetail={favoriteBoard.content}
-                  title={favoriteBoard.title}
-                  upCount={favoriteBoard.up_count}
-                  downCount={favoriteBoard.down_count}
-                  createdAt={favoriteBoard.created_at.slice(0, 10)}
-                />
-              );
-            })}
-          </CardsFrame>
-          <PagenateFrame>
-          <ReactPaginate
-            pageCount={favoritePageCount}
-            previousLabel={'<'}
-            nextLabel={'>'}
-            onPageChange={favoriteChangePage}
-          />
-          </PagenateFrame>
-        </>
-        )
-        : ''}
-      <h1>My Commits</h1>
-      {myCommit.length > 0 ? (
-        <>
-          <CardsFrame>
-          {myCommit
-            .slice(commitPagesVisited, commitPagesVisited + commitBoardsPerPage)
-            .map((commitBoard, idx) => {           
-              return (
-                <MyCommits
-                  key={idx}
-                  boardIndex={commitBoard.board_index}
-                  commitIndex={commitBoard.commit_index}
-                  commitDetail={commitBoard.content}
-                  title={commitBoard.title}
-                  upCount={commitBoard.up_count}
-                  downCount={commitBoard.down_count}
-                  createdAt={commitBoard.created_at.slice(0, 10)}
-                />
-              );
-            })}
-          </CardsFrame>
-          <PagenateFrame>
-          <ReactPaginate
-            pageCount={commitPageCount}
-            previousLabel={'<'}
-            nextLabel={'>'}
-            onPageChange={commitChangePage}
-          />
-          </PagenateFrame>
-        </>
-        )
-        : ''}
-      <h1>My Comments</h1>
-      {myComment.length > 0 ? (
-        <>
-          <CardsFrame comments>
-          {myComment
-            .slice(commentPagesVisited, commentPagesVisited + commentBoardsPerPage)
-            .map((commentBoard, idx) => {           
-              return (
-                <MyComments
-                  key={idx}
-                  boardIndex={commentBoard.board_index}
-                  commitIndex={commentBoard.commit_index}
-                  content={commentBoard.content}
-                  upCount={commentBoard.up_count}
-                  downCount={commentBoard.down_count}
-                  createdAt={commentBoard.created_at.slice(0, 10)}
-                />
-              );
-            })}
-          </CardsFrame>
-          <PagenateFrame>
-          <ReactPaginate
-            pageCount={commentPageCount}
-            previousLabel={'<'}
-            nextLabel={'>'}
-            onPageChange={commentChangePage}
-          />
-          </PagenateFrame>
-        </>
-        )
-        : ''}
-    </Parts.Board>
-    <StoryModal display={modalPage==="MyStory" ? "" : "none"}/>
-    <CommitModal display={modalPage==="MyCommit" ? "" : "none"}/>
-    <CommentModal display={modalPage==="MyComment" ? "" : "none"}/>
+        {myInfo ? <MyInfo myInfo={myInfo} setAccessToken={setAccessToken} /> : ''}
+        <h1>My Story</h1>
+        {myStory.length > 0 ? (
+          <>
+            <CardsFrame story>
+              {myStory
+                .slice(storyPagesVisited, storyPagesVisited + storyBoardsPerPage)
+                .map((storyBoard, idx) => {
+                  return (
+                    <MyStory
+                      key={idx}
+                      boardIndex={storyBoard.board_index}
+                      storyDetail={storyBoard.content}
+                      title={storyBoard.title}
+                      upCount={storyBoard.up_count}
+                      downCount={storyBoard.down_count}
+                      createdAt={storyBoard.created_at.slice(0, 10)}
+                    />
+                  );
+                })}
+            </CardsFrame>
+            <PagenateFrame>
+              <ReactPaginate
+                pageCount={storyPageCount}
+                previousLabel={'<'}
+                nextLabel={'>'}
+                onPageChange={storyChangePage}
+              />
+            </PagenateFrame>
+          </>
+        ) : (
+          ''
+        )}
+      </Parts.Board>
+      <Parts.Board>
+        <h1>My Favorite</h1>
+        {myFavorite.length > 0 ? (
+          <>
+            <CardsFrame>
+              {myFavorite
+                .slice(favoritePagesVisited, favoritePagesVisited + favoriteBoardsPerPage)
+                .map((favoriteBoard, idx) => {
+                  return (
+                    <MyFavorite
+                      key={idx}
+                      boardIndex={favoriteBoard.board_index}
+                      storyDetail={favoriteBoard.content}
+                      title={favoriteBoard.title}
+                      upCount={favoriteBoard.up_count}
+                      downCount={favoriteBoard.down_count}
+                      createdAt={favoriteBoard.created_at.slice(0, 10)}
+                    />
+                  );
+                })}
+            </CardsFrame>
+            <PagenateFrame>
+              <ReactPaginate
+                pageCount={favoritePageCount}
+                previousLabel={'<'}
+                nextLabel={'>'}
+                onPageChange={favoriteChangePage}
+              />
+            </PagenateFrame>
+          </>
+        ) : (
+          ''
+        )}
+        <h1>My Commits</h1>
+        {myCommit.length > 0 ? (
+          <>
+            <CardsFrame>
+              {myCommit
+                .slice(commitPagesVisited, commitPagesVisited + commitBoardsPerPage)
+                .map((commitBoard, idx) => {
+                  return (
+                    <MyCommits
+                      key={idx}
+                      boardIndex={commitBoard.board_index}
+                      commitIndex={commitBoard.commit_index}
+                      commitDetail={commitBoard.content}
+                      title={commitBoard.title}
+                      upCount={commitBoard.up_count}
+                      downCount={commitBoard.down_count}
+                      createdAt={commitBoard.created_at.slice(0, 10)}
+                    />
+                  );
+                })}
+            </CardsFrame>
+            <PagenateFrame>
+              <ReactPaginate
+                pageCount={commitPageCount}
+                previousLabel={'<'}
+                nextLabel={'>'}
+                onPageChange={commitChangePage}
+              />
+            </PagenateFrame>
+          </>
+        ) : (
+          ''
+        )}
+        <h1>My Comments</h1>
+        {myComment.length > 0 ? (
+          <>
+            <CardsFrame comments>
+              {myComment
+                .slice(commentPagesVisited, commentPagesVisited + commentBoardsPerPage)
+                .map((commentBoard, idx) => {
+                  return (
+                    <MyComments
+                      key={idx}
+                      boardIndex={commentBoard.board_index}
+                      commitIndex={commentBoard.commit_index}
+                      content={commentBoard.content}
+                      upCount={commentBoard.up_count}
+                      downCount={commentBoard.down_count}
+                      createdAt={commentBoard.created_at.slice(0, 10)}
+                      commentindex={commentBoard.comment_index}
+                    />
+                  );
+                })}
+            </CardsFrame>
+            <PagenateFrame>
+              <ReactPaginate
+                pageCount={commentPageCount}
+                previousLabel={'<'}
+                nextLabel={'>'}
+                onPageChange={commentChangePage}
+              />
+            </PagenateFrame>
+          </>
+        ) : (
+          ''
+        )}
+      </Parts.Board>
+      <StoryModal display={modalPage === 'MyStory' ? '' : 'none'} />
+      <CommitModal display={modalPage === 'MyCommit' ? '' : 'none'} />
+      <CommentModal display={modalPage === 'MyComment' ? '' : 'none'} />
     </>
   );
 };

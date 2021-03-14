@@ -23,6 +23,9 @@ import LoginSignUpModal from './components/modals/LoginSignUpModal';
 import Message from './components/modals/messageModal';
 import Merge from './components/modals/mergeModal'
 import DeleteCommit from './components/modals/deleteCommitModal'
+import DeleteBoard from './components/modals/deleteBoard'
+import UpdateBoard from './components/modals/updateBoard'
+import UpdateCommit from './components/modals/updateCommit'
 import styled from 'styled-components'
 import background from './images/backgroundImage.jpeg'
 import Parts from './style/Parts';
@@ -101,6 +104,9 @@ const App = () => {
       <LoginSignUpModal display={modalPage==="Login" ? "" : "none"}/>
       <Merge display={modalPage==="Merge" ? "" : "none"}/>
       <DeleteCommit display={modalPage==="DeleteCommit" ? "" : "none"}/>
+      <DeleteBoard display={modalPage==="DeleteBoard" ? "" : "none"}/>
+      <UpdateBoard display={modalPage==="UpdateBoard" ? "" : "none"}/>
+      <UpdateCommit display={modalPage==="UpdateCommit" ? "" : "none"}/>
       <Message display={isOpen ? "" : "none"}/>
     </AppFrame>
   );

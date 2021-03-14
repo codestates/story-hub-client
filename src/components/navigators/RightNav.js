@@ -15,6 +15,8 @@ import Parts from '../../style/Parts'
 const RightNav = (props) => {
     let url = document.location.href.split("/");
     let clicked = url[url.length-1]
+    const state = useSelector((state) => state);
+    const { accessToken } = state.userReducer;
 
     const setClicked = (e) => {
         clicked = e.target.textContent
@@ -25,7 +27,7 @@ const RightNav = (props) => {
         else return ""
     }
 
-    return (
+    return accessToken ? (
         <Parts.Nav display={props.display==="none" ? "none": ""}>
             <Link to="/board">
             <Parts.Button onClick={setClicked} clicked={isClickedButton(["board", "Board"])} color="#ffeeaad9">Board</Parts.Button>
@@ -40,6 +42,15 @@ const RightNav = (props) => {
             <Parts.Button onClick={setClicked} clicked={isClickedButton(["event", "Event"])} color='#aad4ffbd'>Event</Parts.Button>
             </Link>
         </Parts.Nav>
+    ) : (
+        <Parts.Nav display={props.display==="none" ? "none": ""}>
+        <Link to="/board">
+        <Parts.Button onClick={setClicked} clicked={isClickedButton(["board", "Board"])} color="#ffeeaad9">Board</Parts.Button>
+        </Link>
+        <Link to="/event">
+        <Parts.Button onClick={setClicked} clicked={isClickedButton(["event", "Event"])} color='#aad4ffbd'>Event</Parts.Button>
+        </Link>
+    </Parts.Nav>
     )
 }
 

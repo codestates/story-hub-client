@@ -35,6 +35,7 @@ export const COMMIT_DETAIL_TITLE_SAVED = "COMMIT_DETAIL_TITLE_SAVED";
 export const COMMIT_DETAIL_NICKNAME_SAVED = "COMMIT_DETAIL_NICKNAME_SAVED";
 export const COMMIT_DETAIL_CREATED_SAVED = "COMMIT_DETAIL_CREATED_SAVED";
 export const COMMIT_DETAIL_ISMERGED_SAVED = "COMMIT_DETAIL_ISMERGED_SAVED";
+export const COMMIT_MAXDEPTH_SAVED = "COMMIT_MAXDEPTH_SAVED";
 
 export const userLogin = (userInfo) => {
   return {
@@ -244,3 +245,9 @@ export const commitDetailIsMergedSaved = (number) => {
   }
 }
 
+export const commitMaxDepthSaved = (number) => {
+  return {
+      type: COMMIT_MAXDEPTH_SAVED,
+      payload: number,
+  }
+}
