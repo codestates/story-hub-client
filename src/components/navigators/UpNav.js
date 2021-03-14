@@ -20,7 +20,7 @@ import {
 import styled from 'styled-components';
 import Parts from '../../style/Parts';
 import logoImage from '../../images/story_hub_logo.png';
-import logoImage2 from '../../images/story_hub_logo2.png'
+import logoImage2 from '../../images/story_hub_logo2.png';
 import searchButtonImage from '../../images/searchButton.png';
 import searchButtonImage2 from '../../images/searchButton2.png';
 import configureStore from '../../store/store';
@@ -158,21 +158,21 @@ const UpNav = (props) => {
         {isLogin ? (
           <ButtonWrap>
             <button
-              onClick={() => {
+              onClick={async () => {
                 dispatch(
                   userLogout(),
                   dispatch(messageOpen('로그아웃 되었습니다!')),
-                  dispatch(categorySaved('')),
-                  dispatch(commitbySaved('')),
-                  dispatch(commitSaved('')),
-                  dispatch(commitTitleSaved('')),
-                  dispatch(contentSaved('')),
-                  dispatch(contentTitleSaved('')),
-                  dispatch(commentSaved('')),
-                  dispatch(etcSaved('')),
-                  dispatch(minSaved(0)),
-                  dispatch(maxSaved(0)),
-                  persistor.purge(),
+                  // dispatch(categorySaved('')),
+                  // dispatch(commitbySaved('')),
+                  // dispatch(commitSaved('')),
+                  // dispatch(commitTitleSaved('')),
+                  // dispatch(contentSaved('')),
+                  // dispatch(contentTitleSaved('')),
+                  // dispatch(commentSaved('')),
+                  // dispatch(etcSaved('')),
+                  // dispatch(minSaved(0)),
+                  // dispatch(maxSaved(0)),
+                  await persistor.purge(),
                   history.push('/')
                 );
               }}

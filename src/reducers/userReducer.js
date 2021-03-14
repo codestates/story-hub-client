@@ -17,13 +17,10 @@ const userReducer = (state = userState, action) => {
         accessToken: '',
       };
     case USER_UPDATE: {
+      console.log(action.payload);
       return {
         ...state,
-        users: [
-          {
-            nickname: action.payload,
-          },
-        ],
+        accessToken: action.payload,
       };
     }
     case USER_SIGNUP:
