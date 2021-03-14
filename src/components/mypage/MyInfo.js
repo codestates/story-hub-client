@@ -100,23 +100,27 @@ const MyInfo = ({ myInfo }) => {
     setNickName(e.target.value);
     console.log(nickName)
   };
-
   const handleNickNameChange = async () => {
     setCheckBtn((prevCheckbtn) => (prevCheckbtn ? false : true));
     if (checkBtn === true) {
-      axios({
-        url: 'http://localhost:4000/user',
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-        data: {
-          loginType: loginType,
-          nickname: nickName
-        },
-        withCredentials: true
-      })
-    }
+      if (nickName) {
+        axios({
+          url: 'http://localhost:4000/user',
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          data: {
+            loginType: loginType,
+            nickname: nickName
+          },
+          withCredentials: true
+        })
+      }else {
+        setCheckBtn(true);  
+        dispatch(messageOpen('닉네임을 입력해주세요!'));
+      }
+    } 
   };
 
   return (
