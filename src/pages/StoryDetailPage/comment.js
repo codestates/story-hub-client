@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, withRouter, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { pageMoved } from '../../actions';
+import { pageMoved, messageOpen } from '../../actions';
 
 const CommentPage = (props) => {
   const state = useSelector((state) => state);
@@ -21,7 +21,6 @@ const CommentPage = (props) => {
         boardIndex,
       },
     });
-    console.log(result)
     setCommentList(result.data.list);
   };
 
@@ -54,7 +53,7 @@ const handleComment = (e) => {
 }
 
   useEffect(() => {
-    console.log(users)
+    dispatch(pageMoved('StoryDetail'));
     getCommentList();
   }, []);
 

@@ -92,19 +92,37 @@ input {
 const MyInfo = ({ myInfo }) => {
   const state = useSelector((state) => state);
   const { loginType, accessToken } = state.userReducer;
-
   const [checkBtn, setCheckBtn] = useState(false);
   const [nickName, setNickName] = useState(myInfo.nickname);
-  console.log(nickName)
+
+  useEffect(() => {
+    myInfoFc();
+  }, []);
+
+  const myInfoFc = async () => {
+    const result = await axios({
+      url: 'http://localhost:4000/user/info',
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        loginType,
+      },
+    });
+    const { data } = result.data;
+    console.log(data)
+    if(data)setNickName(data.nickname);
+  };
+
   const handleInputValue = (e) => {
     setNickName(e.target.value);
-    console.log(nickName)
   };
 
   const handleNickNameChange = async () => {
     setCheckBtn((prevCheckbtn) => (prevCheckbtn ? false : true));
     if (checkBtn === true) {
-      axios({
+      await axios({
         url: 'http://localhost:4000/user',
         method: 'PUT',
         headers: {
@@ -133,7 +151,7 @@ const MyInfo = ({ myInfo }) => {
           {checkBtn ? (
               <input type="text" onChange={handleInputValue} value={nickName} />
             ) : (
-              <div>{nickName}</div>
+              <div>{nickName? nickName : myInfo.nickname}</div>
             )}
         </div>
         <div>USER NAME : <span>{myInfo.userName}</span></div>
