@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { pageMoved, modalMoved, messageOpen } from '../actions';
+import { pageMoved, modalMoved, messageOpen, commitMaxDepthSaved } from '../actions';
 import Parts from '../style/Parts';
 import styled from 'styled-components';
 
@@ -18,12 +18,13 @@ const CommitDetailPage = (props) => {
     commitDetailNickname,
     commitDetailCreated,
     commitDetailIsMerged,
+    commitMaxDepth,
   } = state.pageReducer;
   const history = useHistory();
   const dispatch = useDispatch();
   const { accessToken, loginType } = state.userReducer;
   const [isWriter, setIsWriter] = useState(false);
-  const [isDelete, setIsDelete] = useState(false);
+  const [isChange, setIsChange] = useState(false);
   const [commentList, setCommentList] = useState([]);
   const [comment, setComment] = useState('');
 
@@ -36,11 +37,12 @@ const CommitDetailPage = (props) => {
       },
     });
     setCommentList(result.data.list);
-    console.log(commentList)
   };
 
   const handleSubmit = () => {
-    if (comment) {
+    if(!accessToken) dispatch(messageOpen('로그인이 필요합니다.'))
+    else {
+      if (comment) {
         axios({
             url: 'http://localhost:4000/comment/create',
             method: 'POST',
@@ -51,7 +53,8 @@ const CommitDetailPage = (props) => {
             data: {
                 loginType,
                 content: comment,
-                commitIndex: commitDetailIndex
+                commitIndex: commitDetailIndex,
+                boardIndex: boardIndex
             },
         }).then((res) => {
           setComment('')
@@ -61,6 +64,7 @@ const CommitDetailPage = (props) => {
         dispatch(messageOpen('내용을 입력해주세요.'));
         return;
     }
+  }
 };
 
   const checkMergeDeleteButton = async () => {
@@ -80,10 +84,10 @@ const CommitDetailPage = (props) => {
       data.map((el) => {
         if (el.board_index === boardIndex) {
           setIsWriter(true);
-          setIsDelete(true);
+          setIsChange(true);
           if (commitDetailIsMerged === 1) {
             setIsWriter(false);
-            setIsDelete(false);
+            setIsChange(false);
           }
         }
       });
@@ -101,16 +105,20 @@ const CommitDetailPage = (props) => {
     });
     if (resultDelete.data) {
       if(!accessToken) return;
-      resultDelete.data.map((el) => {
+      resultDelete.data.map((el) => {        
         if (el.commit_index === commitDetailIndex) {
-          setIsDelete(true);
+          setIsChange(true);
           if (commitDetailIsMerged === 1) {
-            setIsDelete(false);
+            setIsChange(false);
+          }
+          if(el.depth < commitMaxDepth) {
+            setIsWriter(false);
           }
         }
       });
     }
   };
+  
 
   const handleBack = () => {
     history.push('/commit');
@@ -118,16 +126,19 @@ const CommitDetailPage = (props) => {
 
   const handleMerge = () => {
     dispatch(modalMoved('Merge'));
+    dispatch(commitMaxDepthSaved(commitMaxDepth + 1))
   };
   const handleDelete = () => {
     dispatch(modalMoved('DeleteCommit'));
+  };
+  const handleUpdate = () => {
+    dispatch(modalMoved('UpdateCommit'));
   };
   const handleComment = (e) => {
     setComment(e.target.value)
   }
 
   useEffect(() => {
-    // console.log(commitDetailIsMerged);
     getCommentList();
     checkMergeDeleteButton();
     dispatch(pageMoved('CommitDetail'));
@@ -165,8 +176,11 @@ const CommitDetailPage = (props) => {
       <Parts.Button display={isWriter ? '' : 'none'} onClick={handleMerge}>
         Merge
       </Parts.Button>
-      <Parts.Button display={isDelete ? '' : 'none'} onClick={handleDelete}>
+      <Parts.Button display={isChange ? '' : 'none'} onClick={handleDelete}>
         Delete
+      </Parts.Button>
+      <Parts.Button display={isChange ? '' : 'none'} onClick={handleUpdate}>
+        Update
       </Parts.Button>
     </CommentStyle>
   );

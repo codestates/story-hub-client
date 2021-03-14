@@ -35,6 +35,7 @@ export const COMMIT_DETAIL_TITLE_SAVED = 'COMMIT_DETAIL_TITLE_SAVED';
 export const COMMIT_DETAIL_NICKNAME_SAVED = 'COMMIT_DETAIL_NICKNAME_SAVED';
 export const COMMIT_DETAIL_CREATED_SAVED = 'COMMIT_DETAIL_CREATED_SAVED';
 export const COMMIT_DETAIL_ISMERGED_SAVED = 'COMMIT_DETAIL_ISMERGED_SAVED';
+export const COMMIT_MAXDEPTH_SAVED = "COMMIT_MAXDEPTH_SAVED";
 
 export const deleteState = () => {
   return {
@@ -245,7 +246,14 @@ export const commitDetailCreatedSaved = (text) => {
 
 export const commitDetailIsMergedSaved = (number) => {
   return {
-    type: COMMIT_DETAIL_ISMERGED_SAVED,
-    payload: number,
-  };
-};
+      type: COMMIT_DETAIL_ISMERGED_SAVED,
+      payload: number,
+  }
+}
+
+export const commitMaxDepthSaved = (number) => {
+  return {
+      type: COMMIT_MAXDEPTH_SAVED,
+      payload: number,
+  }
+}

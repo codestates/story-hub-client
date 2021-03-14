@@ -109,6 +109,11 @@ const MyPage = (props) => {
     myCommentsFc();
   }, [accessToken]);
 
+  const setAccessToken = (token) => {
+    dispatch(userUpdate(token));
+  };
+
+
   const myInfoFc = async () => {
     console.log(accessToken);
     const result = await axios({
@@ -188,8 +193,9 @@ const MyPage = (props) => {
         loginType,
       },
     });
-
     const { list } = result.data;
+    // console.log(list)
+
     setMyComments(list);
   };
 
@@ -312,6 +318,7 @@ const MyPage = (props) => {
                       upCount={commentBoard.up_count}
                       downCount={commentBoard.down_count}
                       createdAt={commentBoard.created_at.slice(0, 10)}
+                      commentindex={commentBoard.comment_index}
                     />
                   );
                 })}

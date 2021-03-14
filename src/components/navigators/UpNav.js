@@ -116,7 +116,7 @@ const ButtonWrap = styled.div`
 
 const UpNav = (props) => {
   const state = useSelector((state) => state);
-  const { isLogin } = state.userReducer;
+  const { isLogin, accessToken } = state.userReducer;
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -131,6 +131,11 @@ const UpNav = (props) => {
     setTitle('');
   };
 
+  const handleCreate = () => {
+    if(accessToken) history.push('newstorycontent')
+    else dispatch(messageOpen('로그인이 필요합니다.'))
+  }
+
   return (
     <Parts.Nav up display={props.display === 'none' ? 'none' : ''}>
       <UpNavFrame>
@@ -138,9 +143,7 @@ const UpNav = (props) => {
           <Logo />
         </Link>
         <ButtonWrap>
-          <Link to="/newstorycontent">
-            <button>Create New Story</button>
-          </Link>
+            <button onClick = {handleCreate}>Create New Story</button>
         </ButtonWrap>
       </UpNavFrame>
       <UpNavFrame>

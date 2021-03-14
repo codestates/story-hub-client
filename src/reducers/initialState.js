@@ -18,6 +18,7 @@ export const pageState = {
   commitDetailNickname : '',
   commitDetailCreated : '',
   commitDetailIsMerged : 0,
+  commitMaxDepth : 0,
 };
 
 export const textState = {

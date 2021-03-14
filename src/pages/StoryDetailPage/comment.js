@@ -24,8 +24,11 @@ const CommentPage = (props) => {
     setCommentList(result.data.list);
   };
 
-  const handleSubmit = () => {
-    if (comment) {
+
+  const handleSubmit = () => {   
+    if(!accessToken) dispatch(messageOpen('로그인이 필요합니다.')) 
+    else {
+      if (comment) {
         axios({
             url: 'http://localhost:4000/comment/create',
             method: 'POST',
@@ -43,9 +46,10 @@ const CommentPage = (props) => {
           history.go(0)
         })
     } else {
-        dispatch(messageOpen('내용을 입력해주세요.'));
-        return;
+      dispatch(messageOpen('내용을 입력해주세요.'));
+      return;
     }
+  }
 };
 
 const handleComment = (e) => {

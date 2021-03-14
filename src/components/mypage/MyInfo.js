@@ -98,9 +98,24 @@ const MyInfo = ({ myInfo, setAccessToken }) => {
   const [checkBtn, setCheckBtn] = useState(false);
   const [nickName, setNickName] = useState(myInfo.nickname);
 
-  // useEffect(() => {
-  //   myInfoFc();
-  // }, [accessToken]);
+  useEffect(() => {
+    myInfoFc();
+  }, []);
+
+  const myInfoFc = async () => {
+    const result = await axios({
+      url: 'http://localhost:4000/user/info',
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      params: {
+        loginType,
+      },
+    });
+    const { data } = result.data;
+    if(data)setNickName(data.nickname);
+  };
 
   const handleInputValue = (e) => {
     setNickName(e.target.value);
