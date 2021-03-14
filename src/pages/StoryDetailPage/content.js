@@ -27,8 +27,8 @@ const ContentPage = (props) => {
   };
 
   useEffect(() => {
-    getTitle();
     dispatch(pageMoved('StoryDetail'));
+    getTitle();
   }, []);
   return (
     <ContentStyle>

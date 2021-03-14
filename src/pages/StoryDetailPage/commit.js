@@ -48,7 +48,6 @@ const CommitPage = (props) => {
               );
             })
           : ''}
-        <button onClick={() => console.log(state.pageReducer)}>asdfasdf</button>
       </div>
     </>
   );

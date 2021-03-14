@@ -83,7 +83,7 @@ const myComment= (props) => {
                 <button className="toDetail" onClick={() => {
                     if (myPageProps.commitIndex) {
                         const boardIndex = myPageProps.commitIndex
-                        const result = axios({
+                        axios({
                             url: 'http://localhost:4000/commit/list',
                             method: 'GET',
                             params: {
@@ -97,7 +97,7 @@ const myComment= (props) => {
                     }
                     if (myPageProps.boardIndex) {
                         const boardIndex = myPageProps.boardIndex
-                        const result = axios({
+                        axios({
                             url: 'http://localhost:4000/board/detailcontent',
                             method: 'GET',
                             params: {
