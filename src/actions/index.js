@@ -14,28 +14,34 @@ export const SEARCH_LIST = 'SEARCH_LIST';
 export const MESSAGE_OPEN = 'MESSAGE_OPEN';
 export const MESSAGE_CLOSE = 'MESSAGE_CLOSE';
 
-export const CONTENT_TITLE = "CONTENT_TITLE";
-export const COMMIT_TITLE = "COMMIT_TITLE";
+export const CONTENT_TITLE = 'CONTENT_TITLE';
+export const COMMIT_TITLE = 'COMMIT_TITLE';
 
-export const CATEGORY_SAVED = "CATEGORY_SAVED";
-export const COMMENT_SAVED = "COMMENT_SAVED";
-export const COMMITBY_SAVED = "COMMITBY_SAVED";
-export const MAX_SAVED = "MAX_SAVED";
-export const MIN_SAVED = "MIN_SAVED";
-export const ETC_SAVED = "ETC_SAVED";
+export const CATEGORY_SAVED = 'CATEGORY_SAVED';
+export const COMMENT_SAVED = 'COMMENT_SAVED';
+export const COMMITBY_SAVED = 'COMMITBY_SAVED';
+export const MAX_SAVED = 'MAX_SAVED';
+export const MIN_SAVED = 'MIN_SAVED';
+export const ETC_SAVED = 'ETC_SAVED';
 
-export const BOARD_INDEX_SAVED = "BOARD_INDEX_SAVED";
-export const BOARD_TITLE_SAVED = "BOARD_TITLE_SAVED";
-export const STORY_DETAIL_SAVED = "STORY_DETAIL_SAVED";
-export const SET_MY_PAGE_PROPS = "SET_MY_PAGE_PROPS";
+export const BOARD_INDEX_SAVED = 'BOARD_INDEX_SAVED';
+export const BOARD_TITLE_SAVED = 'BOARD_TITLE_SAVED';
+export const STORY_DETAIL_SAVED = 'STORY_DETAIL_SAVED';
+export const SET_MY_PAGE_PROPS = 'SET_MY_PAGE_PROPS';
 
-export const COMMIT_DETAIL_SAVED = "COMMIT_DETAIL_SAVED";
-export const COMMIT_DETAIL_INDEX_SAVED = "COMMIT_DETAIL_INDEX_SAVED";
-export const COMMIT_DETAIL_TITLE_SAVED = "COMMIT_DETAIL_TITLE_SAVED";
-export const COMMIT_DETAIL_NICKNAME_SAVED = "COMMIT_DETAIL_NICKNAME_SAVED";
-export const COMMIT_DETAIL_CREATED_SAVED = "COMMIT_DETAIL_CREATED_SAVED";
-export const COMMIT_DETAIL_ISMERGED_SAVED = "COMMIT_DETAIL_ISMERGED_SAVED";
+export const COMMIT_DETAIL_SAVED = 'COMMIT_DETAIL_SAVED';
+export const COMMIT_DETAIL_INDEX_SAVED = 'COMMIT_DETAIL_INDEX_SAVED';
+export const COMMIT_DETAIL_TITLE_SAVED = 'COMMIT_DETAIL_TITLE_SAVED';
+export const COMMIT_DETAIL_NICKNAME_SAVED = 'COMMIT_DETAIL_NICKNAME_SAVED';
+export const COMMIT_DETAIL_CREATED_SAVED = 'COMMIT_DETAIL_CREATED_SAVED';
+export const COMMIT_DETAIL_ISMERGED_SAVED = 'COMMIT_DETAIL_ISMERGED_SAVED';
 export const COMMIT_MAXDEPTH_SAVED = "COMMIT_MAXDEPTH_SAVED";
+
+export const deleteState = () => {
+  return {
+    type: DELETE_STATE,
+  };
+};
 
 export const userLogin = (userInfo) => {
   return {
@@ -57,10 +63,10 @@ export const userSignup = (signupInfo) => {
   };
 };
 
-export const userUpdate = (nickName) => {
+export const userUpdate = (token) => {
   return {
     type: USER_UPDATE,
-    payload: nickName,
+    payload: token,
   };
 };
 
@@ -162,81 +168,81 @@ export const maxSaved = (number) => {
 };
 
 export const boardIndexSaved = (number) => {
-    return {
-        type: BOARD_INDEX_SAVED,
-        payload: number,
-    }
-}
+  return {
+    type: BOARD_INDEX_SAVED,
+    payload: number,
+  };
+};
 
 export const boardTitleSaved = (text) => {
   return {
-      type: BOARD_TITLE_SAVED,
-      payload: text,
-  }
-}
+    type: BOARD_TITLE_SAVED,
+    payload: text,
+  };
+};
 
 export const etcSaved = (text) => {
-    return {
-        type: ETC_SAVED,
-        payload: text,
-    }
-}
+  return {
+    type: ETC_SAVED,
+    payload: text,
+  };
+};
 
 export const minSaved = (number) => {
   return {
-      type: MIN_SAVED,
-      payload: number,
-  }
-}
+    type: MIN_SAVED,
+    payload: number,
+  };
+};
 
 export const storyDetailSaved = (text) => {
   return {
-      type: STORY_DETAIL_SAVED,
-      payload: text,
-  }
-}
+    type: STORY_DETAIL_SAVED,
+    payload: text,
+  };
+};
 
 export const setMyPageProps = (props) => {
   return {
-      type: SET_MY_PAGE_PROPS,
-      payload: props,
-  }
-}
+    type: SET_MY_PAGE_PROPS,
+    payload: props,
+  };
+};
 
 export const commitDetailSaved = (text) => {
   return {
-      type: COMMIT_DETAIL_SAVED,
-      payload: text,
-  }
-}
+    type: COMMIT_DETAIL_SAVED,
+    payload: text,
+  };
+};
 
 export const commitDetailIndexSaved = (number) => {
   return {
-      type: COMMIT_DETAIL_INDEX_SAVED,
-      payload: number,
-  }
-}
+    type: COMMIT_DETAIL_INDEX_SAVED,
+    payload: number,
+  };
+};
 
 export const commitDetailTitleSaved = (text) => {
   return {
-      type: COMMIT_DETAIL_TITLE_SAVED,
-      payload: text,
-  }
-}
+    type: COMMIT_DETAIL_TITLE_SAVED,
+    payload: text,
+  };
+};
 
 export const commitDetailNicknameSaved = (text) => {
   return {
-      type: COMMIT_DETAIL_NICKNAME_SAVED,
-      payload: text,
-  }
-}
+    type: COMMIT_DETAIL_NICKNAME_SAVED,
+    payload: text,
+  };
+};
 
 export const commitDetailCreatedSaved = (text) => {
   return {
-      type: COMMIT_DETAIL_CREATED_SAVED,
-      payload: text,
-  }
-}
+    type: COMMIT_DETAIL_CREATED_SAVED,
+    payload: text,
+  };
+};
 
 export const commitDetailIsMergedSaved = (number) => {
   return {

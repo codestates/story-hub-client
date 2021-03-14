@@ -11,47 +11,48 @@ import MyStory from '../components/mypage/MyStory';
 import MyFavorite from '../components/mypage/MyFavorite';
 import MyCommits from '../components/mypage/MyCommit';
 import MyComments from '../components/mypage/MyComment';
-import StoryModal from '../components/modals/MyPageModals/story'
-import CommitModal from '../components/modals/MyPageModals/commit'
-import CommentModal from '../components/modals/MyPageModals/comment'
+import StoryModal from '../components/modals/MyPageModals/story';
+import CommitModal from '../components/modals/MyPageModals/commit';
+import CommentModal from '../components/modals/MyPageModals/comment';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
 
 const CardsFrame = styled.div`
-width: 100%;
-height: ${props => props.comments ? "20vh" : "35vh"};
-${props => props.story ? "height: 75vh;" : ""}
-display:flex;
-flex-direction: row;
-justyfy-content: flex-start;
-align-items: center;
-flex-wrap: wrap;
-`
+  width: 100%;
+  height: ${(props) => (props.comments ? '20vh' : '35vh')};
+  ${(props) => (props.story ? 'height: 75vh;' : '')}
+  display:flex;
+  flex-direction: row;
+  justyfy-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+`;
 
 const PagenateFrame = styled.div`
-font-size: 0.8rem;
-margin: 5px 0 5px 0;
-ul {
-width: 80%;
-display: flex;
-flex-direction: row;
-justify-self: end;
-}
-li {
-  display: inline-block;
-  margin: 0 3px 0 3px;
-}
-.previous, .next {
-  display: inline-block;
-  margin: 0 15px 0 15px;
-  font-weight: bold;
-}
-.selected {
-  font-weight: bold;
-  text-decoration: underline;
-  color: #f49531;
-}
-`
+  font-size: 0.8rem;
+  margin: 5px 0 5px 0;
+  ul {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-self: end;
+  }
+  li {
+    display: inline-block;
+    margin: 0 3px 0 3px;
+  }
+  .previous,
+  .next {
+    display: inline-block;
+    margin: 0 15px 0 15px;
+    font-weight: bold;
+  }
+  .selected {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #f49531;
+  }
+`;
 
 const MyPage = (props) => {
   const state = useSelector((state) => state);
@@ -114,6 +115,7 @@ const MyPage = (props) => {
 
 
   const myInfoFc = async () => {
+    console.log(accessToken);
     const result = await axios({
       url: 'http://localhost:4000/user/info',
       method: 'GET',
@@ -125,7 +127,14 @@ const MyPage = (props) => {
       },
     });
     const { data } = result.data;
+    console.log(data);
     setMyInfo(data);
+  };
+
+  const setAccessToken = (token) => {
+    console.log('1', token);
+    dispatch(userUpdate(token));
+    console.log(state.userReducer);
   };
 
   const myStoryFc = async () => {
