@@ -126,7 +126,7 @@ const MyInfo = ({ myInfo }) => {
   return (
     <>
       <Frame>
-        <h1>My Info</h1>
+        <h1 style={{marginTop:'10px'}}>My Info</h1>
         <ButtonWrap>
           <button id="change" onClick={handleNickNameChange}>CHANGE<br/>NICKNAME</button>
         </ButtonWrap>

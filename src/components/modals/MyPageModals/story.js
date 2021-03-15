@@ -8,6 +8,7 @@ import styled from 'styled-components'
 import { ellipsis } from 'polished';
 import { htmlToText } from 'html-to-text';
 import cardBackground from '../../../images/card.png'
+import background from '../../../images/note.png'
 
 
 const ModalFrame = styled.div`
@@ -15,16 +16,16 @@ const ModalFrame = styled.div`
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    background-color: transparent;
+    background-image: url(${background});
+    background-size: 100%;
     width: 400px;
-    height: 500px;
-    background-color: white;
-    border: 2px solid rgb(220,220,220);
-    box-shadow: 3px 3px 12px gray;
+    height: 535px;
     padding: 10px;
     font-size: 0.9rem;
     .close {
         align-self: start;
-        margin-bottom: -10px;
+        margin: 25px 0 -35px 10px;
         background-color: transparent;
         font-weight: 400;
         font-size: 1.5rem;
@@ -37,6 +38,7 @@ const ModalFrame = styled.div`
         font-weight: 900;
         font-size: 1.1rem;
         margin-left: -120px;
+        margin-top:35px;
     }
     span {
         font-weight: 300;
@@ -51,11 +53,12 @@ const ModalFrame = styled.div`
         width: 140px;
     }
     .content {
-        width : 300px;
+        width : 270px;
         height: 35px;
         margin: 10px;
         font-size: 0.8rem;
-        background-color: rgb(220,220,220);
+        background-color: #fff8eda1;
+        border: 1px solid rgba(255,0,0,0.3);
         border-radius: 20px;
         padding: 15px;
         white-space: normal;
@@ -125,6 +128,41 @@ const ModalFrame = styled.div`
         padding-right: 10px;
     }
 `
+const ButtonWrap = styled.div`
+width: 100%;
+display: flex;
+justify-content: center;
+padding-top: 10px;
+  button {
+    display: inline-block;
+    background: transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #d2a638;
+    padding: 3px;
+    transition: all 0.5s ease-out;
+    background: linear-gradient(
+      270deg,
+      rgba(223, 190, 106, 0.8),
+      rgba(146, 111, 52, 0.8),
+      rgba(34, 34, 34, 0),
+      rgba(34, 34, 34, 0)
+    );
+    background-position: 1% 50%;
+    background-size: 300% 300%;
+    text-decoration: none;
+    border: 3px solid rgba(223, 190, 106, 1);
+    border-radius: 5px;
+    font: 900 0.8rem serif;
+  }
+
+  button:hover {
+    color: #fff;
+    border: 3px solid rgba(223, 190, 106, 0);
+    color: $white;
+    background-position: 96% 50%;
+  }
+`;
 
 const myStory = (props) => {
     const state = useSelector((state) => state);
@@ -220,10 +258,12 @@ const myStory = (props) => {
                             }
                     </div>
                 </div>
-                <button className="toStory" onClick={() => {
-                    history.push('/content')
-                    dispatch(modalMoved(""))
-                }}>To the Story</button>
+                <ButtonWrap>
+                    <button className="toStory" onClick={() => {
+                        history.push('/content')
+                        dispatch(modalMoved(""))
+                    }}>To the Story</button>
+                </ButtonWrap>
             </ModalFrame>
         </Parts.ModalBackground>
     )

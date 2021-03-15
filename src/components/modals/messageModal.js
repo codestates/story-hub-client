@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { messageClose } from '../../actions'
 import styled from 'styled-components'
 import Parts from '../../style/Parts'
+import background from '../../images/note2.png'
 
 const MessageFrame = styled.div`
     display: flex;
@@ -11,11 +12,10 @@ const MessageFrame = styled.div`
     justify-content: center;
     align-items: center;
     z-index:8;
-    width: 250px;
     height: 110 px;
-    background-color: white;
-    border: 2px solid rgb(220,220,220);
-    box-shadow: 3px 3px 12px gray;
+    background-image: url(${background});
+    background-size: 105% 105%;
+    background-position: 50% 50%;
     padding: 40px 30px 30px 30px;
 `
 const MessageButton = styled.button`

@@ -103,7 +103,7 @@ const ButtonWrap = styled.div`
     margin: 0.625rem;
     border: 3px solid rgba(223, 190, 106, 0.6);
     border-radius: 5px;
-    font: bold 0.7rem 'Nanum Myeongjo', serif;
+    font: 900 0.7rem 'Nanum Myeongjo', serif;
   }
 
   button:hover {

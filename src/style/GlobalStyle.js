@@ -8,6 +8,19 @@ const GlobalStyle = createGlobalStyle`
         white-space: nowrap;
     }
     
+    ::-webkit-scrollbar {
+        width: 9px;
+        background-color: rgba(255,255,255,0.1);
+        border-radius: 5px;
+        border: 1px solid rgba(255,218,171,0.9);
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgba(255,255,255,0.6);
+        background-clip: padding-box;
+        border-radius: 5px;
+        border: 2.5px solid transparent;
+    }
+
     :focus {
         outline: none;
     }
@@ -21,7 +34,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: 1.4rem;
         font-weight: 900;
         align-self: flex-start;
-        margin: 10px;
+        margin: 3vh 10px 10px 10px;
         padding: 0 0 5px 10px;
         text-transform: uppercase;
         width: 93%;

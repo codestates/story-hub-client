@@ -11,14 +11,22 @@ import { EditorState, ContentState, convertToRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
+const blink = keyframes`
+    0% { opacity: 1; }
+    50% { opacity: 0.2; }
+    100% { opacity: 1; }
+`
 
 const EditorStyle = styled.div`
 width: 100%;
-height: 90%;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
 
 .toolbarClassName{
     border: none;
@@ -37,9 +45,10 @@ height: 90%;
 
 .wrapperClassName{
     width: 100%;
-    height: 80%;
+    height: 75%;
     margin: 0 auto;
     margin-bottom: 4rem;
+    
 }
 
 .editorClassName{
@@ -58,24 +67,85 @@ span {
     white-space: break-spaces;
 }
 
+.upperFrame {
+    height: 110%;
+}
+.back {
+    animation: ${blink} 1.5s infinite both;
+    cursor: pointer;
+    margin: -25px auto 5px -15px;
+    border: none;
+    background-color: transparent;
+    font-size: 1.5rem;
+    font-weight: 900;
+
+}
 .title {
+    width: 99%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin: 0px 10px 15px 10px;
+    font-weight: 900;
 }
-
-input {
-    height: 18px;
-    width: 50vw;
-    max-width: 350px;
+.titleInput {
+    height: 25px;
+    width: 100%;
     margin-left: 15px;
     border-radius: 5px;
     padding-left: 10px;
+    background-color: #fff8eda1;
+    font: 1rem 'Nanum Myeongjo', serif;
+}
+.bottomFrame {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.rules {
+    font-weight: 900;
+}
+span {
+    font-size: 0.9rem;
+    font-weight: 400;
 }
 ` 
+const ButtonWrap = styled.div`
+  button {
+    width: 30vw;
+    display: inline-block;
+    background: transparent;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #d2a638;
+    padding: 2vh;
+    transition: all 0.5s ease-out;
+    background: linear-gradient(
+      270deg,
+      rgba(223, 190, 106, 0.8),
+      rgba(146, 111, 52, 0.8),
+      rgba(34, 34, 34, 0),
+      rgba(34, 34, 34, 0)
+    );
+    background-position: 1% 50%;
+    background-size: 300% 300%;
+    text-decoration: none;
+    margin: 0.625rem;
+    border: 3px solid rgba(223, 190, 106, 0.8);
+    border-radius: 5px;
+    font: 900 1rem serif;
+  }
+
+  button:hover {
+    color: #fff;
+    border: 3px solid rgba(223, 190, 106, 0);
+    color: $white;
+    background-position: 96% 50%;
+  }
+`;
+
 
 const NewCommitPage = (props) => {
     const state = useSelector((state) => state);
@@ -161,33 +231,40 @@ const NewCommitPage = (props) => {
     
     return (
         <EditorStyle>
-        <div className = "title">
-        <button onClick = {handleBack}>back</button>
-            <div>Title </div>
-            <input placeholder="Please enter a title" value = {commitTitle} onChange = {handleTitle}/>
-            <div>Commit By : {option_name}</div>
-            <div>Min : {min}</div>
-            <div>Max : {max}</div>
-            <div>ETC : {etc}</div>
-        </div>
-        <Editor
-        editorState={text}
-        toolbarClassName="toolbarClassName"
-        wrapperClassName="wrapperClassName"
-        editorClassName="editorClassName"
-        toolbar = {{
-            list: {inDropdown: true},
-            textAlign : {inDropdown: true},
-            history : {inDropdown: true},
-            options: ['inline', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'emoji', 'history'],
-            fontSize: {
-                options: [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48],
-            },
-        }}
-        onEditorStateChange={onEditorStateChange}
-        placeholder="Please write the commit."
-        />
-        <button onClick={handleSubmit}>Submit</button>
+            <div className='upperFrame'>
+                <button className='back' onClick = {handleBack}>←</button>
+                <div className = "title">
+                    <div>TITLE : </div>
+                    <input className="titleInput" placeholder="Please enter a title" value = {commitTitle} onChange = {handleTitle}/>
+                </div>
+                <Editor
+                editorState={text}
+                toolbarClassName="toolbarClassName"
+                wrapperClassName="wrapperClassName"
+                editorClassName="editorClassName"
+                toolbar = {{
+                    list: {inDropdown: true},
+                    textAlign : {inDropdown: true},
+                    history : {inDropdown: true},
+                    options: ['inline', 'fontSize', 'fontFamily', 'list', 'textAlign', 'colorPicker', 'emoji', 'history'],
+                    fontSize: {
+                        options: [8, 9, 10, 11, 12, 14, 16, 18, 24, 30, 36, 48],
+                    },
+                }}
+                onEditorStateChange={onEditorStateChange}
+                placeholder="Please write the commit." />
+            </div>
+            <div className='bottomFrame'>
+                <div className='rules'>
+                    <div>COMMIT BY : <span>{option_name}</span></div>
+                    <div>MIN : <span>{min} BYTES</span></div>
+                    <div>MAX : <span>{max} BYTES</span></div>
+                    <div>ETC : <span>{etc}</span></div>
+                </div>
+                <ButtonWrap>
+                    <button className='submit' onClick={handleSubmit}>Submit</button>
+                </ButtonWrap>
+            </div>
         </EditorStyle>
         )
     }
