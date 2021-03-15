@@ -80,7 +80,7 @@ const NewStoryContentPage = (props) => {
     const [text, setText] = 
         useState(EditorState.createWithContent(ContentState.createFromBlockArray(htmlToDraft(content).contentBlocks)))
 
-    // console.log(typeof content)
+    console.log(content)
     const onEditorStateChange = (text) => {
         setText(text);              
         if(text.getCurrentContent().getPlainText()) {
