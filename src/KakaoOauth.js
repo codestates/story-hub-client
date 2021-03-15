@@ -23,7 +23,7 @@ const KakaoOauth = () => {
         dispatch(messageOpen('카카오 로그인 완료! :)'));
         dispatch(
           userLogin({
-            accessToken: token,
+            accessToken: res.data.accessToken,
           })
         );
       })
