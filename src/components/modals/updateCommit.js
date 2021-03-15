@@ -112,7 +112,7 @@ const UpdateBoard = (props) => {
     if (text.getCurrentContent().getPlainText()) {
       dispatch(commitDetailSaved(draftToHtml(convertToRaw(text.getCurrentContent()))));
     } else {
-      dispatch(commitDetailSaved(''));
+      dispatch(commitDetailSaved(commitDetail));
     }
   };
 

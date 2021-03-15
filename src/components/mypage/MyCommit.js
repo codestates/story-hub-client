@@ -57,7 +57,8 @@ const MyCommit = (props) => {
         <Card onClick={() => {
             dispatch(modalMoved("MyCommit"))
             dispatch(commitDetailIndexSaved(props.commitIndex))
-            dispatch(commitDetailSaved(props.commitDetail))
+            {props.commitDetail ? dispatch(commitDetailSaved(props.commitDetail))
+                : dispatch(commitDetailSaved(''))}
             dispatch(setMyPageProps(props))
         }}>
             <div className='frame1'>

@@ -4,29 +4,55 @@ import { useDispatch, useSelector } from 'react-redux';
 import { pageMoved, commitMaxDepthSaved } from '../../actions';
 import styled from 'styled-components'
 import CommitDetailCard from '../../components/cards/CommitDetailCard';
+import Parts from '../../style/Parts'
+import merged from '../../images/merged.png'
 
 const CommitDetailFrame = styled.div`
 width: 100%;
 height: 100%;
 display: flex;
 flex-direction: column;
-`
-const CommitsFrame = styled.div`
-width: 100%;
-height: 100%;
-display: flex;
-flex-direction: row;
+align-items: center;
 
 `
+const CommitsFrame = styled.div`
+width: 90%;
+height: 90%;
+display: flex;
+flex-direction: row;
+overflow-x: auto;
+overflow-y: auto;
+.table{
+  font-size: 0.8rem;
+  font-weight: 900;
+}
+.table > div {
+  height: 25px;
+  text-align: center;
+  padding-top: 50px;
+}
+`
 const CommitsPerDepth = styled.div`
+width: 130px;
 display: flex;
 flex-direction: column;
+align-items: center;
+margin-left: 30px;
 .isMerged{
-  width: 80px;
+  padding-top: 10px;
+  background-image: url(${merged});
+  background-color: transparent;
+  border: none;
+  width: 110px;
   height: 80px;
-  background-color: gray;
-  color: white;
   order: -1;
+}
+h2 {
+  order: -1;
+  width: 80%;
+  text-align: center;
+  font-weight: 700;
+  border-bottom: 1px solid gray;
 }
 `
 
@@ -36,7 +62,6 @@ const CommitPage = (props) => {
   const dispatch = useDispatch();
 
   const [commitList, setCommitList] = useState([]);
-  const [depthArr, setDepthArr] = useState([]);
 
   const getCommitList = async () => {
     const result = await axios({
@@ -46,58 +71,75 @@ const CommitPage = (props) => {
         boardIndex,
       },
     });
-    setCommitList(result.data.list);
-
-    if (commitMaxDepth !== 0 ) {
-      const depthArr = []
-      for (let i = 1; i <= commitMaxDepth; i++){
-        depthArr.push(i)
-      }
-      setDepthArr(depthArr)
-    }
-
-    result.data.list.map((commit) => {
-      console.log([commit.depth, commitMaxDepth])
-      if(commit.depth > commitMaxDepth) dispatch(commitMaxDepthSaved(commit.depth))
-    })
+    const data = result.data.list
+    setCommitList(data);
+    if (data[0].depth > commitMaxDepth) dispatch(commitMaxDepthSaved(data[0].depth))
+    
   };
+  
+  const depthArrMaker = () => {
+    if (commitMaxDepth !== 0 ) {
+      const depthCheckArr = []
+      for (let i = 1; i <= commitMaxDepth; i++){
+        depthCheckArr.push(i)
+      }
+    }
+  }
+
+  const commitsMaker = () => {
+        const depthArr = []
+        for (let i = 1; i <= commitMaxDepth; i++){
+          depthArr.push(i)
+        }
+    const commits = depthArr.map((depth, idx) => {
+      return(
+          <CommitsPerDepth key={idx} depth={depth}>
+            <h2>DEPTH: {depth}</h2>
+            {commitList.length > 0
+              ? commitList.map((commit, idx) => {
+                if(commit.depth===commitMaxDepth && commit.merge_check===1){
+                  dispatch(commitMaxDepthSaved(commit.depth+1))
+                }
+                if(commit.depth === depth)
+                return (
+                  <CommitDetailCard
+                    key={idx}
+                    commit_index={commit.commit_index}
+                    title={commit.title}
+                    content={commit.content}
+                    created={commit.created_at}
+                    nickname={commit.nickname}
+                    depth={commit.depth}
+                    merge_check={commit.merge_check}
+                  />
+                );
+              })
+            : ''}
+          </CommitsPerDepth>
+      )
+    })
+    return commits
+  } 
+  
+
   useEffect(() => {
     dispatch(pageMoved('StoryDetail'));
     getCommitList();
+    depthArrMaker();
   }, []);
-  
+  console.log(commitMaxDepth)
   return (
     <>
-      <CommitDetailFrame>
+      <Parts.DetailFrame>
         <h1>{boardTitle}</h1>
         <CommitsFrame>
-        {depthArr.length > 0
-        ? depthArr.map((depth, idx) => {
-          return(
-            <CommitsPerDepth key={idx} depth={depth}>
-              {commitList.length > 0
-                ? commitList.map((commit, idx) => {
-                  if(commit.depth === depth)
-                  return (
-                    <CommitDetailCard
-                      key={idx}
-                      commit_index={commit.commit_index}
-                      title={commit.title}
-                      content={commit.content}
-                      created={commit.created_at}
-                      nickname={commit.nickname}
-                      depth={commit.depth}
-                      merge_check={commit.merge_check}
-                    />
-                  );
-                })
-              : ''}
-            </CommitsPerDepth>
-          )
-        })
-        : ""}
+          <div className="table">
+            <div>MERGED:</div>
+            <div>COMMITS:</div>
+          </div>
+          {commitsMaker()}
         </CommitsFrame>
-      </CommitDetailFrame>
+      </Parts.DetailFrame>
     </>
   );
 };
