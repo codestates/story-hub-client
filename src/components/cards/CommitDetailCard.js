@@ -11,12 +11,10 @@ import {
   commitDetailIsMergedSaved,  
 } from '../../actions';
 
-const Card = styled.div`
-  font-size: 2vw;
-
-  .isMerged {
-    background-color: blue;
-  }
+const Card = styled.button`
+border-radius: 10px;
+width: 80px;
+height: 40px;
 `;
 
 const CommitDetailCard = (props) => {
@@ -34,10 +32,10 @@ const CommitDetailCard = (props) => {
   };
 
   return (
-    <Card onClick={handleCard}>
-      <div className={props.merge_check === 1 ? 'isMerged' : ''}>
-        <button>{props.title}</button>
-      </div>
+    <Card className={props.merge_check === 1 ? 'isMerged' : ''}
+    onClick={handleCard}
+    depth={props.depth}>
+      {props.title}
     </Card>
   );
 };

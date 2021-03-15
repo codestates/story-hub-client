@@ -28,7 +28,7 @@ const ModalFrame = styled.div`
     .close {
         align-self: start;
         margin: 25px 0 -35px 10px;
-        background-color: transparent;
+        background-color: tr;
         font-weight: 400;
         font-size: 1.5rem;
         border: none;
