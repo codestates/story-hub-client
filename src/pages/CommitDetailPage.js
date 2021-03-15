@@ -377,8 +377,7 @@ const CommitDetailPage = (props) => {
     checkMergeDeleteButton();
     dispatch(pageMoved('CommitDetail'));
   }, []);
-  
-  console.log([isWriter, isChange, commitMaxDepth])
+    
   return (
     <Parts.DetailFrame>
         <CommitDetailFrame>
