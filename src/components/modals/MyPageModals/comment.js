@@ -54,7 +54,7 @@ const ModalFrame = styled.div`
         background-color: #fff8eda1;
         border: 1px solid rgba(255,0,0,0.3);
         border-radius: 20px;
-        padding: 15px;
+        padding: 10px;
         white-space: normal;
         overflow-y: hidden;
     }
@@ -65,9 +65,9 @@ const ModalFrame = styled.div`
         padding-bottom: 3px;
     }
     .toDetail{
-        margin: auto 0 20px 0;
+        margin: auto 0 10px 0;
         width: 80%;
-        height: 50px;
+        height: 30px;
         border-radius: 15px;
     }
 `
