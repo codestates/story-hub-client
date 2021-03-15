@@ -49,18 +49,23 @@ const CommitPage = (props) => {
     setCommitList(result.data.list);
 
     if (commitMaxDepth !== 0 ) {
-      const depthArr = []
+      const depthCheckArr = []
       for (let i = 1; i <= commitMaxDepth; i++){
-        depthArr.push(i)
+        depthCheckArr.push(i)
       }
-      setDepthArr(depthArr)
+      setDepthArr(depthCheckArr)
     }
+    
+    let fn = () => { result.data.list.map((commit) => {
+      if(commit.depth >= commitMaxDepth) {
+        dispatch(commitMaxDepthSaved(commit.depth))
+        if(commit.merge_check === 1) dispatch(commitMaxDepthSaved(commit.depth + 1))
+      } 
+    })}
 
-    result.data.list.map((commit) => {
-      console.log([commit.depth, commitMaxDepth])
-      if(commit.depth > commitMaxDepth) dispatch(commitMaxDepthSaved(commit.depth))
-    })
+    fn()
   };
+  console.log(commitMaxDepth)
   useEffect(() => {
     dispatch(pageMoved('StoryDetail'));
     getCommitList();
@@ -71,8 +76,7 @@ const CommitPage = (props) => {
       <CommitDetailFrame>
         <h1>{boardTitle}</h1>
         <CommitsFrame>
-        {depthArr.length > 0
-        ? depthArr.map((depth, idx) => {
+        { [1, 2, 3, 4].map((depth, idx) => {
           return(
             <CommitsPerDepth key={idx} depth={depth}>
               {commitList.length > 0
@@ -95,7 +99,7 @@ const CommitPage = (props) => {
             </CommitsPerDepth>
           )
         })
-        : ""}
+      }
         </CommitsFrame>
       </CommitDetailFrame>
     </>
