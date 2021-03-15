@@ -32,7 +32,7 @@ const MessageButton = styled.button`
 const Merge = (props) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { accessToken, loginType } = state.userReducer;
+  const { accessToken } = state.userReducer;
   const { commitDetailIndex } = state.pageReducer;
   const history = useHistory();
 
@@ -45,7 +45,6 @@ const Merge = (props) => {
         Authorization: `Bearer ${accessToken}`,
       },
       data: {
-        loginType,
         commitIndex: commitDetailIndex,
       },
     });

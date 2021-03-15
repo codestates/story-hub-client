@@ -13,7 +13,7 @@ const InfoStyle = styled.div`
 const InfoPage = () => {
   const state = useSelector((state) => state);
   const { boardIndex, boardTitle } = state.pageReducer;
-  const { accessToken, loginType } = state.userReducer;
+  const { accessToken } = state.userReducer;
   const [writer, setWriter] = useState();
   const [description, setDescription] = useState();
   const [option_name, setOptionName] = useState();

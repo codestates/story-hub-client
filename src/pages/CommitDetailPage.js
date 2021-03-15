@@ -22,7 +22,7 @@ const CommitDetailPage = (props) => {
   } = state.pageReducer;
   const history = useHistory();
   const dispatch = useDispatch();
-  const { accessToken, loginType } = state.userReducer;
+  const { accessToken } = state.userReducer;
   const [isWriter, setIsWriter] = useState(false);
   const [isChange, setIsChange] = useState(false);
   const [commentList, setCommentList] = useState([]);
@@ -33,39 +33,38 @@ const CommitDetailPage = (props) => {
       url: 'http://localhost:4000/comment/list',
       method: 'GET',
       params: {
-        commitIndex : commitDetailIndex,
+        commitIndex: commitDetailIndex,
       },
     });
     setCommentList(result.data.list);
   };
 
   const handleSubmit = () => {
-    if(!accessToken) dispatch(messageOpen('로그인이 필요합니다.'))
+    if (!accessToken) dispatch(messageOpen('로그인이 필요합니다.'));
     else {
       if (comment) {
         axios({
-            url: 'http://localhost:4000/comment/create',
-            method: 'POST',
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            data: {
-                loginType,
-                content: comment,
-                commitIndex: commitDetailIndex,
-                boardIndex: boardIndex
-            },
+          url: 'http://localhost:4000/comment/create',
+          method: 'POST',
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          data: {
+            content: comment,
+            commitIndex: commitDetailIndex,
+            boardIndex: boardIndex,
+          },
         }).then((res) => {
-          setComment('')
-          history.go(0)
-        })
-    } else {
+          setComment('');
+          history.go(0);
+        });
+      } else {
         dispatch(messageOpen('내용을 입력해주세요.'));
         return;
+      }
     }
-  }
-};
+  };
 
   const checkMergeDeleteButton = async () => {
     const result = await axios({
@@ -74,13 +73,10 @@ const CommitDetailPage = (props) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: {
-        loginType,
-      },
     });
     const { data } = result;
     if (data) {
-      if(!accessToken) return;
+      if (!accessToken) return;
       data.map((el) => {
         if (el.board_index === boardIndex) {
           setIsWriter(true);
@@ -99,26 +95,22 @@ const CommitDetailPage = (props) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: {
-        loginType,
-      },
     });
     if (resultDelete.data) {
-      if(!accessToken) return;
-      resultDelete.data.map((el) => {        
+      if (!accessToken) return;
+      resultDelete.data.map((el) => {
         if (el.commit_index === commitDetailIndex) {
           setIsChange(true);
           if (commitDetailIsMerged === 1) {
             setIsChange(false);
           }
-          if(el.depth < commitMaxDepth) {
+          if (el.depth < commitMaxDepth) {
             setIsWriter(false);
           }
         }
       });
     }
   };
-  
 
   const handleBack = () => {
     history.push('/commit');
@@ -126,7 +118,7 @@ const CommitDetailPage = (props) => {
 
   const handleMerge = () => {
     dispatch(modalMoved('Merge'));
-    dispatch(commitMaxDepthSaved(commitMaxDepth + 1))
+    dispatch(commitMaxDepthSaved(commitMaxDepth + 1));
   };
   const handleDelete = () => {
     dispatch(modalMoved('DeleteCommit'));
@@ -135,8 +127,8 @@ const CommitDetailPage = (props) => {
     dispatch(modalMoved('UpdateCommit'));
   };
   const handleComment = (e) => {
-    setComment(e.target.value)
-  }
+    setComment(e.target.value);
+  };
 
   useEffect(() => {
     getCommentList();
@@ -157,22 +149,20 @@ const CommitDetailPage = (props) => {
         Date : {commitDetailCreated.slice(0, 10)}
       </div>
       <div>
-          <h1>
-          New Comment
-          </h1>
-          <input placeholder="Please enter a comment" value = {comment} onChange = {handleComment}/>
-          <button onClick={handleSubmit}>Submit</button>
+        <h1>New Comment</h1>
+        <input placeholder="Please enter a comment" value={comment} onChange={handleComment} />
+        <button onClick={handleSubmit}>Submit</button>
       </div>
-        {commentList.map((el, idx) => {
-          return (
-            <div key={idx}>
-              <div>nickname : {el.nickname}</div>
-              <div>{el.content}</div>
-              <div>{el.created_at.slice(0, 10)}</div>
-              <hr style={{ border: '1px solid red' }} />
-            </div>
-          );
-        })}
+      {commentList.map((el, idx) => {
+        return (
+          <div key={idx}>
+            <div>nickname : {el.nickname}</div>
+            <div>{el.content}</div>
+            <div>{el.created_at.slice(0, 10)}</div>
+            <hr style={{ border: '1px solid red' }} />
+          </div>
+        );
+      })}
       <Parts.Button display={isWriter ? '' : 'none'} onClick={handleMerge}>
         Merge
       </Parts.Button>

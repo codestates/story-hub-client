@@ -11,7 +11,7 @@ const ContentStyle = styled.div``;
 const ContentPage = (props) => {
   const state = useSelector((state) => state);
   const { storyDetail, boardIndex } = state.pageReducer;
-  const { accessToken, loginType } = state.userReducer;
+  const { accessToken } = state.userReducer;
   const history = useHistory();
   const [boardInfoList, setBoardInfo] = useState([]);
   const [commitInfoList, setCommitInfo] = useState([]);
@@ -19,15 +19,12 @@ const ContentPage = (props) => {
   const dispatch = useDispatch();
 
   const checkUpdateDeleteButton = async () => {
-    if(!accessToken) return;
+    if (!accessToken) return;
     const result = await axios({
       url: 'http://localhost:4000/board/info',
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`,
-      },
-      params: {
-        loginType,
       },
     });
     const { data } = result;
@@ -54,9 +51,9 @@ const ContentPage = (props) => {
   };
 
   const handleContinue = () => {
-    if(accessToken) history.push('/newcommit')
-    else dispatch(messageOpen('로그인이 필요합니다.'))
-  }
+    if (accessToken) history.push('/newcommit');
+    else dispatch(messageOpen('로그인이 필요합니다.'));
+  };
 
   const handleUpdate = () => {
     dispatch(modalMoved('UpdateBoard'));
@@ -74,14 +71,14 @@ const ContentPage = (props) => {
   return (
     <ContentStyle>
       <div>ContentPage</div>
-        <div>
+      <div>
         <Parts.Button display={isWriter ? '' : 'none'} onClick={handleUpdate}>
-        Update
+          Update
         </Parts.Button>
         <Parts.Button display={isWriter ? '' : 'none'} onClick={handleDelete}>
-        Delete
+          Delete
         </Parts.Button>
-        </div>
+      </div>
       <div>
         <h1>Title : {boardInfoList[0] ? boardInfoList[0].title : ''}</h1>
         <div>Writer : {boardInfoList[0] ? boardInfoList[0].nickname : ''}</div>
@@ -97,7 +94,7 @@ const ContentPage = (props) => {
           );
         })}
       </div>
-        <button onClick = {handleContinue}>Continue To Write</button>
+      <button onClick={handleContinue}>Continue To Write</button>
     </ContentStyle>
   );
 };
