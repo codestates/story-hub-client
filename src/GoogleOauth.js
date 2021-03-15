@@ -2,8 +2,8 @@ import React from 'react';
 import axios from 'axios';
 import GoogleLogin from 'react-google-login';
 import { useDispatch, useSelector } from 'react-redux';
-import { userLogin, modalMoved, messageOpen } from './actions'
-import Background from './images/GoogleLoginButton.png'
+import { userLogin, modalMoved, messageOpen } from './actions';
+import Background from './images/GoogleLoginButton.png';
 
 const GoogleOauth = () => {
   const state = useSelector((state) => state);
@@ -17,19 +17,20 @@ const GoogleOauth = () => {
         authorization: `Bearer ${token}`,
       },
       withCredentials: true,
-    }).then((res) => {
-      if (res.data.loginType) {
-        console.log(res);
+    })
+      .then((res) => {
         dispatch(modalMoved(''));
         dispatch(messageOpen('구글 로그인 완료! :)'));
         dispatch(
           userLogin({
-            loginType: res.data.loginType,
-            accessToken: token,
+            accessToken: res.data.accessToken,
           })
         );
-      } else dispatch(messageOpen('구글 로그인 실패! :('));
-    });
+      })
+      .catch((err) => {
+        console.log(err);
+        return dispatch(messageOpen('구글 로그인 실패! :('));
+      });
   };
   return (
     <>

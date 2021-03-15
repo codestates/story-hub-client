@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link, withRouter, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { pageMoved, modalMoved } from '../actions';
+import { pageMoved, modalMoved, messageOpen, commitMaxDepthSaved } from '../actions';
 import Parts from '../style/Parts';
 import styled, { keyframes }from 'styled-components'
 
@@ -111,6 +111,7 @@ align-items: flex-end;
   }
 `;
 
+
 const CommitDetailPage = (props) => {
   const state = useSelector((state) => state);
   const {
@@ -121,12 +122,53 @@ const CommitDetailPage = (props) => {
     commitDetailNickname,
     commitDetailCreated,
     commitDetailIsMerged,
+    commitMaxDepth,
   } = state.pageReducer;
   const history = useHistory();
   const dispatch = useDispatch();
-  const { accessToken, loginType } = state.userReducer;
+  const { accessToken } = state.userReducer;
   const [isWriter, setIsWriter] = useState(false);
-  const [isDelete, setIsDelete] = useState(false);
+  const [isChange, setIsChange] = useState(false);
+  const [commentList, setCommentList] = useState([]);
+  const [comment, setComment] = useState('');
+
+  const getCommentList = async () => {
+    const result = await axios({
+      url: 'http://localhost:4000/comment/list',
+      method: 'GET',
+      params: {
+        commitIndex: commitDetailIndex,
+      },
+    });
+    setCommentList(result.data.list);
+  };
+
+  const handleSubmit = () => {
+    if (!accessToken) dispatch(messageOpen('로그인이 필요합니다.'));
+    else {
+      if (comment) {
+        axios({
+          url: 'http://localhost:4000/comment/create',
+          method: 'POST',
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          data: {
+            content: comment,
+            commitIndex: commitDetailIndex,
+            boardIndex: boardIndex,
+          },
+        }).then((res) => {
+          setComment('');
+          history.go(0);
+        });
+      } else {
+        dispatch(messageOpen('내용을 입력해주세요.'));
+        return;
+      }
+    }
+  };
 
   const checkMergeDeleteButton = async () => {
     const result = await axios({
@@ -135,19 +177,18 @@ const CommitDetailPage = (props) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: {
-        loginType,
-      },
     });
     const { data } = result;
     if (data) {
+      console.log(data)
+      if (!accessToken) return;
       data.map((el) => {
         if (el.board_index === boardIndex) {
           setIsWriter(true);
-          setIsDelete(true);
-          if (commitDetailIsMerged === '1') {
+          setIsChange(true);
+          if (commitDetailIsMerged === 1) {
             setIsWriter(false);
-            setIsDelete(false);
+            setIsChange(false);
           }
         }
       });
@@ -159,16 +200,18 @@ const CommitDetailPage = (props) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: {
-        loginType,
-      },
     });
     if (resultDelete.data) {
+      console.log(resultDelete.data)
+      if (!accessToken) return;
       resultDelete.data.map((el) => {
         if (el.commit_index === commitDetailIndex) {
-          setIsDelete(true);
-          if (commitDetailIsMerged === '1') {
-            setIsDelete(false);
+          setIsChange(true);
+          if (commitDetailIsMerged === 1) {
+            setIsChange(false);
+          }
+          if (el.depth < commitMaxDepth) {
+            setIsWriter(false);
           }
         }
       });
@@ -181,49 +224,76 @@ const CommitDetailPage = (props) => {
 
   const handleMerge = () => {
     dispatch(modalMoved('Merge'));
+    dispatch(commitMaxDepthSaved(commitMaxDepth + 1));
   };
   const handleDelete = () => {
     dispatch(modalMoved('DeleteCommit'));
   };
+  const handleUpdate = () => {
+    dispatch(modalMoved('UpdateCommit'));
+  };
+  const handleComment = (e) => {
+    setComment(e.target.value);
+  };
 
   useEffect(() => {
-    console.log(commitDetailIsMerged);
+    getCommentList();
     checkMergeDeleteButton();
     dispatch(pageMoved('CommitDetail'));
   }, []);
 
+
   return (
     <Parts.DetailFrame>
-      <CommitDetailFrame>
-          <button className='back' onClick={handleBack}>←</button>
-        <div className="up-part">
-          <div className="title-line">
-            <h1>Title :<span className="title">{commitDetailTitle}</span></h1>
-              <div className="title-line">
-                <div className="buttons">
-                  <ButtonWrap>
-                    <button display={isWriter ? '' : 'none'} onClick={handleMerge}>
-                      Merge
-                    </button>
-                  </ButtonWrap>
-                  <ButtonWrap>
-                    <button display={isDelete ? '' : 'none'} onClick={handleDelete}>
-                      Delete
-                    </button>
-                  </ButtonWrap>
+        <CommitDetailFrame>
+            <button className='back' onClick={handleBack}>←</button>
+            <div className="up-part">
+                <div className="title-line">
+                    <h1>Title :<span className="title">{commitDetailTitle}</span></h1>
+                        <div className="title-line">
+                        <div className="buttons">
+                            <ButtonWrap>
+                                <button display={isWriter ? '' : 'none'} onClick={handleMerge}>
+                                    Merge
+                                </button>
+                            </ButtonWrap>
+                            <ButtonWrap>
+                                <button display={isChange ? '' : 'none'} onClick={handleDelete}>
+                                    Delete
+                                </button>
+                            </ButtonWrap>
+                            <ButtonWrap>
+                                <button display={isChange ? '' : 'none'} onClick={handleUpdate}>
+                                    Update
+                                </button>
+                            </ButtonWrap>
+                        </div>
+                    </div>
                 </div>
-              </div>
           </div>
           <div className="info">
             <div className="writer">Writer : <span>{commitDetailNickname}</span></div>
             <div className="date">Date : <span>{commitDetailCreated.slice(0, 10)}</span></div>
           </div>
+          <div className='contentFrame'>
+              <div className='content' dangerouslySetInnerHTML={{ __html: commitDetail }}></div>
         </div>
-        <div className='contentFrame'>
-          <div className='content' dangerouslySetInnerHTML={{ __html: commitDetail }}></div>
-        </div>
-
-      </CommitDetailFrame>
+          <div>
+            <h1>New Comment</h1>
+            <input placeholder="Please enter a comment" value={comment} onChange={handleComment} />
+            <button onClick={handleSubmit}>Submit</button>
+          </div>
+          {commentList.map((el, idx) => {
+            return (
+              <div key={idx}>
+                <div>nickname : {el.nickname}</div>
+                <div>{el.content}</div>
+                <div>{el.created_at.slice(0, 10)}</div>
+                <hr style={{ border: '1px solid red' }} />
+              </div>
+            );
+          })}
+        </CommitDetailFrame>
     </Parts.DetailFrame>
   );
 };

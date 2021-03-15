@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { pageMoved } from '../../actions';
+import { pageMoved, commitMaxDepthSaved } from '../../actions';
 import CommitDetailCard from '../../components/cards/CommitDetailCard';
 
 const CommitPage = (props) => {
   const state = useSelector((state) => state);
-  const { boardIndex, boardTitle } = state.pageReducer;
+  const { boardIndex, boardTitle, commitMaxDepth } = state.pageReducer;
   const dispatch = useDispatch();
 
   const [commitList, setCommitList] = useState([]);
@@ -19,14 +19,16 @@ const CommitPage = (props) => {
         boardIndex,
       },
     });
-    console.log('삭제하고나선 여기 안들리니??');
-    console.log(result.data);
     setCommitList(result.data.list);
+    commitList.map((commit) => {
+      if(commit.depth > commitMaxDepth) dispatch(commitMaxDepthSaved(commit.depth))
+    })
   };
   useEffect(() => {
     dispatch(pageMoved('StoryDetail'));
     getCommitList();
   }, []);
+  
 
   return (
     <>

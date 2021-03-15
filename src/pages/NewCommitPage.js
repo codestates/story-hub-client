@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { 
-    pageMoved, 
-    commitSaved, 
-    commitTitleSaved, 
-    messageOpen 
-} from '../actions';
+import { pageMoved, commitSaved, commitTitleSaved, messageOpen } from '../actions';
 import { Editor } from 'react-draft-wysiwyg';
 import { EditorState, ContentState, convertToRaw } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
@@ -28,30 +23,28 @@ display: flex;
 flex-direction: column;
 justify-content: space-between;
 
-.toolbarClassName{
+  .toolbarClassName {
     border: none;
     background-color: #fff8eda1;
-}
+  }
 
-.rdw-option-wrapper{
+  .rdw-option-wrapper {
     border: none;
     background-color: #fff8eda1;
-}
+  }
 
-.rdw-dropdown-selectedtext{
+  .rdw-dropdown-selectedtext {
     border: none;
     background-color: #fff8eda1;
-}
+  }
 
-.wrapperClassName{
+  .wrapperClassName {
     width: 100%;
     height: 75%;
     margin: 0 auto;
     margin-bottom: 4rem;
-    
-}
-
-.editorClassName{
+  }
+  .editorClassName {
     white-space: pre-wrap;
     width: 100%;
     display: block;
@@ -59,13 +52,13 @@ justify-content: space-between;
     padding: 5px !important;
     border-radius: 2px !important;
     background-color: #fff8eda1;
-}
+  }
 
-span {
+  span {
     display: inline-block;
     max-width: 100%;
     white-space: break-spaces;
-}
+  }
 
 .upperFrame {
     height: 110%;
@@ -146,84 +139,84 @@ const ButtonWrap = styled.div`
   }
 `;
 
-
 const NewCommitPage = (props) => {
-    const state = useSelector((state) => state);
-    const dispatch = useDispatch();
-    const {commit, commitTitle} = state.textReducer
-    const { boardIndex } = state.pageReducer
-    const { accessToken, loginType } = state.userReducer;
-    const history = useHistory();
-    const [text, setText] = 
-    useState(EditorState.createWithContent(ContentState.createFromBlockArray(htmlToDraft(commit).contentBlocks)))
-    const [option_name, setOptionName] = useState();
-    const [min, setMin] = useState();
-    const [max, setMax] = useState();
-    const [etc, setEtc] = useState();
-    
-    const detailSmallInfo = async () => {
-        const result = await axios({
-            url: 'http://localhost:4000/board/detailinfo',
-            method: 'GET',
-            params: {
-                boardIndex,
-            },
-        });
-        const { data } = result;
-        if (data) {
-            setOptionName(data[1][0].option_name);
-            setMin(data[1][0].min_length);
-            setMax(data[1][0].max_length);
-            setEtc(data[1][0].etc);
-        }
-    };
-    
-    const onEditorStateChange = (text) => {
-        setText(text);              
-        if(text.getCurrentContent().getPlainText()) {
-            dispatch(commitSaved(draftToHtml(convertToRaw(text.getCurrentContent()))));
-        }
-        else {
-            dispatch(commitSaved(''))
-        }
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { commit, commitTitle } = state.textReducer;
+  const { boardIndex } = state.pageReducer;
+  const { accessToken } = state.userReducer;
+  const history = useHistory();
+  const [text, setText] = useState(
+    EditorState.createWithContent(
+      ContentState.createFromBlockArray(htmlToDraft(commit).contentBlocks)
+    )
+  );
+  const [option_name, setOptionName] = useState();
+  const [min, setMin] = useState();
+  const [max, setMax] = useState();
+  const [etc, setEtc] = useState();
+
+  const detailSmallInfo = async () => {
+    const result = await axios({
+      url: 'http://localhost:4000/board/detailinfo',
+      method: 'GET',
+      params: {
+        boardIndex,
+      },
+    });
+    const { data } = result;
+    if (data) {
+      setOptionName(data[1][0].option_name);
+      setMin(data[1][0].min_length);
+      setMax(data[1][0].max_length);
+      setEtc(data[1][0].etc);
     }
-    
-    const handleTitle = (e) => {
-        dispatch(commitTitleSaved(e.target.value))
+  };
+
+  const onEditorStateChange = (text) => {
+    setText(text);
+    if (text.getCurrentContent().getPlainText()) {
+      dispatch(commitSaved(draftToHtml(convertToRaw(text.getCurrentContent()))));
+    } else {
+      dispatch(commitSaved(''));
     }
-    
-    const handleBack = () => {
-        history.push("/content")
-    }
-    
-    const handleSubmit = () => {
-        if (commitTitle && commit ) {
-            axios({
-                url: 'http://localhost:4000/commit/create',
-                method: 'POST',
-                withCredentials: true,
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-                data: {
-                    loginType,
-                    title: commitTitle,
-                    content: commit,
-                    boardIndex: boardIndex
-                },
-            }).then((res) => {
-                if (res.data.message === 'OK') {
-                    dispatch(commitSaved(''));
-                    dispatch(commitTitleSaved(''));
-                    history.push('/content');
-                }
-            });
-        } else {
-            dispatch(messageOpen('제목과 내용은 필수입력사항입니다.'));
-            return;
+  };
+
+  const handleTitle = (e) => {
+    dispatch(commitTitleSaved(e.target.value));
+  };
+
+  const handleBack = () => {
+    history.push('/content');
+  };
+
+  const handleSubmit = () => {
+    if (commitTitle && commit) {
+      axios({
+        url: 'http://localhost:4000/commit/create',
+        method: 'POST',
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        data: {
+          title: commitTitle,
+          content: commit,
+          boardIndex: boardIndex,
+        },
+      }).then((res) => {
+        if (res.data.message === 'OK') {
+          dispatch(commitSaved(''));
+          dispatch(commitTitleSaved(''));
+          history.push('/content');
         }
-    };
-    
+      });
+    } else {
+      dispatch(messageOpen('제목과 내용은 필수입력사항입니다.'));
+      return;
+    }
+  };
+  
     useEffect( () => {
         detailSmallInfo()
         dispatch(pageMoved("NewCommit"));

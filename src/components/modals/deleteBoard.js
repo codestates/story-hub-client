@@ -5,7 +5,6 @@ import { modalMoved } from '../../actions';
 import styled from 'styled-components';
 import Parts from '../../style/Parts';
 import { useHistory } from 'react-router-dom';
-import background from '../../images/note2.png'
 
 const MessageFrame = styled.div`
   display: flex;
@@ -13,10 +12,11 @@ const MessageFrame = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 8;
+  width: 250px;
   height: 110 px;
-  background-image: url(${background});
-  background-size: 105% 105%;
-  background-position: 50% 50%;
+  background-color: white;
+  border: 2px solid rgb(220, 220, 220);
+  box-shadow: 3px 3px 12px gray;
   padding: 40px 30px 30px 30px;
 `;
 const MessageButton = styled.button`
@@ -29,33 +29,33 @@ const MessageButton = styled.button`
   padding-top: 20px;
 `;
 
-const DeleteCommit = (props) => {
+const DeleteBoard = (props) => {
   const state = useSelector((state) => state);
   const { accessToken } = state.userReducer;
-  const { commitDetailIndex } = state.pageReducer;
+  const { boardIndex } = state.pageReducer;
   const history = useHistory();
   const dispatch = useDispatch();
 
   const handleAccept = () => {
     axios({
-      url: 'http://localhost:4000/commit',
+      url: 'http://localhost:4000/board',
       method: 'DELETE',
       withCredentials: true,
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
       params: {
-        commitIndex: commitDetailIndex,
+        boardIndex: boardIndex,
       },
     });
     dispatch(modalMoved(''));
-    history.push('/commit');
+    history.push('/board');
   };
 
   return (
     <Parts.ModalBackground message display={props.display === 'none' ? 'none' : ''}>
       <MessageFrame>
-        <div>Will you definitely delete this commit?</div>
+        <div>Will you definitely delete this board?</div>
         <MessageButton onClick={handleAccept}>ACCEPT</MessageButton>
         <MessageButton onClick={() => dispatch(modalMoved(''))}>CLOSE</MessageButton>
       </MessageFrame>
@@ -63,4 +63,4 @@ const DeleteCommit = (props) => {
   );
 };
 
-export default DeleteCommit;
+export default DeleteBoard;

@@ -216,7 +216,7 @@ const NewStoryInfoPage = (props) => {
   const dispatch = useDispatch();
   const history = useHistory();
   const { category, comment, commitBy, max, min, etc } = state.infoReducer;
-  const { accessToken, loginType } = state.userReducer;
+  const { accessToken } = state.userReducer;
   const { content, contentTitle } = state.textReducer;
 
   const setCategory = (e) => {
@@ -276,7 +276,6 @@ const NewStoryInfoPage = (props) => {
           Authorization: `Bearer ${accessToken}`,
         },
         data: {
-          loginType,
           title: contentTitle,
           content: content,
           optionName: commitBy,

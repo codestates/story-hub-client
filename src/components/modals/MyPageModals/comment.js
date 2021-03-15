@@ -1,9 +1,16 @@
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { modalMoved, storyDetailSaved, commitDetailSaved, setMyPageProps } from '../../../actions'
-import Parts from '../../../style/Parts'
-import styled from 'styled-components'
+import {
+  modalMoved,
+  boardIndexSaved,
+  boardTitleSaved,
+  storyDetailSaved,
+  setMyPageProps,
+} from '../../../actions';
+import Parts from '../../../style/Parts';
+import styled from 'styled-components';
+import React, { useEffect } from 'react';
 import background from '../../../images/note1.png'
 
 const ModalFrame = styled.div`
@@ -100,11 +107,15 @@ padding-top: 10px;
   }
 `;
 
-const myComment= (props) => {
-    const state = useSelector((state) => state);
-    const dispatch = useDispatch();
-    const { myPageProps } = state.pageReducer;
-    const history = useHistory();
+const myComment = (props) => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+  const { accessToken } = state.userReducer;
+  const { myPageProps, boardIndex } = state.pageReducer;
+  const history = useHistory();
+  useEffect(() => {
+    dispatch(modalMoved(''));
+  }, []);
 
     return (
         <Parts.ModalBackground display={props.display==="none" ? "none" : ""}>
@@ -117,42 +128,71 @@ const myComment= (props) => {
                 <h1 style={{textAlign:'center', padding:'0 0 5px 0'}}>My Comment</h1>
                 <div className="content">{myPageProps.content}</div>
                 <div className="createdAt">DATE : {myPageProps.createdAt}</div>
-                <ButtonWrap>
-                    <button className="toDetail" onClick={() => {
-                        if (myPageProps.commitIndex) {
-                            const boardIndex = myPageProps.commitIndex
-                            const result = axios({
-                                url: 'http://localhost:4000/commit/list',
-                                method: 'GET',
-                                params: {
-                                    boardIndex,
-                                },
-                            }).then( res => {
-                                console.log(res.data)
-                            })
-                            
-                            history.push('/commitdetail')
-                        }
-                        if (myPageProps.boardIndex) {
-                            const boardIndex = myPageProps.boardIndex
-                            const result = axios({
-                                url: 'http://localhost:4000/board/detailcontent',
-                                method: 'GET',
-                                params: {
-                                    boardIndex,
-                                },
-                            }).then( res => {
-                                dispatch(storyDetailSaved(res.data.boardInfo[0].content))
-                                history.push('/content')
-                            })
-                        }
-                        dispatch(modalMoved(""))
-                    }}>To the Detail</button>
-                </ButtonWrap>
-            </ModalFrame>
-        </Parts.ModalBackground>
-    )
+      <ButtonWrap>
+        <button
+          className="toDetail"
+          onClick={() => {
+            // if (myPageProps.commitIndex) {
+            //     const boardIndex = myPageProps.commitIndex
+            //     axios({
+            //         url: 'http://localhost:4000/commit/list',
+            //         method: 'GET',
+            //         params: {
+            //             boardIndex,
+            //         },
+            //     }).then( res => {
+            //         console.log(res.data)
+            //     })
+
+            //     history.push('/commitdetail')
+            // }
+            // if (myPageProps.boardIndex) {
+            //     const boardIndex =
+            dispatch(boardIndexSaved(myPageProps.boardIndex));
+            axios({
+              url: 'http://localhost:4000/board/detailcontent',
+              method: 'GET',
+              params: {
+                boardIndex,
+              },
+            }).then((res) => {
+              dispatch(storyDetailSaved(res.data.boardInfo[0].content));
+              dispatch(boardTitleSaved(res.data.boardInfo[0].title));
+              history.push('/content');
+            });
+            // }
+            dispatch(modalMoved(''));
+          }}
+        >
+          To the Detail
+        </button>
+       </ButtonWrap>
+       <ButtonWrap>
+        <button
+          className="toDetail"
+          onClick={() => {
+            axios({
+              url: 'http://localhost:4000/comment',
+              method: 'DELETE',
+              withCredentials: true,
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+              },
+              data: {
+                commentIndex: myPageProps.commentindex,
+              },
+            });
+            window.location.reload();
+            dispatch(modalMoved(''));
+            dispatch(setMyPageProps({}));
+          }}
+        >
+          Delete
+        </button>
+      </ButtonWrap>
+      </ModalFrame>
+    </Parts.ModalBackground>
+  );
 };
-        
+
 export default myComment;
-        

@@ -4,54 +4,55 @@ import RightNav from '../components/navigators/RightNav';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { pageMoved, userInfo, modalMoved } from '../actions';
+import { pageMoved, userInfo, modalMoved, userUpdate } from '../actions';
 import Parts from '../style/Parts';
 import MyInfo from '../components/mypage/MyInfo';
 import MyStory from '../components/mypage/MyStory';
 import MyFavorite from '../components/mypage/MyFavorite';
 import MyCommits from '../components/mypage/MyCommit';
 import MyComments from '../components/mypage/MyComment';
-import StoryModal from '../components/modals/MyPageModals/story'
-import CommitModal from '../components/modals/MyPageModals/commit'
-import CommentModal from '../components/modals/MyPageModals/comment'
+import StoryModal from '../components/modals/MyPageModals/story';
+import CommitModal from '../components/modals/MyPageModals/commit';
+import CommentModal from '../components/modals/MyPageModals/comment';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
 
 const CardsFrame = styled.div`
-width: 100%;
-height: ${props => props.comments ? "20vh" : "35vh"};
-${props => props.story ? "height: 75vh;" : ""}
-display:flex;
-flex-direction: row;
-justyfy-content: flex-start;
-align-items: center;
-flex-wrap: wrap;
-`
+  width: 100%;
+  height: ${(props) => (props.comments ? '20vh' : '35vh')};
+  ${(props) => (props.story ? 'height: 75vh;' : '')}
+  display:flex;
+  flex-direction: row;
+  justyfy-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+`;
 
 const PagenateFrame = styled.div`
-font-size: 0.8rem;
-margin: 5px 0 5px 0;
-ul {
-width: 80%;
-display: flex;
-flex-direction: row;
-justify-self: end;
-}
-li {
-  display: inline-block;
-  margin: 0 3px 0 3px;
-}
-.previous, .next {
-  display: inline-block;
-  margin: 0 15px 0 15px;
-  font-weight: bold;
-}
-.selected {
-  font-weight: bold;
-  text-decoration: underline;
-  color: #f49531;
-}
-`
+  font-size: 0.8rem;
+  margin: 5px 0 5px 0;
+  ul {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-self: end;
+  }
+  li {
+    display: inline-block;
+    margin: 0 3px 0 3px;
+  }
+  .previous,
+  .next {
+    display: inline-block;
+    margin: 0 15px 0 15px;
+    font-weight: bold;
+  }
+  .selected {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #f49531;
+  }
+`;
 
 const MyPage = (props) => {
   const state = useSelector((state) => state);
@@ -97,7 +98,7 @@ const MyPage = (props) => {
     setCommentPageNumber(selected);
   };
 
-  const { accessToken, loginType } = state.userReducer;
+  const { accessToken } = state.userReducer;
 
   useEffect(() => {
     dispatch(pageMoved('MyPage'));
@@ -106,20 +107,23 @@ const MyPage = (props) => {
     MyFavoriteFc();
     MyCommitsFc();
     myCommentsFc();
-  }, []);
+  }, [accessToken]);
+
+  const setAccessToken = (token) => {
+    dispatch(userUpdate(token));
+  };
 
   const myInfoFc = async () => {
+    console.log(accessToken);
     const result = await axios({
       url: 'http://localhost:4000/user/info',
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: {
-        loginType,
-      },
     });
     const { data } = result.data;
+    console.log(data);
     setMyInfo(data);
   };
 
@@ -129,9 +133,6 @@ const MyPage = (props) => {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`,
-      },
-      params: {
-        loginType,
       },
     });
     const { data } = result;
@@ -144,9 +145,6 @@ const MyPage = (props) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: {
-        loginType,
-      },
     });
     const { data } = result;
     setMyFavorites(data);
@@ -158,9 +156,6 @@ const MyPage = (props) => {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`,
-      },
-      params: {
-        loginType,
       },
     });
 
@@ -175,150 +170,153 @@ const MyPage = (props) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: {
-        loginType,
-      },
     });
-
     const { list } = result.data;
+    // console.log(list)
+
     setMyComments(list);
   };
 
   return (
     <>
       <Parts.Board>
-      <MyInfo myInfo={myInfo} />
-      <h1>My Story</h1>
-      {myStory.length > 0 ? (
-        <>
-          <CardsFrame story>
-          {myStory
-            .slice(storyPagesVisited, storyPagesVisited + storyBoardsPerPage)
-            .map((storyBoard, idx) => {           
-              return (
-                <MyStory
-                  key={idx}
-                  boardIndex={storyBoard.board_index}
-                  storyDetail={storyBoard.content}
-                  title={storyBoard.title}
-                  upCount={storyBoard.up_count}
-                  downCount={storyBoard.down_count}
-                  createdAt={storyBoard.created_at.slice(0, 10)}
-                />
-              );
-            })}
-          </CardsFrame>
-          <PagenateFrame>
-          <ReactPaginate
-            pageCount={storyPageCount}
-            previousLabel={'<'}
-            nextLabel={'>'}
-            onPageChange={storyChangePage}
-          />
-          </PagenateFrame>
-        </>
-        )
-        : ''}
-        </Parts.Board>
-        <Parts.Board>
-                  <h1>My Favorite</h1>
-      {myFavorite.length > 0 ? (
-        <>
-          <CardsFrame>
-          {myFavorite
-            .slice(favoritePagesVisited, favoritePagesVisited + favoriteBoardsPerPage)
-            .map((favoriteBoard, idx) => {           
-              return (
-                <MyFavorite
-                  key={idx}
-                  boardIndex={favoriteBoard.board_index}
-                  storyDetail={favoriteBoard.content}
-                  title={favoriteBoard.title}
-                  upCount={favoriteBoard.up_count}
-                  downCount={favoriteBoard.down_count}
-                  createdAt={favoriteBoard.created_at.slice(0, 10)}
-                />
-              );
-            })}
-          </CardsFrame>
-          <PagenateFrame>
-          <ReactPaginate
-            pageCount={favoritePageCount}
-            previousLabel={'<'}
-            nextLabel={'>'}
-            onPageChange={favoriteChangePage}
-          />
-          </PagenateFrame>
-        </>
-        )
-        : ''}
-      <h1>My Commits</h1>
-      {myCommit.length > 0 ? (
-        <>
-          <CardsFrame>
-          {myCommit
-            .slice(commitPagesVisited, commitPagesVisited + commitBoardsPerPage)
-            .map((commitBoard, idx) => {           
-              return (
-                <MyCommits
-                  key={idx}
-                  boardIndex={commitBoard.board_index}
-                  commitIndex={commitBoard.commit_index}
-                  commitDetail={commitBoard.content}
-                  title={commitBoard.title}
-                  upCount={commitBoard.up_count}
-                  downCount={commitBoard.down_count}
-                  createdAt={commitBoard.created_at.slice(0, 10)}
-                />
-              );
-            })}
-          </CardsFrame>
-          <PagenateFrame>
-          <ReactPaginate
-            pageCount={commitPageCount}
-            previousLabel={'<'}
-            nextLabel={'>'}
-            onPageChange={commitChangePage}
-          />
-          </PagenateFrame>
-        </>
-        )
-        : ''}
-      <h1>My Comments</h1>
-      {myComment.length > 0 ? (
-        <>
-          <CardsFrame comments>
-          {myComment
-            .slice(commentPagesVisited, commentPagesVisited + commentBoardsPerPage)
-            .map((commentBoard, idx) => {           
-              return (
-                <MyComments
-                  key={idx}
-                  boardIndex={commentBoard.board_index}
-                  commitIndex={commentBoard.commit_index}
-                  content={commentBoard.content}
-                  upCount={commentBoard.up_count}
-                  downCount={commentBoard.down_count}
-                  createdAt={commentBoard.created_at.slice(0, 10)}
-                />
-              );
-            })}
-          </CardsFrame>
-          <PagenateFrame>
-          <ReactPaginate
-            pageCount={commentPageCount}
-            previousLabel={'<'}
-            nextLabel={'>'}
-            onPageChange={commentChangePage}
-          />
-          </PagenateFrame>
-        </>
-        )
-        : ''}
-    </Parts.Board>
-    <StoryModal display={modalPage==="MyStory" ? "" : "none"}/>
-    <CommitModal display={modalPage==="MyCommit" ? "" : "none"}/>
-    <CommentModal display={modalPage==="MyComment" ? "" : "none"}/>
+        {myInfo ? <MyInfo myInfo={myInfo} setAccessToken={setAccessToken} /> : ''}
+        <h1>My Story</h1>
+        {myStory.length > 0 ? (
+          <>
+            <CardsFrame story>
+              {myStory
+                .slice(storyPagesVisited, storyPagesVisited + storyBoardsPerPage)
+                .map((storyBoard, idx) => {
+                  return (
+                    <MyStory
+                      key={idx}
+                      boardIndex={storyBoard.board_index}
+                      storyDetail={storyBoard.content}
+                      title={storyBoard.title}
+                      upCount={storyBoard.up_count}
+                      downCount={storyBoard.down_count}
+                      createdAt={storyBoard.created_at.slice(0, 10)}
+                    />
+                  );
+                })}
+            </CardsFrame>
+            <PagenateFrame>
+              <ReactPaginate
+                pageCount={storyPageCount}
+                previousLabel={'<'}
+                nextLabel={'>'}
+                onPageChange={storyChangePage}
+              />
+            </PagenateFrame>
+          </>
+        ) : (
+          ''
+        )}
+      </Parts.Board>
+      <Parts.Board>
+        <h1>My Favorite</h1>
+        {myFavorite.length > 0 ? (
+          <>
+            <CardsFrame>
+              {myFavorite
+                .slice(favoritePagesVisited, favoritePagesVisited + favoriteBoardsPerPage)
+                .map((favoriteBoard, idx) => {
+                  return (
+                    <MyFavorite
+                      key={idx}
+                      boardIndex={favoriteBoard.board_index}
+                      storyDetail={favoriteBoard.content}
+                      title={favoriteBoard.title}
+                      upCount={favoriteBoard.up_count}
+                      downCount={favoriteBoard.down_count}
+                      createdAt={favoriteBoard.created_at.slice(0, 10)}
+                    />
+                  );
+                })}
+            </CardsFrame>
+            <PagenateFrame>
+              <ReactPaginate
+                pageCount={favoritePageCount}
+                previousLabel={'<'}
+                nextLabel={'>'}
+                onPageChange={favoriteChangePage}
+              />
+            </PagenateFrame>
+          </>
+        ) : (
+          ''
+        )}
+        <h1>My Commits</h1>
+        {myCommit.length > 0 ? (
+          <>
+            <CardsFrame>
+              {myCommit
+                .slice(commitPagesVisited, commitPagesVisited + commitBoardsPerPage)
+                .map((commitBoard, idx) => {
+                  return (
+                    <MyCommits
+                      key={idx}
+                      boardIndex={commitBoard.board_index}
+                      commitIndex={commitBoard.commit_index}
+                      commitDetail={commitBoard.content}
+                      title={commitBoard.title}
+                      upCount={commitBoard.up_count}
+                      downCount={commitBoard.down_count}
+                      createdAt={commitBoard.created_at.slice(0, 10)}
+                    />
+                  );
+                })}
+            </CardsFrame>
+            <PagenateFrame>
+              <ReactPaginate
+                pageCount={commitPageCount}
+                previousLabel={'<'}
+                nextLabel={'>'}
+                onPageChange={commitChangePage}
+              />
+            </PagenateFrame>
+          </>
+        ) : (
+          ''
+        )}
+        <h1>My Comments</h1>
+        {myComment.length > 0 ? (
+          <>
+            <CardsFrame comments>
+              {myComment
+                .slice(commentPagesVisited, commentPagesVisited + commentBoardsPerPage)
+                .map((commentBoard, idx) => {
+                  return (
+                    <MyComments
+                      key={idx}
+                      boardIndex={commentBoard.board_index}
+                      commitIndex={commentBoard.commit_index}
+                      content={commentBoard.content}
+                      upCount={commentBoard.up_count}
+                      downCount={commentBoard.down_count}
+                      createdAt={commentBoard.created_at.slice(0, 10)}
+                      commentindex={commentBoard.comment_index}
+                    />
+                  );
+                })}
+            </CardsFrame>
+            <PagenateFrame>
+              <ReactPaginate
+                pageCount={commentPageCount}
+                previousLabel={'<'}
+                nextLabel={'>'}
+                onPageChange={commentChangePage}
+              />
+            </PagenateFrame>
+          </>
+        ) : (
+          ''
+        )}
+      </Parts.Board>
+      <StoryModal display={modalPage === 'MyStory' ? '' : 'none'} />
+      <CommitModal display={modalPage === 'MyCommit' ? '' : 'none'} />
+      <CommentModal display={modalPage === 'MyComment' ? '' : 'none'} />
     </>
   );
 };

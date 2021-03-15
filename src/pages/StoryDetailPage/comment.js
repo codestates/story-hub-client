@@ -5,7 +5,7 @@ import { Link, withRouter, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { ContentState } from 'draft-js';
 import htmlToDraft from 'html-to-draftjs';
-import { pageMoved } from '../../actions';
+import { pageMoved, messageOpen } from '../../actions';
 import styled from 'styled-components'
 import Parts from '../../style/Parts'
 import cardBackground from '../../images/card.png'
@@ -161,7 +161,7 @@ align-items: flex-end;
 const CommentPage = (props) => {
   const state = useSelector((state) => state);
   const { boardIndex, boardTitle } = state.pageReducer;
-  const { accessToken, loginType, users } = state.userReducer;
+  const { accessToken, users } = state.userReducer;
   const dispatch = useDispatch();
   const history = useHistory();
   const [commentList, setCommentList] = useState([]);
@@ -174,11 +174,7 @@ const CommentPage = (props) => {
   const commentChangePage = ({ selected }) => {
     setCommentPageNumber(selected);
   };
-
-
-
-
-
+  
   const getCommentList = async () => {
     const result = await axios({
       url: 'http://localhost:4000/comment/list',
@@ -187,40 +183,41 @@ const CommentPage = (props) => {
         boardIndex,
       },
     });
-    console.log(result)
     setCommentList(result.data.list);
   };
 
   const handleSubmit = () => {
-    if (comment) {
+    if (!accessToken) dispatch(messageOpen('로그인이 필요합니다.'));
+    else {
+      if (comment) {
         axios({
-            url: 'http://localhost:4000/comment/create',
-            method: 'POST',
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            data: {
-                loginType,
-                content: comment,
-                boardIndex: boardIndex
-            },
+          url: 'http://localhost:4000/comment/create',
+          method: 'POST',
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          data: {
+            content: comment,
+            boardIndex: boardIndex,
+          },
         }).then((res) => {
-          setComment('')
-          history.go(0)
-        })
-    } else {
+          setComment('');
+          history.go(0);
+        });
+      } else {
         dispatch(messageOpen('내용을 입력해주세요.'));
         return;
+      }
     }
-};
+  };
 
-const handleComment = (e) => {
-  setComment(e.target.value)
-}
+  const handleComment = (e) => {
+    setComment(e.target.value);
+  };
 
   useEffect(() => {
-    console.log(users)
+    dispatch(pageMoved('StoryDetail'));
     getCommentList();
   }, []);
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { pageMoved } from '../../actions';
+import { pageMoved, messageOpen, storyDetailSaved, modalMoved } from '../../actions';
 import styled from 'styled-components';
 import Parts from '../../style/Parts'
 
@@ -81,9 +81,32 @@ align-items: flex-end;
 const ContentPage = (props) => {
   const state = useSelector((state) => state);
   const { storyDetail, boardIndex } = state.pageReducer;
+  const { accessToken } = state.userReducer;
+  const history = useHistory();
   const [boardInfoList, setBoardInfo] = useState([]);
   const [commitInfoList, setCommitInfo] = useState([]);
+  const [isWriter, setIsWriter] = useState(false);
   const dispatch = useDispatch();
+
+  const checkUpdateDeleteButton = async () => {
+    if (!accessToken) return;
+    const result = await axios({
+      url: 'http://localhost:4000/board/info',
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    const { data } = result;
+    if (data) {
+      data.map((el) => {
+        if (el.board_index === boardIndex) {
+          setIsWriter(true);
+        }
+      });
+    }
+  };
+
   const getTitle = async () => {
     const result = await axios({
       url: 'http://localhost:4000/board/detailcontent',
@@ -97,10 +120,24 @@ const ContentPage = (props) => {
     setBoardInfo(boardInfo);
   };
 
+  const handleContinue = () => {
+    if (accessToken) history.push('/newcommit');
+    else dispatch(messageOpen('로그인이 필요합니다.'));
+  };
+
+  const handleUpdate = () => {
+    dispatch(modalMoved('UpdateBoard'));
+  };
+  const handleDelete = () => {
+    dispatch(modalMoved('DeleteBoard'));
+  };
+
   useEffect(() => {
-    getTitle();
+    checkUpdateDeleteButton();
     dispatch(pageMoved('StoryDetail'));
+    getTitle();
   }, []);
+
   return (
     <Parts.DetailFrame>
         <ContentStyle>
@@ -108,6 +145,14 @@ const ContentPage = (props) => {
             <h1>Title :
                 <span className="title">{boardInfoList[0] ? boardInfoList[0].title : ''}</span>
                 <div className="writer">Writer : <span>{boardInfoList[0] ? boardInfoList[0].nickname : ''}</span></div>
+                <div className="buttons">
+                    <ButtonWrap>
+                        <button display={isWriter ? '' : 'none'} onClick={handleUpdate}>Update</button>
+                    </ButtonWrap>
+                    <ButtonWrap>
+                        <button display={isWriter ? '' : 'none'} onClick={handleDelete}>Delete</button>
+                    </ButtonWrap>
+                </div>
             </h1>
         </div >
         <div className="contentFrame">
@@ -125,12 +170,10 @@ const ContentPage = (props) => {
             </div>
         </div>
         <ButtonWrap>
-            <Link to="/newcommit">
-                <button>Continue To Write</button>
-            </Link>{' '}
+            <button onClick={handleContinue}>Continue To Write</button>
         </ButtonWrap>
-        </ContentStyle>
-    </Parts.DetailFrame>
+      </ContentStyle>
+   </Parts.DetailFrame>
   );
 };
 

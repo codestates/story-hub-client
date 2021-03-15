@@ -20,7 +20,7 @@ import {
 import styled from 'styled-components';
 import Parts from '../../style/Parts';
 import logoImage from '../../images/story_hub_logo.png';
-import logoImage2 from '../../images/story_hub_logo2.png'
+import logoImage2 from '../../images/story_hub_logo2.png';
 import searchButtonImage from '../../images/searchButton.png';
 import searchButtonImage2 from '../../images/searchButton2.png';
 import configureStore from '../../store/store';
@@ -116,7 +116,7 @@ const ButtonWrap = styled.div`
 
 const UpNav = (props) => {
   const state = useSelector((state) => state);
-  const { isLogin } = state.userReducer;
+  const { isLogin, accessToken } = state.userReducer;
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -131,6 +131,11 @@ const UpNav = (props) => {
     setTitle('');
   };
 
+  const handleCreate = () => {
+    if(accessToken) history.push('newstorycontent')
+    else dispatch(messageOpen('로그인이 필요합니다.'))
+  }
+
   return (
     <Parts.Nav up display={props.display === 'none' ? 'none' : ''}>
       <UpNavFrame>
@@ -138,9 +143,7 @@ const UpNav = (props) => {
           <Logo />
         </Link>
         <ButtonWrap>
-          <Link to="/newstorycontent">
-            <button>Create New Story</button>
-          </Link>
+            <button onClick = {handleCreate}>Create New Story</button>
         </ButtonWrap>
       </UpNavFrame>
       <UpNavFrame>
@@ -158,21 +161,21 @@ const UpNav = (props) => {
         {isLogin ? (
           <ButtonWrap>
             <button
-              onClick={() => {
+              onClick={async () => {
                 dispatch(
                   userLogout(),
                   dispatch(messageOpen('로그아웃 되었습니다!')),
-                  dispatch(categorySaved('')),
-                  dispatch(commitbySaved('')),
-                  dispatch(commitSaved('')),
-                  dispatch(commitTitleSaved('')),
-                  dispatch(contentSaved('')),
-                  dispatch(contentTitleSaved('')),
-                  dispatch(commentSaved('')),
-                  dispatch(etcSaved('')),
-                  dispatch(minSaved(0)),
-                  dispatch(maxSaved(0)),
-                  persistor.purge(),
+                  // dispatch(categorySaved('')),
+                  // dispatch(commitbySaved('')),
+                  // dispatch(commitSaved('')),
+                  // dispatch(commitTitleSaved('')),
+                  // dispatch(contentSaved('')),
+                  // dispatch(contentTitleSaved('')),
+                  // dispatch(commentSaved('')),
+                  // dispatch(etcSaved('')),
+                  // dispatch(minSaved(0)),
+                  // dispatch(maxSaved(0)),
+                  await persistor.purge(),
                   history.push('/')
                 );
               }}
