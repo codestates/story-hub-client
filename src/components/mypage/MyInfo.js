@@ -94,7 +94,7 @@ const Card = styled.div`
 const MyInfo = ({ myInfo, setAccessToken }) => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
-  const { loginType, accessToken } = state.userReducer;
+  const { accessToken } = state.userReducer;
   const [checkBtn, setCheckBtn] = useState(false);
   const [nickName, setNickName] = useState(myInfo.nickname);
 
@@ -109,12 +109,9 @@ const MyInfo = ({ myInfo, setAccessToken }) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: {
-        loginType,
-      },
     });
     const { data } = result.data;
-    if(data)setNickName(data.nickname);
+    if (data) setNickName(data.nickname);
   };
 
   const handleInputValue = (e) => {
@@ -133,7 +130,6 @@ const MyInfo = ({ myInfo, setAccessToken }) => {
             Authorization: `Bearer ${accessToken}`,
           },
           data: {
-            loginType: loginType,
             nickname: nickName,
           },
           withCredentials: true,

@@ -31,7 +31,7 @@ const MessageButton = styled.button`
 
 const DeleteCommit = (props) => {
   const state = useSelector((state) => state);
-  const { accessToken, loginType } = state.userReducer;
+  const { accessToken } = state.userReducer;
   const { commitDetailIndex } = state.pageReducer;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -45,7 +45,6 @@ const DeleteCommit = (props) => {
         Authorization: `Bearer ${accessToken}`,
       },
       params: {
-        loginType: loginType,
         commitIndex: commitDetailIndex,
       },
     });

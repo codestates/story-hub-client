@@ -10,7 +10,7 @@ import CommentCard from '../components/cards/CommentCard';
 
 const AlertPage = (props) => {
   const state = useSelector((state) => state);
-  const { accessToken, loginType } = state.userReducer;
+  const { accessToken } = state.userReducer;
   const dispatch = useDispatch();
   console.log(accessToken);
 
@@ -25,9 +25,6 @@ const AlertPage = (props) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: {
-        loginType,
-      },
     })
       .then((res) => {
         console.log(res.data);
@@ -38,9 +35,6 @@ const AlertPage = (props) => {
           withCredentials: true,
           headers: {
             Authorization: `Bearer ${accessToken}`,
-          },
-          params: {
-            loginType,
           },
         });
       })
@@ -61,7 +55,6 @@ const AlertPage = (props) => {
         Authorization: `Bearer ${accessToken}`,
       },
       data: {
-        loginType: loginType,
         index,
       },
       withCredentials: true,

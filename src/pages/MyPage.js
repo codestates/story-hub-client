@@ -98,7 +98,7 @@ const MyPage = (props) => {
     setCommentPageNumber(selected);
   };
 
-  const { accessToken, loginType } = state.userReducer;
+  const { accessToken } = state.userReducer;
 
   useEffect(() => {
     dispatch(pageMoved('MyPage'));
@@ -113,7 +113,6 @@ const MyPage = (props) => {
     dispatch(userUpdate(token));
   };
 
-
   const myInfoFc = async () => {
     console.log(accessToken);
     const result = await axios({
@@ -122,19 +121,10 @@ const MyPage = (props) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: {
-        loginType,
-      },
     });
     const { data } = result.data;
     console.log(data);
     setMyInfo(data);
-  };
-
-  const setAccessToken = (token) => {
-    console.log('1', token);
-    dispatch(userUpdate(token));
-    console.log(state.userReducer);
   };
 
   const myStoryFc = async () => {
@@ -143,9 +133,6 @@ const MyPage = (props) => {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`,
-      },
-      params: {
-        loginType,
       },
     });
     const { data } = result;
@@ -157,9 +144,6 @@ const MyPage = (props) => {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`,
-      },
-      params: {
-        loginType,
       },
     });
     const { data } = result;
@@ -173,9 +157,6 @@ const MyPage = (props) => {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
-      params: {
-        loginType,
-      },
     });
 
     const { data } = result;
@@ -188,9 +169,6 @@ const MyPage = (props) => {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${accessToken}`,
-      },
-      params: {
-        loginType,
       },
     });
     const { list } = result.data;

@@ -1,7 +1,7 @@
 import React from 'react';
 import KakaoLogin from 'react-kakao-login';
 import axios from 'axios';
-import Background from './images/kakao_login_medium_wide.png'
+import Background from './images/kakao_login_medium_wide.png';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLogin, modalMoved, messageOpen } from './actions';
 
@@ -17,19 +17,20 @@ const KakaoOauth = () => {
         authorization: `Bearer ${token}`,
       },
       withCredentials: true,
-    }).then((res) => {
-      if (res.data.loginType) {
-        console.log(res);
+    })
+      .then((res) => {
         dispatch(modalMoved(''));
         dispatch(messageOpen('카카오 로그인 완료! :)'));
         dispatch(
           userLogin({
-            loginType: res.data.loginType,
             accessToken: token,
           })
         );
-      } else dispatch(messageOpen('카카오 로그인 실패! :('));
-    });
+      })
+      .catch((err) => {
+        console.log(err);
+        return dispatch(messageOpen('카카오 로그인 실패! :('));
+      });
   };
   return (
     <KakaoLogin

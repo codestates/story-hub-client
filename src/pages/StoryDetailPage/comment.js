@@ -7,7 +7,7 @@ import { pageMoved, messageOpen } from '../../actions';
 const CommentPage = (props) => {
   const state = useSelector((state) => state);
   const { boardIndex, boardTitle } = state.pageReducer;
-  const { accessToken, loginType, users } = state.userReducer;
+  const { accessToken, users } = state.userReducer;
   const dispatch = useDispatch();
   const history = useHistory();
   const [commentList, setCommentList] = useState([]);
@@ -24,37 +24,35 @@ const CommentPage = (props) => {
     setCommentList(result.data.list);
   };
 
-
-  const handleSubmit = () => {   
-    if(!accessToken) dispatch(messageOpen('로그인이 필요합니다.')) 
+  const handleSubmit = () => {
+    if (!accessToken) dispatch(messageOpen('로그인이 필요합니다.'));
     else {
       if (comment) {
         axios({
-            url: 'http://localhost:4000/comment/create',
-            method: 'POST',
-            withCredentials: true,
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-            data: {
-                loginType,
-                content: comment,
-                boardIndex: boardIndex
-            },
+          url: 'http://localhost:4000/comment/create',
+          method: 'POST',
+          withCredentials: true,
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+          data: {
+            content: comment,
+            boardIndex: boardIndex,
+          },
         }).then((res) => {
-          setComment('')
-          history.go(0)
-        })
-    } else {
-      dispatch(messageOpen('내용을 입력해주세요.'));
-      return;
+          setComment('');
+          history.go(0);
+        });
+      } else {
+        dispatch(messageOpen('내용을 입력해주세요.'));
+        return;
+      }
     }
-  }
-};
+  };
 
-const handleComment = (e) => {
-  setComment(e.target.value)
-}
+  const handleComment = (e) => {
+    setComment(e.target.value);
+  };
 
   useEffect(() => {
     dispatch(pageMoved('StoryDetail'));
@@ -64,14 +62,12 @@ const handleComment = (e) => {
   return (
     <>
       <div>
-      <h1>{boardTitle}</h1>
-      <div>
-          <h1>
-          New Comment
-          </h1>
-          <input placeholder="Please enter a comment" value = {comment} onChange = {handleComment}/>
+        <h1>{boardTitle}</h1>
+        <div>
+          <h1>New Comment</h1>
+          <input placeholder="Please enter a comment" value={comment} onChange={handleComment} />
           <button onClick={handleSubmit}>Submit</button>
-      </div>
+        </div>
         {commentList.map((el, idx) => {
           return (
             <div key={idx}>

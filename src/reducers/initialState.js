@@ -1,7 +1,6 @@
 export const userState = {
   users: [],
   isLogin: false,
-  loginType: null,
   accessToken: '',
 };
 
@@ -12,34 +11,34 @@ export const pageState = {
   boardTitle: '',
   storyDetail: '',
   myPageProps: {},
-  commitDetail : '',
-  commitDetailIndex : 0,
-  commitDetailTitle : '',
-  commitDetailNickname : '',
-  commitDetailCreated : '',
-  commitDetailIsMerged : 0,
-  commitMaxDepth : 0,
+  commitDetail: '',
+  commitDetailIndex: 0,
+  commitDetailTitle: '',
+  commitDetailNickname: '',
+  commitDetailCreated: '',
+  commitDetailIsMerged: 0,
+  commitMaxDepth: 0,
 };
 
 export const textState = {
-    content : "",
-    commit : "",
-    title: "",
-    searchList: [],
-    contentTitle : "",
-    commitTitle : "",
+  content: '',
+  commit: '',
+  title: '',
+  searchList: [],
+  contentTitle: '',
+  commitTitle: '',
 };
 
 export const messageState = {
-    message: "",
-    isOpen: false 
-}
+  message: '',
+  isOpen: false,
+};
 
 export const infoState = {
-    category : "",
-    comment : "",
-    commitBy: "",
-    max: 0,
-    min : 0,
-    etc : "",
+  category: '',
+  comment: '',
+  commitBy: '',
+  max: 0,
+  min: 0,
+  etc: '',
 };

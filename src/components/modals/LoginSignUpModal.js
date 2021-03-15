@@ -104,7 +104,6 @@ const LoginSignUpModal = (props) => {
       .then((res) => {
         dispatch(
           userLogin({
-            loginType: res.data.loginType,
             accessToken: res.data.accessToken,
           })
         );
