@@ -181,7 +181,7 @@ padding-top: 5px;
 const ButtonWrap = styled.div`
 margin-right: 10px;
 width: 90%;
-display: flex;
+display: ${props => props.display==="none"? "none" : "flex"};
 flex-direction: row;
 justify-content: space-evenly;
 align-items: flex-end;
@@ -318,7 +318,6 @@ const CommitDetailPage = (props) => {
     });
     const { data } = result;
     if (data) {
-      console.log(data)
       if (!accessToken) return;
       data.map((el) => {
         if (el.board_index === boardIndex) {
@@ -340,7 +339,6 @@ const CommitDetailPage = (props) => {
       },
     });
     if (resultDelete.data) {
-      console.log(resultDelete.data)
       if (!accessToken) return;
       resultDelete.data.map((el) => {
         if (el.commit_index === commitDetailIndex) {
@@ -379,8 +377,7 @@ const CommitDetailPage = (props) => {
     checkMergeDeleteButton();
     dispatch(pageMoved('CommitDetail'));
   }, []);
-
-
+    
   return (
     <Parts.DetailFrame>
         <CommitDetailFrame>
@@ -400,18 +397,18 @@ const CommitDetailPage = (props) => {
                         <div className='content' dangerouslySetInnerHTML={{ __html: commitDetail }}></div>
                     </div>
                     <div className="buttons">
-                          <ButtonWrap>
-                              <button display={isWriter ? '' : 'none'} onClick={handleMerge}>
+                          <ButtonWrap display={isWriter ? '' : 'none'}>
+                              <button onClick={handleMerge}>
                                   Merge
                               </button>
                           </ButtonWrap>
-                          <ButtonWrap>
-                              <button display={isChange ? '' : 'none'} onClick={handleDelete}>
+                          <ButtonWrap display={isChange ? '' : 'none'}>
+                              <button onClick={handleDelete}>
                                   Delete
                               </button>
                           </ButtonWrap>
-                          <ButtonWrap>
-                              <button display={isChange ? '' : 'none'} onClick={handleUpdate}>
+                          <ButtonWrap display={isChange ? '' : 'none'}>
+                              <button onClick={handleUpdate}>
                                   Update
                               </button>
                           </ButtonWrap>
