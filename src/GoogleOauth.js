@@ -40,8 +40,8 @@ const GoogleOauth = () => {
           <button
             onClick={renderProps.onClick}
             style={{
-              width: '300px',
-              height: '35px',
+              width: '260px',
+              height: '30px',
               borderRadius: '10px',
               border: '1px solid #e0e0e0',
               marginTop: '10px',

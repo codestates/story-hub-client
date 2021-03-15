@@ -13,7 +13,7 @@ background-size: cover;
 background-repeat: no-repeat;
 background-position: 50% 50%;
 padding: 10px 0 0 5vw;
-width: 90%;
+width: ${props => props.page==='search' ? '35%' : '90%'};
 height: 15vh;
 min-height: 100px;
 background-size: 100% 100%;
@@ -69,7 +69,7 @@ const StoryCard = (props) => {
     }
 
     return (
-        <Card onClick = {handleCard}>
+        <Card page={props.page} onClick = {handleCard}>
             <div className='frame1'>
                 <h2 className="title">{props.title}</h2>
                 <div className="counts">

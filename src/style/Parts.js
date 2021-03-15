@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import bodyImage from '../images/body.png'
+import detailImage from '../images/paper.jpg'
 
 const Parts = {
     Page : styled.div`
@@ -51,7 +52,7 @@ const Parts = {
         margin-right: -5px;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        justify-content: space-evenly;
         float: left;
     `,
     Board : styled.div`
@@ -93,14 +94,16 @@ const Parts = {
         align-items: center;
         justify-content: center;
     `,
-    Info : styled.div`
-    margin:0;
-    height:30px;
-    width:80px;
-    color: black;
-    text-align: center;
-    background-color: ${props => props.clicked==="clicked" ? "rgb(185, 185, 185)" : "gray"};
-`,
+    DetailFrame : styled.div`
+    width: 90%;
+    height: 90%;
+    background-image: url(${detailImage});
+    background-repeat: repeat-x;
+    margin: 20px 10px 10px 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+    border-radius: 5px;
+    padding: 20px;
+    `
 }
 
 export default Parts;

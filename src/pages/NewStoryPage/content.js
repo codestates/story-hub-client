@@ -11,6 +11,7 @@ import styled from 'styled-components'
 const EditorStyle = styled.div`
     width: 100%;
     height: 90%;
+    margin: 15px;
 
     .toolbarClassName{
         border: none;
@@ -51,21 +52,24 @@ const EditorStyle = styled.div`
     }
 
     .title {
+        width: 99%;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: flex-start;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
         margin: 0px 10px 15px 10px;
+        font-weight: 900;
     }
 
-    input {
-        height: 18px;
-        width: 50vw;
-        max-width: 350px;
+    .titleInput {
+        height: 25px;
+        width: 100%;
         margin-left: 15px;
         border-radius: 5px;
         padding-left: 10px;
+        background-color: #fff8eda1;
+        font: 1rem 'Nanum Myeongjo', serif;
     }
 ` 
 
@@ -103,8 +107,8 @@ const NewStoryContentPage = (props) => {
     return (
         <EditorStyle>
             <div className = "title">
-                <div>Title </div>
-                <input placeholder="Please enter a title" value = {contentTitle} onChange = {handleTitle}/>
+                <div>TITLE : </div>
+                <input className='titleInput' placeholder="Please enter a title" value = {contentTitle} onChange = {handleTitle}/>
             </div>
             <Editor
                 editorState={text}

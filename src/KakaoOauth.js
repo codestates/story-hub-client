@@ -37,8 +37,8 @@ const KakaoOauth = () => {
       token={process.env.REACT_APP_KAKAO_API_KEY}
       onSuccess={(res) => kakaoLogin(res.response.access_token)}
       style={{
-        width: '300px',
-        height: '35px',
+        width: '260px',
+        height: '30px',
         borderRadius: '10px',
         backgroundImage: `url(${Background})`,
         marginTop: '10px',

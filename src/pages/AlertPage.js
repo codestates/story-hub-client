@@ -1,12 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import UpNav from '../components/navigators/UpNav';
-import RightNav from '../components/navigators/RightNav';
+import ReactPaginate from 'react-paginate';
 import axios from 'axios';
-import { Link, withRouter } from 'react-router-dom';
+import { ContentState } from 'draft-js';
+import htmlToDraft from 'html-to-draftjs';
 import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components'
 import { pageMoved } from '../actions';
 import CommitCard from '../components/cards/CommitCard';
 import CommentCard from '../components/cards/CommentCard';
+
+const CardsFrame = styled.div`
+width: 45%;
+height: 75vh;
+display:flex;
+flex-direction: column;
+justyfy-content: flex-start;
+align-items: center;
+`
+
+const PagenateFrame = styled.div`
+font-size: 0.8rem;
+margin-top: 15px;
+ul {
+width: 80%;
+display: flex;
+flex-direction: row;
+justify-self: end;
+}
+li {
+  display: inline-block;
+  margin: 0 3px 0 3px;
+}
+.previous, .next {
+  display: inline-block;
+  margin: 0 15px 0 15px;
+  font-weight: bold;
+}
+.selected {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #f49531;
+}
+`
 
 const AlertPage = (props) => {
   const state = useSelector((state) => state);
@@ -72,14 +107,39 @@ const AlertPage = (props) => {
       .catch((err) => console.log(err));
   };
 
+
+  const [commitsPageNumber, setCommitsPageNumber] = useState(0);
+  const [commentsPageNumber, setCommentsPageNumber] = useState(0);
+
+  const commitsBoardsPerPage = 4;
+  const commentsBoardsPerPage = 4;
+
+  const commitsPagesVisited = commitsPageNumber * commitsBoardsPerPage;
+  const commentsPagesVisited = commentsPageNumber * commentsBoardsPerPage;
+
+  const commitsPageCount = Math.ceil(commits.length / commitsBoardsPerPage);
+  const commentsPageCount = Math.ceil(comments.length / commentsBoardsPerPage);
+
+  const commitsChangePage = ({ selected }) => {
+    setcommitsPageNumber(selected);
+  };
+  const commentsChangePage = ({ selected }) => {
+    setCommentsPageNumber(selected);
+  };
+  
   const commitList =
     commits.length > 0
-      ? commits.map((el, idx) => (
+      ? commits
+      .slice(commitsPagesVisited, commitsPagesVisited + commitsBoardsPerPage)
+          .map((el, idx) => {
+            let contentState = ContentState.createFromBlockArray(htmlToDraft(el.content).contentBlocks)
+            let onlyText = contentState.getPlainText()  
+          return (
           <CommitCard
             key={idx}
             commitIndex={el.commitIndex}
             title={el.title}
-            content={el.content}
+            content={onlyText}
             nickname={el.nickname}
             createdAt={el.createdAt.slice(0, 10)}
             upCount={el.upCount}
@@ -87,35 +147,56 @@ const AlertPage = (props) => {
             visitCount={el.visitCount}
             alertCheck={alertCheck}
           />
-        ))
+          )})
       : '';
 
   const commentList =
     comments.length > 0
-      ? comments.map((el, idx) => (
+      ? comments
+      .slice(commentsPagesVisited, commentsPagesVisited + commentsBoardsPerPage)
+          .map((el, idx) => {
+            let contentState = ContentState.createFromBlockArray(htmlToDraft(el.content).contentBlocks)
+            let onlyText = contentState.getPlainText()  
+          return (
           <CommentCard
             key={idx}
             commentIndex={el.commentIndex}
-            content={el.content}
+            content={onlyText}
             nickname={el.nickname}
             upCount={el.upCount}
             downCount={el.downCount}
             createdAt={el.createdAt.slice(0, 10)}
             alertCheck={alertCheck}
           />
-        ))
+        )})
       : '';
 
   return (
     <>
-      <div>
-        <div>NEW COMMIT</div>
+      <CardsFrame>
+        <h1>NEW COMMIT</h1>
         {commitList}
-      </div>
-      <div>
-        <div>NOW COMMENT</div>
+        <PagenateFrame>
+        <ReactPaginate
+          pageCount={commitsPageCount}
+          previousLabel={'<'}
+          nextLabel={'>'}
+          onPageChange={commitsChangePage}
+        />
+        </PagenateFrame>
+      </CardsFrame>
+      <CardsFrame>
+        <h1>NEW COMMENT</h1>
         {commentList}
-      </div>
+        <PagenateFrame>
+        <ReactPaginate
+          pageCount={commentsPageCount}
+          previousLabel={'<'}
+          nextLabel={'>'}
+          onPageChange={commentsChangePage}
+        />
+        </PagenateFrame>
+      </CardsFrame>
     </>
   );
 };
