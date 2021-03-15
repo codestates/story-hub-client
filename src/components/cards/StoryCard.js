@@ -3,7 +3,7 @@ import { useHistory, withRouter } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { ellipsis } from 'polished';
-import { boardIndexSaved, boardTitleSaved, storyDetailSaved } from '../../actions';
+import { boardIndexSaved, boardTitleSaved, storyDetailSaved, commitMaxDepthSaved } from '../../actions';
 import cardBackground from '../../images/card.png'
 
 const Card = styled.div`
@@ -65,6 +65,7 @@ const StoryCard = (props) => {
         dispatch(boardIndexSaved(props.board_index))
         dispatch(boardTitleSaved(props.title))
         dispatch(storyDetailSaved(props.storyDetail))
+        dispatch(commitMaxDepthSaved(0))
         history.push('/content');
     }
 

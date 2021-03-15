@@ -10,11 +10,19 @@ import {
   commitDetailCreatedSaved,
   commitDetailIsMergedSaved,  
 } from '../../actions';
+import commitimage from '../../images/commit.png'
+import { ellipsis } from 'polished';
 
 const Card = styled.button`
-border-radius: 10px;
-width: 80px;
-height: 40px;
+font: 400 0.8rem 'Nanum Myeongjo', serif;
+width: 100px;
+height: 45px;
+margin-top: 10px;
+padding-top: 5px;
+background-color: transparent;
+border: none;
+background-image: url(${commitimage});
+${ellipsis('700px')};
 `;
 
 const CommitDetailCard = (props) => {
@@ -22,7 +30,8 @@ const CommitDetailCard = (props) => {
   const dispatch = useDispatch();
 
   const handleCard = () => {
-    dispatch(commitDetailSaved(props.content));
+    if (props.content) dispatch(commitDetailSaved(props.content));
+    else dispatch(commitDetailSaved(''));
     dispatch(commitDetailIndexSaved(props.commit_index));
     dispatch(commitDetailTitleSaved(props.title));
     dispatch(commitDetailNicknameSaved(props.nickname));

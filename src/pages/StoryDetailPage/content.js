@@ -38,7 +38,10 @@ h1 {
   justify-content: flex-end;
 }
 .contentFrame {
-    width: 100%;
+    margin-top: 15px;
+    position: relative;
+    left: 3%;
+    width: 94%;
     height: 90%;
     overflow-y: auto;
 }
@@ -51,7 +54,8 @@ h1 {
   text-align: right;
   font-size: 0.8rem;
   margin: 10px;
-  border-bottom: 1px solid gray;
+  color: rgba(0,0,0,0.6);
+  border-bottom: 1px solid rgba(0,0,0,0.2);
 }
 `;
 

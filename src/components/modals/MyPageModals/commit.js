@@ -84,7 +84,7 @@ const ModalFrame = styled.div`
         justify-content: space-evenly;
         align-items: center;
         flex-wrap: wrap;
-        width: 300px;
+        width: 310px;
         height: 160px;
     }
     .message {
