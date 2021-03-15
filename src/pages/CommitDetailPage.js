@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import ReactPaginate from 'react-paginate';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { pageMoved, modalMoved, messageOpen, commitMaxDepthSaved } from '../actions';
 import Parts from '../style/Parts';
 import styled, { keyframes }from 'styled-components'
+import cardBackground from '../images/card.png'
 
 const blink = keyframes`
     0% { opacity: 1; }
@@ -14,10 +16,13 @@ const blink = keyframes`
 const CommitDetailFrame = styled.div`
 display: flex;
 flex-direction: column;
+height: 100%;
 .back {
+  margin-left: -40vw;
+  margin-top: -45px;
+  margin-bottom: 20px;
   animation: ${blink} 1.5s infinite both;
   cursor: pointer;
-  margin: -50px auto 20px -50px;
   border: none;
   background-color: transparent;
   font-size: 1.5rem;
@@ -32,12 +37,13 @@ flex-direction: column;
 }
 .title-line {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
 }
 .buttons{
+  border-top: 1px solid black;
   display: flex;
   flex-direction: row;
+  margin-right: 15px;
 }
 h1 {
   border: none;
@@ -51,7 +57,8 @@ h1 {
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between
+  justify-content: space-between;
+  margin-top: -10px;
 }
 .writer, .date {
   margin: 8px 10px 0 10px;
@@ -61,26 +68,126 @@ h1 {
 .writer > span, .date > span {
   font-weight: 200;
 }
+.contentFrame {
+  width: 100%;
+  height: 100%;
+}
 .content{
-  width: 90%;
+  width: 100%;
   height: 90%;
-  position: relative;
-  left: 5%;
+  white-space: pre-wrap;
   overflow-y: auto;
 }
-.content {
+.bottomFrame {
   width: 100%;
-  white-space: pre-wrap;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.bottom-part {
+  width: 45%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+.commit {
+  border-right: 3px double black;
+  justify-content: space-between;
+}
+.newComment {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justfy-content: space-evenly;
+}
+button {
+  border: 3px solid gray;
+  width: 100%;
+  background-color: transparent;
+  border-radius: 5px;
+  margin-top: 5px;
+  font: 900 0.8rem serif;
+}
+h2 {
+  font-weight: 900;
+}
+textarea {
+  width: 100%;
+  height: 80%;
+  white-space: normal;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+.bottomFrame {
+  width: 100%;
+  height: 60vh;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.comments {
+  margin-left: 3vw;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+`
+const Card = styled.div`
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+justify-content: center;
+background-image: url(${cardBackground});
+background-color: transparent;
+background-size: cover;
+background-repeat: no-repeat;
+background-position: 50% 50%;
+padding: 3vh 2vw 2vh 2vw;
+width: 35%;
+height: 20%;
+background-size: 100% 100%;
+font-size: 0.9rem;
+.nickname {
+font-size: 0.9rem;
+font-weight: 800;
+width: 100%;
+border-bottom: 1px solid black;
+padding-bottom: 5px;
+}
+.content {
+  font-size: 0.8rem;
+  width: 95%;
+  height: 80%;
+  margin: 3x;
+  overflow-y: auto;
+  white-space: normal;
+}
+.date {
+font-size: 0.8rem;
+width: 100%;
+border-top: 1px solid black;
+text-align: right;
+padding-top: 5px;
 }
 `
 const ButtonWrap = styled.div`
-width: 98%;
+margin-right: 10px;
+width: 90%;
 display: flex;
 flex-direction: row;
-justify-content: flex-end;
+justify-content: space-evenly;
 align-items: flex-end;
   button {
-    margin-left: 5px;
+    width: 10vw;
+    min-width: 0px;
     display: inline-block;
     background: transparent;
     text-transform: uppercase;
@@ -110,7 +217,30 @@ align-items: flex-end;
     background-position: 96% 50%;
   }
 `;
-
+const PagenateFrame = styled.div`
+font-size: 0.8rem;
+margin-top: 15px;
+ul {
+width: 90%;
+display: flex;
+flex-direction: row;
+justify-content: center;
+}
+li {
+  display: inline-block;
+  margin: 0 3px 0 3px;
+}
+.previous, .next {
+  display: inline-block;
+  margin: 0 15px 0 15px;
+  font-weight: bold;
+}
+.selected {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #f49531;
+}
+`
 
 const CommitDetailPage = (props) => {
   const state = useSelector((state) => state);
@@ -131,6 +261,14 @@ const CommitDetailPage = (props) => {
   const [isChange, setIsChange] = useState(false);
   const [commentList, setCommentList] = useState([]);
   const [comment, setComment] = useState('');
+
+  const [commentPageNumber, setCommentPageNumber] = useState(0);
+  const commentBoardsPerPage = 5;
+  const commentPagesVisited = commentPageNumber * commentBoardsPerPage;
+  const commentPageCount = Math.ceil(commentList.length / commentBoardsPerPage);
+  const commentChangePage = ({ selected }) => {
+    setCommentPageNumber(selected);
+  };
 
   const getCommentList = async () => {
     const result = await axios({
@@ -250,49 +388,66 @@ const CommitDetailPage = (props) => {
             <div className="up-part">
                 <div className="title-line">
                     <h1>Title :<span className="title">{commitDetailTitle}</span></h1>
-                        <div className="title-line">
-                        <div className="buttons">
-                            <ButtonWrap>
-                                <button display={isWriter ? '' : 'none'} onClick={handleMerge}>
-                                    Merge
-                                </button>
-                            </ButtonWrap>
-                            <ButtonWrap>
-                                <button display={isChange ? '' : 'none'} onClick={handleDelete}>
-                                    Delete
-                                </button>
-                            </ButtonWrap>
-                            <ButtonWrap>
-                                <button display={isChange ? '' : 'none'} onClick={handleUpdate}>
-                                    Update
-                                </button>
-                            </ButtonWrap>
-                        </div>
+                    <div className="info">
+                        <div className="writer">Writer : <span>{commitDetailNickname}</span></div>
+                        <div className="date">Date : <span>{commitDetailCreated.slice(0, 10)}</span></div>
                     </div>
                 </div>
-          </div>
-          <div className="info">
-            <div className="writer">Writer : <span>{commitDetailNickname}</span></div>
-            <div className="date">Date : <span>{commitDetailCreated.slice(0, 10)}</span></div>
-          </div>
-          <div className='contentFrame'>
-              <div className='content' dangerouslySetInnerHTML={{ __html: commitDetail }}></div>
-        </div>
-          <div>
-            <h1>New Comment</h1>
-            <input placeholder="Please enter a comment" value={comment} onChange={handleComment} />
-            <button onClick={handleSubmit}>Submit</button>
-          </div>
-          {commentList.map((el, idx) => {
-            return (
-              <div key={idx}>
-                <div>nickname : {el.nickname}</div>
-                <div>{el.content}</div>
-                <div>{el.created_at.slice(0, 10)}</div>
-                <hr style={{ border: '1px solid red' }} />
+                </div>
+                <div className='bottomFrame'>
+                  <div className='bottom-part commit'>
+                    <div className='contentFrame'>
+                        <div className='content' dangerouslySetInnerHTML={{ __html: commitDetail }}></div>
+                    </div>
+                    <div className="buttons">
+                          <ButtonWrap>
+                              <button display={isWriter ? '' : 'none'} onClick={handleMerge}>
+                                  Merge
+                              </button>
+                          </ButtonWrap>
+                          <ButtonWrap>
+                              <button display={isChange ? '' : 'none'} onClick={handleDelete}>
+                                  Delete
+                              </button>
+                          </ButtonWrap>
+                          <ButtonWrap>
+                              <button display={isChange ? '' : 'none'} onClick={handleUpdate}>
+                                  Update
+                              </button>
+                          </ButtonWrap>
+                      </div>
+                  </div>
+                  <div className='bottom-part'>
+                    <div className='comments'>
+                      <Card>
+                        <div className='newComment'>
+                          <h2>
+                          NEW COMMENT :
+                          </h2>
+                          <textarea placeholder="Please enter a comment" value = {comment} onChange = {handleComment}/>
+                          <button onClick={handleSubmit}>SUBMIT</button>
+                        </div>
+                      </Card>
+                      {commentList.map((el, idx) => {
+                        return (
+                          <Card key={idx}>
+                            <div className='nickname'>{el.nickname}</div>
+                            <div className='content'>{el.content}</div>
+                            <div className='date'>{el.created_at.slice(0, 10)}</div>
+                          </Card>
+                        );
+                      })}
+                  </div>
+                  <PagenateFrame>
+                    <ReactPaginate
+                      pageCount={commentPageCount}
+                      previousLabel={'<'}
+                      nextLabel={'>'}
+                      onPageChange={commentChangePage}
+                    />
+                  </PagenateFrame>
+                </div>
               </div>
-            );
-          })}
         </CommitDetailFrame>
     </Parts.DetailFrame>
   );

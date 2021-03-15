@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
         border: 1px solid rgba(255,218,171,0.9);
     }
     ::-webkit-scrollbar-thumb {
-        background-color: rgba(255,255,255,0.6);
+        background-color: rgba(255,218,171,0.9);
         background-clip: padding-box;
         border-radius: 5px;
         border: 2.5px solid transparent;

@@ -8,6 +8,18 @@ import Parts from '../../style/Parts'
 
 const ContentStyle = styled.div`
 height: 77%;
+.titleFrame {
+  margin-top: -10px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 3px double black;
+}
+h1 {
+  border: none;
+}
 .title {
     font-size: 1.2rem;
     font-weight: 200;
@@ -20,11 +32,14 @@ height: 77%;
 .writer > span {
     font-weight: 200;
 }
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
 .contentFrame {
-    width: 90%;
+    width: 100%;
     height: 90%;
-    position: relative;
-    left: 5%;
     overflow-y: auto;
 }
 .content {
@@ -41,7 +56,6 @@ height: 77%;
 `;
 
 const ButtonWrap = styled.div`
-width: 98%;
 display: flex;
 flex-direction: row;
 justify-content: flex-end;
@@ -52,7 +66,8 @@ align-items: flex-end;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     color: #d2a638;
-    padding: 15px;
+    ${props => props.up ? 'width: 80px;' : ''}
+    padding: ${props => props.up ? '2px' : '15px'};
     transition: all 0.5s ease-out;
     background: linear-gradient(
       270deg,
@@ -64,7 +79,7 @@ align-items: flex-end;
     background-position: 1% 50%;
     background-size: 300% 300%;
     text-decoration: none;
-    margin: 0.625rem;
+    margin: ${props => props.up ? '3px' : '0.625rem'};
     border: 3px solid rgba(223, 190, 106, 0.8);
     border-radius: 5px;
     font: 900 0.8rem serif;
@@ -141,19 +156,19 @@ const ContentPage = (props) => {
   return (
     <Parts.DetailFrame>
         <ContentStyle>
-        <div>
+        <div className='titleFrame'>
             <h1>Title :
                 <span className="title">{boardInfoList[0] ? boardInfoList[0].title : ''}</span>
                 <div className="writer">Writer : <span>{boardInfoList[0] ? boardInfoList[0].nickname : ''}</span></div>
-                <div className="buttons">
-                    <ButtonWrap>
-                        <button display={isWriter ? '' : 'none'} onClick={handleUpdate}>Update</button>
-                    </ButtonWrap>
-                    <ButtonWrap>
-                        <button display={isWriter ? '' : 'none'} onClick={handleDelete}>Delete</button>
-                    </ButtonWrap>
-                </div>
             </h1>
+            <div className="buttons">
+                <ButtonWrap up>
+                    <button display={isWriter ? '' : 'none'} onClick={handleUpdate}>Update</button>
+                </ButtonWrap>
+                <ButtonWrap up>
+                    <button display={isWriter ? '' : 'none'} onClick={handleDelete}>Delete</button>
+                </ButtonWrap>
+            </div>
         </div >
         <div className="contentFrame">
             <div className="content" dangerouslySetInnerHTML={{ __html: storyDetail }}></div>
