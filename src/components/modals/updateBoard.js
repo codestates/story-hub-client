@@ -10,19 +10,25 @@ import draftToHtml from 'draftjs-to-html';
 import htmlToDraft from 'html-to-draftjs';
 import styled from 'styled-components';
 import Parts from '../../style/Parts';
+import back from '../../images/paper.jpg'
 
 const MessageFrame = styled.div`
+  background-image: url(${back});
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 8;
   width: 700px;
-  height: 200px;
+  height: 500px;
   background-color: white;
   border: 2px solid rgb(220, 220, 220);
   box-shadow: 3px 3px 12px gray;
   padding: 40px 30px 30px 30px;
+  .buttonWrap {
+    display: flex;
+    flex-direction: row;
+  }
 `;
 
 const EditorStyle = styled.div`
@@ -46,7 +52,7 @@ const EditorStyle = styled.div`
 
   .wrapperClassName {
     width: 100%;
-    height: 80%;
+    height: 70%;
     margin: 0 auto;
     margin-bottom: 4rem;
   }
@@ -68,6 +74,7 @@ const EditorStyle = styled.div`
   }
 
   .title {
+
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -77,7 +84,8 @@ const EditorStyle = styled.div`
   }
 
   input {
-    height: 18px;
+    font: 400 0.9rem 'Nanum Myeongjo', serif;
+    height: 25px;
     width: 50vw;
     max-width: 350px;
     margin-left: 15px;
@@ -86,13 +94,15 @@ const EditorStyle = styled.div`
   }
 `;
 const MessageButton = styled.button`
-  width: 230px;
+  width: 150px;
+  height: 50px;
   background-color: transparent;
   font: 1rem 'Nanum Myeongjo', serif;
   border: none;
   border-top: 1px double gray;
   margin-top: 50px;
-  padding-top: 20px;
+  padding-top: 5px;
+  margin: 0 10px 0 10px;
 `;
 
 const UpdateBoard = (props) => {
@@ -176,9 +186,10 @@ const UpdateBoard = (props) => {
             // }}
           />
         </EditorStyle>
-        <div>Will you definitely update this board?</div>
-        <MessageButton onClick={handleUpdate}>UPDATE</MessageButton>
-        <MessageButton onClick={() => dispatch(modalMoved(''))}>CLOSE</MessageButton>
+        <div className='buttonWrap'>
+          <MessageButton onClick={handleUpdate}>UPDATE</MessageButton>
+          <MessageButton onClick={() => dispatch(modalMoved(''))}>CLOSE</MessageButton>
+        </div>
       </MessageFrame>
     </Parts.ModalBackground>
   );

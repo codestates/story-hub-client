@@ -61,7 +61,6 @@ const Merge = (props) => {
           <MessageButton onClick={() => dispatch(modalMoved(''))}>CLOSE</MessageButton>
         </MessageFrame>
       </Parts.ModalBackground>
-      <button onClick={() => console.log(props)}>afasdfsdf</button>
     </>
   );
 };

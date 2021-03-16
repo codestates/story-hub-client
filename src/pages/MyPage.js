@@ -215,7 +215,7 @@ const MyPage = (props) => {
         )}
       </Parts.Board>
       <Parts.Board>
-        <h1>My Favorite</h1>
+        {/* <h1>My Favorite</h1>
         {myFavorite.length > 0 ? (
           <>
             <CardsFrame>
@@ -246,7 +246,7 @@ const MyPage = (props) => {
           </>
         ) : (
           ''
-        )}
+        )} */}
         <h1>My Commits</h1>
         {myCommit.length > 0 ? (
           <>

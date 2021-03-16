@@ -79,9 +79,8 @@ const NewStoryContentPage = (props) => {
     const {content, contentTitle} = state.textReducer
     const [text, setText] = 
         useState(EditorState.createWithContent(ContentState.createFromBlockArray(htmlToDraft(content).contentBlocks)))
-        console.log(text)
         
-    const onEditorStateChange = (text) => {
+        const onEditorStateChange = (text) => {
         setText(text);              
         if(text.getCurrentContent().getPlainText()) {
             dispatch(contentSaved(draftToHtml(convertToRaw(text.getCurrentContent()))));

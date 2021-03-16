@@ -163,7 +163,7 @@ const MyInfo = ({ myInfo, setAccessToken }) => {
           {checkBtn ? (
             <input type="text" onChange={handleInputValue} value={nickName} />
           ) : (
-            <div>{nickName ? nickName : myInfo.nickname}</div>
+            <div> {nickName ? nickName : myInfo.nickname}</div>
           )}
         </div>
         <div>

@@ -47,7 +47,6 @@ const AlertPage = (props) => {
   const state = useSelector((state) => state);
   const { accessToken } = state.userReducer;
   const dispatch = useDispatch();
-  console.log(accessToken);
 
   const [commits, setCommits] = useState([]);
   const [comments, setComments] = useState([]);
@@ -62,7 +61,6 @@ const AlertPage = (props) => {
       },
     })
       .then((res) => {
-        console.log(res.data);
         setCommits(res.data);
         return axios({
           url: 'http://localhost:4000/comment/alertlist',
@@ -132,6 +130,9 @@ const AlertPage = (props) => {
       ? commits
       .slice(commitsPagesVisited, commitsPagesVisited + commitsBoardsPerPage)
           .map((el, idx) => {
+            if(!el.content) el.content = ''
+            if(!el.createdAt) el.createdAt = []
+            if(!el) window.location.reload();
             let contentState = ContentState.createFromBlockArray(htmlToDraft(el.content).contentBlocks)
             let onlyText = contentState.getPlainText()  
           return (
@@ -155,6 +156,8 @@ const AlertPage = (props) => {
       ? comments
       .slice(commentsPagesVisited, commentsPagesVisited + commentsBoardsPerPage)
           .map((el, idx) => {
+            if(!el.content) el.content = ''
+            if(!el.createdAt) el.createdAt = []
             let contentState = ContentState.createFromBlockArray(htmlToDraft(el.content).contentBlocks)
             let onlyText = contentState.getPlainText()  
           return (
