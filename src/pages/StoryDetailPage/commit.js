@@ -96,7 +96,18 @@ const CommitPage = (props) => {
     const commits = depthArr.map((depth, idx) => {
       return(
           <CommitsPerDepth key={idx} depth={depth}>
-            <h2>DEPTH: {depth}</h2>
+            {depth===commitMaxDepth ?
+            <>
+              <h2>DEPTH: {depth}</h2> 
+              <div style={{
+                height:'44px',
+                paddingTop:'44px',
+                font: '100 0.8rem serif'}}>EMPTY</div>
+            </>
+            :
+            <h2>DEPTH: {depth}</h2> 
+            }
+            
             {commitList.length > 0
               ? commitList.map((commit, idx) => {
                 if(commit.depth===commitMaxDepth && commit.merge_check===1){
