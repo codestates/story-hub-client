@@ -73,8 +73,10 @@ const CommitPage = (props) => {
     });
     const data = result.data.list
     setCommitList(data);
-    if (data[0].depth > commitMaxDepth) dispatch(commitMaxDepthSaved(data[0].depth))
-    
+    if(data.length) {
+      console.log(data)
+      if (data[0].depth > commitMaxDepth) dispatch(commitMaxDepthSaved(data[0].depth))
+    }     
   };
   
   const depthArrMaker = () => {
@@ -138,7 +140,6 @@ const CommitPage = (props) => {
     getCommitList();
     depthArrMaker();
   }, []);
-  console.log(commitMaxDepth)
   return (
     <>
       <Parts.DetailFrame>

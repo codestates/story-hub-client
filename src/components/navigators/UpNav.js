@@ -16,6 +16,8 @@ import {
   contentSaved,
   commitSaved,
   commitTitleSaved,
+  boardIndexSaved,
+  boardTitleSaved,  
 } from '../../actions';
 import styled from 'styled-components';
 import Parts from '../../style/Parts';
@@ -164,17 +166,19 @@ const UpNav = (props) => {
               onClick={async () => {
                 dispatch(
                   userLogout(),
-                  dispatch(messageOpen('로그아웃 되었습니다!')),
-                  // dispatch(categorySaved('')),
-                  // dispatch(commitbySaved('')),
-                  // dispatch(commitSaved('')),
-                  // dispatch(commitTitleSaved('')),
-                  // dispatch(contentSaved('')),
-                  // dispatch(contentTitleSaved('')),
-                  // dispatch(commentSaved('')),
-                  // dispatch(etcSaved('')),
-                  // dispatch(minSaved(0)),
-                  // dispatch(maxSaved(0)),
+                  messageOpen('로그아웃 되었습니다!'),
+                  categorySaved(''),
+                  commitbySaved(''),
+                  commitSaved(''),
+                  commitTitleSaved(''),
+                  contentSaved(''),
+                  contentTitleSaved(''),
+                  commentSaved(''),
+                  etcSaved(''),
+                  minSaved(0),
+                  maxSaved(0),
+                  boardIndexSaved(0),
+                  boardTitleSaved(''),
                   await persistor.purge(),
                   history.push('/')
                 );

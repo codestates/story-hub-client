@@ -299,7 +299,7 @@ const NewStoryInfoPage = (props) => {
         }
       });
     } else {
-      dispatch(messageOpen('입력이 안되었거나 잘못입력된 부분이 있습니다.'));
+      dispatch(messageOpen('입력이 안되었거나 잘못 입력된 부분이 있습니다.'));
       return;
     }
   };

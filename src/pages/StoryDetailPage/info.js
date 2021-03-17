@@ -72,6 +72,7 @@ background-size: 100% 100%;
 font-size: 0.9rem;
 overflow-y: hidden;
 .content {
+  white-space: pre-wrap;
   overflow-y: hidden;
   overflow-x: hidden;
 }

@@ -177,6 +177,9 @@ border-top: 1px solid black;
 text-align: right;
 padding-top: 5px;
 }
+textarea {
+  resize: none;
+}
 `
 const ButtonWrap = styled.div`
 margin-right: 10px;
